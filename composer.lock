@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "72ee2647039afc0d089dc387956f0313",
+    "content-hash": "974969d19cac4e50098bdcad2795ff70",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -174,6 +174,57 @@
                 }
             ],
             "time": "2021-08-15T20:50:18+00:00"
+        },
+        {
+            "name": "cirote/ui",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cirote/ui.git",
+                "reference": "cfe112f7d8fdfc349ef4df723d719726da747280"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cirote/ui/zipball/cfe112f7d8fdfc349ef4df723d719726da747280",
+                "reference": "cfe112f7d8fdfc349ef4df723d719726da747280",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/jetstream": "2.*",
+                "php": "^7.3|^8.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Cirote\\Ui\\UiServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Cirote\\Ui\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Tailwind scaffolding for the Laravel framework.",
+            "keywords": [
+                "auth",
+                "laravel",
+                "tailwind",
+                "user interface"
+            ],
+            "support": {
+                "source": "https://github.com/cirote/ui/tree/main",
+                "issues": "https://github.com/cirote/ui/issues"
+            },
+            "time": "2022-01-29T22:52:48+00:00"
         },
         {
             "name": "dasprid/enum",
@@ -8708,7 +8759,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "cirote/ui": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
