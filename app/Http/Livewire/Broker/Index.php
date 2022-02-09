@@ -12,6 +12,14 @@ class Index extends Component
 
     public $model_class = Broker::class;
 
+    public $nombre = "Esteban";
+    protected $rules = [
+
+        'model.sigla' => 'required|string|min:6',
+
+        'model.nombre' => 'required|string|min:6|max:500',
+
+    ];
     public function render()
     {
         return view('livewire.broker.index', [
