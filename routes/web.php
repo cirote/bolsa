@@ -25,4 +25,14 @@ Route::middleware(['auth:sanctum', 'verified'])
                 Route::get('/{id}', 'show')->name('show');
                 Route::post('/', 'store')->name('store');
             });
+
+            Route::controller(\App\Http\Controllers\MovimientosController::class)
+            ->prefix('movimientos')
+            ->name('movimientos.')
+            ->group(function () 
+            {
+                Route::get('/', 'index')->name('index');
+                Route::get('/{id}', 'show')->name('show');
+                Route::post('/', 'store')->name('store');
+            });
     });

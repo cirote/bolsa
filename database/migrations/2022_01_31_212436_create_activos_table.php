@@ -13,7 +13,9 @@ class CreateActivosTable extends Migration
         {
             $table->increments('id');
 
-            $table->string('denominacion')->index();
+            $table->char('cusip', 9)->index()->nullable()->default(null);
+
+            $table->string('denominacion');
             $table->string('clase')->nullable();
             $table->string('type')->nullable();
 
@@ -24,8 +26,8 @@ class CreateActivosTable extends Migration
             $table->date('vencimiento')->nullable()->default(null);
 
             $table->boolean('ccl')->default(false);
-            $table->string('ticker_referencia_pesos')->nullable()->default(null);
-            $table->string('ticker_referencia_dolares')->nullable()->default(null);
+
+            $table->char('simbolo', 50)->unique()->nullable()->default(null);
 
             $table->timestamps();
         });
