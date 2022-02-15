@@ -2,14 +2,15 @@
 
 namespace App\Actions;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use League\Csv\Reader;
 use App\Models\Broker;
-use App\Models\Movimiento;
 use App\Models\Activos\Activo;
 use App\Models\Activos\Accion;
 use App\Models\Activos\Adr;
 use App\Models\Activos\Call;
+use App\Models\Movimientos\Movimiento;
 
 class ImportarDatosDeStoneXAction
 {
@@ -58,14 +59,21 @@ class ImportarDatosDeStoneXAction
             $activo = $this->crear_activo($record["Cusip"], $record["Description"], $record["Symbol"]);
 
             Movimiento::create([
-                'fecha'       => Carbon::create($record["ProcessDate"]),
-                'broker_id'   => $this->broker->id,
-                'activo_id'   => $activo ? $activo->id : null,
-                'descripcion' => $record["Description"],
-                'cantidad'    => (double) $record["Quantity"],
-                'precio'      => (double) $record["Price"],
-                'dolares'     => (double) $record["NetAmount"],
-                'archivo'     => $this->file
+                'fecha_operacion'   => Carbon::create($record["TradeDate"]),
+                'fecha_liquidacion' => Carbon::create($record["ProcessDate"]),
+                'tipo_operacion'    => Str::startsWith($record["Action"], 'Sell') 
+                                        ? 'Venta' 
+                                        : Str::startsWith($record["Action"], 'Buy') 
+                                            ? 'Compra' 
+                                            : null,
+                'broker_id'         => $this->broker->id,
+                'activo_id'         => $activo ? $activo->id : null,
+                'observaciones'     => $record["Description"],
+                'cantidad'          => abs((double) $record["Quantity"]),
+                'precio_en_moneda_original' => (double) $record["Price"],
+                'precio_en_dolares' => (double) $record["Price"],
+                'monto_en_dolares'  => (double) $record["NetAmount"],
+                'archivo'           => $this->file
             ]);
 
         }
