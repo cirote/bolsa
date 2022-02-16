@@ -10,6 +10,11 @@ class MovimientosController extends Controller
 {
     public function index()
     {
+        return view('movimientos.index');
+    }
+
+    public function index2()
+    {
         Importador::do('transactions-17670277-20220213-103026.csv');
 
         Imputador::do();
