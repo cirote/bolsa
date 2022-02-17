@@ -4,6 +4,7 @@
         <tr>
             <x-ui-th sort="asc">Simbolo</x-ui-th>
             <x-ui-th sort="desc">Denominacion</x-ui-th>
+            <x-ui-th sort="desc">Cotizacion</x-ui-th>
             <x-ui-th >Acciones</x-ui-th>
         <tr>
     </x-slot>
@@ -24,6 +25,7 @@
     <tr>
         <x-ui-td>{{ $activo->simbolo }}</x-ui-td>
         <x-ui-td>{{ $activo->denominacion }}</x-ui-td>
+        <x-ui-td>{{ \App\Apis\YahooFinanceApi::do() ?? 'nada' }}</x-ui-td>
         <x-ui-td-actions :id="$activo->id"/>
     <tr>
     @endforeach
