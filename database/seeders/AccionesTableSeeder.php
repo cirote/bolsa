@@ -90,5 +90,11 @@ class AccionesTableSeeder extends Seeder
         ])
             ->agregarTicker('FB', 'Acción', 1, 1, 0, 1);
     
+        Accion::create([
+            'denominacion' => 'Waltmart Inc.',
+            'clase'  => 'Acciones ordinarias'
+        ])
+            ->agregarTicker('WMT', 'Acción', 1, 1, 0, 1);
+        
     }
 }
