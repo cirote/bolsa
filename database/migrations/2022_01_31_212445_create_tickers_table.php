@@ -13,7 +13,7 @@ class CreateTickersTable extends Migration
         Schema::create(Config::PREFIJO . Config::TICKERS, function (Blueprint $table) 
         {
             $table->increments('id');
-            $table->string('ticker', 20)->unique();
+            $table->string('ticker', 20)->index();
 
             $table->integer('activo_id')->unsigned();
             $table->foreign('activo_id')->references('id')->on(Config::PREFIJO . Config::ACTIVOS);

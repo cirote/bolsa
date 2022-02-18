@@ -30,7 +30,7 @@
         <x-ui-td>{{ $activo->simbolo }}</x-ui-td>
         <x-ui-td>{{ $activo->denominacion }}</x-ui-td>
         <x-ui-td>{{ $cotizador ? $cotizador->getRegularMarketPrice() : 'nada' }}</x-ui-td>
-        <x-ui-td>{{ \App\Models\Ccl::byDate('2022-02-07')->ccl }}</x-ui-td>
+        <x-ui-td>{{ 10 }}</x-ui-td>
         <x-ui-td-actions :id="$activo->id"/>
     <tr>
     @endforeach
