@@ -50,6 +50,9 @@ class Ccl extends Model
     {
         $cliente = \App\Apis\YahooFinanceApi::get();
 
-        $ggal_arg = $cliente->getHistoricalQuoteData($simbolo, '1d', $date, $date)[0]->getClose();
+        if ($cotizador = $cliente->getQuote($simbolo))
+        {
+            return $cotizador->getRegularMarketPrice();
+        }
     }
 }

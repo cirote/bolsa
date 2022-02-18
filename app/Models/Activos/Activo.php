@@ -21,7 +21,36 @@ class Activo extends Model
             return $ticker->ticker;
         }
 
-        return 'jeje';
+        return 'n/d';
+    }
+
+    public function getCotizacionAttribute()
+    {
+        if ($ticker = $this->tickers()->where('precio_referencia_dolares', true)->first())
+        {
+            $cliente = \App\Apis\YahooFinanceApi::get();
+
+            if ($cotizador = $cliente->getQuote($ticker->ticker))
+            {
+                return $cotizador->getRegularMarketPrice();
+            }
+
+            return $ticker->ticker;
+        }
+
+        if ($ticker = $this->tickers()->where('precio_referencia_pesos', true)->first())
+        {
+            $cliente = \App\Apis\YahooFinanceApi::get();
+
+            if ($cotizador = $cliente->getQuote($ticker->ticker))
+            {
+                return $cotizador->getRegularMarketPrice() / \App\Models\Ccl::byDate()->ccl;
+            }
+
+            return $ticker->ticker;
+        }
+
+        return 'n/d';
     }
 
     public function tickers()
