@@ -21,4 +21,6 @@ class Constantes
 	const MOVIMIENTOS            = 'movimientos_originales';
 	const POSICIONES             = 'posiciones';
 	const MOVIMIENTOS_POSICIONES = 'movimientos_posiciones';
+
+	const CCL            = 'ccl';
 }

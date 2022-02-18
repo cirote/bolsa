@@ -7,12 +7,18 @@ use Scheb\YahooFinanceApi\ApiClientFactory;
 
 class YahooFinanceApi
 {
-    static function do()
+    private static $objeto = null;
+
+    static function get()
     {
-        return (new static())->getQuote('PBR');
+        if (! static::$objeto)
+        {
+            static::$objeto = new static();
+        }
+
+        return static::$objeto;
     }
 
-    /** @var ApiClient */
     private $client;
 
     public function __construct()
@@ -20,11 +26,11 @@ class YahooFinanceApi
         $this->client = ApiClientFactory::createApiClient();
     }
 
-    /**
-     * @param string $stock
-     *
-     * @return array|null
-     */
+    public function getCotizador(string $stock)
+    {
+        return $this->getQuote($stock);
+    }
+
     public function getQuote(string $stock)
     {
         $quote = $this->client->getQuote($stock);
@@ -33,17 +39,30 @@ class YahooFinanceApi
             return null;
         }
 
-        return $quote->getRegularMarketPrice();
-        return [
-            'name' => $quote->getLongName(),
-            'symbol' => $quote->getSymbol(),
-            'isMarketOpen' => $quote->getMarketState(),
-            'now' => $quote->getRegularMarketPrice(),
-            'dayLow' => $quote->getRegularMarketDayLow(),
-            'dayHigh' => $quote->getRegularMarketDayHigh(),
-            'previousClose' => $quote->getRegularMarketPreviousClose(),
-            'differenceAmount' => $quote->getRegularMarketChange(),
-            'differencePercent' => $quote->getRegularMarketChangePercent(),
-        ];
+        return $quote;
+    }
+
+    public function getExchangeRate(string $currency1, string $currency2)
+    {
+        $quote = $this->client->getExchangeRate($currency1, $currency2);
+
+        if (! $quote) {
+            return null;
+        }
+
+        return $quote;
+    }
+
+    public function getHistoricalQuoteData(string $symbol, string $interval, $startDate, $endDate)
+    {
+        $time = \DateTime::createFromFormat('Y-m-d', "2022-02-08");
+
+        $quote = $this->client->getHistoricalQuoteData($symbol, $interval, $time, $time);
+
+        if (! $quote) {
+            return null;
+        }
+
+        return $quote;
     }
 }

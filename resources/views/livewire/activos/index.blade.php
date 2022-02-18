@@ -5,6 +5,7 @@
             <x-ui-th sort="asc">Simbolo</x-ui-th>
             <x-ui-th sort="desc">Denominacion</x-ui-th>
             <x-ui-th sort="desc">Cotizacion</x-ui-th>
+            <x-ui-th sort="desc">Cabmio</x-ui-th>
             <x-ui-th >Acciones</x-ui-th>
         <tr>
     </x-slot>
@@ -23,9 +24,13 @@
 
     @foreach($activos as $activo)
     <tr>
+        @php($cliente = \App\Apis\YahooFinanceApi::get())
+        @php($cotizador = $cliente->getQuote('GGAL.BA'))
+        @php($rate = $cliente->getExchangeRate('USD', 'ARS'))
         <x-ui-td>{{ $activo->simbolo }}</x-ui-td>
         <x-ui-td>{{ $activo->denominacion }}</x-ui-td>
-        <x-ui-td>{{ \App\Apis\YahooFinanceApi::do() ?? 'nada' }}</x-ui-td>
+        <x-ui-td>{{ $cotizador ? $cotizador->getRegularMarketPrice() : 'nada' }}</x-ui-td>
+        <x-ui-td>{{ \App\Models\Ccl::byDate('2022-02-07')->ccl }}</x-ui-td>
         <x-ui-td-actions :id="$activo->id"/>
     <tr>
     @endforeach
