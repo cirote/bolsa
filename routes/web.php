@@ -49,4 +49,12 @@ Route::middleware(['auth:sanctum', 'verified'])
             {
                 Route::get('/', 'index')->name('index');
             });
+
+            Route::controller(\App\Http\Controllers\SeguimientosController::class)
+            ->prefix('seguimientos')
+            ->name('seguimientos.')
+            ->group(function () 
+            {
+                Route::get('/', 'index')->name('index');
+            });
     });

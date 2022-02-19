@@ -24,33 +24,49 @@ class Activo extends Model
         return 'n/d';
     }
 
+    private $cotizacion;
+
     public function getCotizacionAttribute()
     {
-        if ($ticker = $this->tickers()->where('precio_referencia_dolares', true)->first())
+        if (! $this->cotizacion)
         {
-            $cliente = \App\Apis\YahooFinanceApi::get();
-
-            if ($cotizador = $cliente->getQuote($ticker->ticker))
+            if ($ticker = $this->tickers()->where('precio_referencia_dolares', true)->first())
             {
-                return $cotizador->getRegularMarketPrice();
+                $cliente = \App\Apis\YahooFinanceApi::get();
+    
+                if ($cotizador = $cliente->getQuote($ticker->ticker))
+                {
+                    $this->cotizacion = $cotizador->getRegularMarketPrice();
+                }
+    
+                else
+                {
+                    $this->cotizacion = $ticker->ticker;
+                }
             }
-
-            return $ticker->ticker;
+    
+            elseif ($ticker = $this->tickers()->where('precio_referencia_pesos', true)->first())
+            {
+                $cliente = \App\Apis\YahooFinanceApi::get();
+    
+                if ($cotizador = $cliente->getQuote($ticker->ticker))
+                {
+                    $this->cotizacion = $cotizador->getRegularMarketPrice() / \App\Models\Ccl::byDate()->ccl;
+                }
+    
+                else
+                {
+                    $this->cotizacion = $ticker->ticker;
+                }
+            }
+    
+            else
+            {
+                $this->cotizacion = 'n/d';
+            }
         }
 
-        if ($ticker = $this->tickers()->where('precio_referencia_pesos', true)->first())
-        {
-            $cliente = \App\Apis\YahooFinanceApi::get();
-
-            if ($cotizador = $cliente->getQuote($ticker->ticker))
-            {
-                return $cotizador->getRegularMarketPrice() / \App\Models\Ccl::byDate()->ccl;
-            }
-
-            return $ticker->ticker;
-        }
-
-        return 'n/d';
+        return $this->cotizacion;
     }
 
     public function tickers()

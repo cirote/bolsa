@@ -20,4 +20,8 @@
         Posiciones
     </x-ui-menu-item>
 
+    <x-ui-menu-item route='seguimientos.index'>
+        Seguimientos
+    </x-ui-menu-item>
+
 </x-ui-menu>
