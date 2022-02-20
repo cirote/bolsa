@@ -7,15 +7,15 @@ Route::get('/', function ()
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () 
-{
-    return view('dashboard');
-
-})->name('dashboard');
-
 Route::middleware(['auth:sanctum', 'verified'])
     ->group(function () 
     {
+        Route::controller(\App\Http\Controllers\DashboardController::class)
+        ->group(function () 
+        {
+            Route::get('/dashboard', 'index')->name('dashboard');
+        });
+
         Route::controller(\App\Http\Controllers\ActivosController::class)
             ->prefix('activos')
             ->name('activos.')
