@@ -26,7 +26,13 @@
     <tr>
         <x-ui-td>{{ $activo->simbolo }}</x-ui-td>
         <x-ui-td>{{ $activo->denominacion }}</x-ui-td>
-        <x-ui-td align='right'>{{ number_format($activo->cotizacion, 2, ',', '.') }}</x-ui-td>
+        <x-ui-td align='right'>
+            @if(is_numeric($activo->cotizacion))
+            {{ number_format($activo->cotizacion, 2, ',', '.') }}
+            @else
+            {{ $activo->cotizacion }}
+            @endif
+        </x-ui-td>
         <x-ui-td>{{ 10 }}</x-ui-td>
         <x-ui-td-actions :id="$activo->id"/>
     <tr>
