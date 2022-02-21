@@ -15,12 +15,12 @@ class DashboardController extends Controller
 
         foreach(Seguimiento::all() as $seguimiento)
         {
-            if (in_array($seguimiento->accion, ['Vender', 'Lanzar PUT']))
+            if (in_array($seguimiento->accion, ['Vender', 'Lanzar CALL']))
             {
                 $vender[] = $seguimiento;
             }
 
-            elseif (in_array($seguimiento->accion, ['Comprar', 'Lanzar CALL']))
+            elseif (in_array($seguimiento->accion, ['Comprar', 'Lanzar PUT']))
             {
                 $comprar[] = $seguimiento;
             }
