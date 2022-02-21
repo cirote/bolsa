@@ -12,6 +12,7 @@ class CreateMercadosTable extends Migration
         Schema::create(Config::PREFIJO . Config::MERCADOS, function (Blueprint $table) 
         {
             $table->increments('id');
+            $table->char('sigla', 10)->index();
             $table->string('nombre');
 
             $table->integer('bolsa_id')->unsigned();
