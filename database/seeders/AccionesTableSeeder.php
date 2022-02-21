@@ -95,6 +95,11 @@ class AccionesTableSeeder extends Seeder
             'clase'  => 'Acciones ordinarias'
         ])
             ->agregarTicker('WMT', 'Acción', 1, 1, 0, 1);
-        
+    
+        Accion::create([
+            'denominacion' => 'MercadoLibre Inc.',
+            'clase'  => 'Acciones ordinarias'
+        ])
+            ->agregarTicker('MELI', 'Acción', 1, 1, 0, 1);
     }
 }
