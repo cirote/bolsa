@@ -33,7 +33,7 @@
             {{ $activo->cotizacion }}
             @endif
         </x-ui-td>
-        <x-ui-td>{{ 10 }}</x-ui-td>
+        <x-ui-td>{{ \App\Models\Ccl::byDate('2013-12-12')->ccl }}</x-ui-td>
         <x-ui-td-actions :id="$activo->id"/>
     <tr>
     @endforeach
