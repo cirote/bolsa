@@ -18,11 +18,8 @@ class CreateHistoricosTable extends Migration
             
             $table->integer('mercado_id')->index()->unsigned();
             $table->foreign('mercado_id')->references('id')->on(Config::PREFIJO . Config::MERCADOS);
-
-            $table->integer('moneda_id')->index()->unsigned();
-            $table->foreign('moneda_id')->references('id')->on(Config::PREFIJO . Config::ACTIVOS);
-
-            $table->date('fecha')->index();
+            
+            $table->date('fecha');
             $table->double('apertura');
             $table->double('maximo');
             $table->double('minimo');
@@ -30,6 +27,8 @@ class CreateHistoricosTable extends Migration
             $table->double('volumen')->default(0);
             $table->double('interes_abierto');
             $table->timestamps();
+
+            $table->unique(['activo_id', 'mercado_id', 'fecha']);
         });
     }
 
