@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use App\Config\Constantes as Config;
+use App\Models\Activos\Ticker;
 
 class Ccl extends Model
 {
@@ -13,6 +14,57 @@ class Ccl extends Model
     protected $guarded = [];
 
     static public function byDate($date = null)
+    {
+        $date = static::getDate($date);
+
+        if ($model = static::where('fecha', $date->format('Y-m-d'))->first())
+        {
+            return $model;
+        }
+
+        $activo = Ticker::byName('TS');
+
+        $mercado = Mercado::bySigla('NYSE');
+
+        $h_usa = Historico::where('activo_id', $activo->id)
+            ->where('mercado_id', $mercado->id)
+            ->where('fecha', $date->format('Y-m-d'))->first();
+
+        if ($h_usa)
+        {
+            $mercado = Mercado::bySigla('BCBA');
+
+            $h_arg = Historico::where('activo_id', $activo->id)
+                ->where('mercado_id', $mercado->id)
+                ->where('fecha', $date->format('Y-m-d'))->first();
+
+                $arg = $h_arg->cierre;
+
+                $usa = $h_usa->cierre;
+    
+                $rel = 1;    
+        }
+
+        else 
+        {
+            $arg = static::getCotizacion('GGAL.BA', $date);
+
+            $usa = static::getCotizacion('GGAL', $date);
+
+            $rel = 10;
+        }
+
+        return static::create([
+            'fecha' => $date,
+            'argentina_pesos' => $arg,
+            'argentina_dolares' => 0,
+            'extranjero_dolares' => $usa,
+            'mep' => 0,
+            'ccl' => $arg / $usa * $rel
+        ]);
+    }
+
+    static public function getDate($date = null): Carbon
     {
         if (! $date instanceof Carbon)
         {
@@ -27,23 +79,7 @@ class Ccl extends Model
             }
         }
 
-        if ($model = static::where('fecha', $date->format('Y-m-d'))->first())
-        {
-            return $model;
-        }
-
-        $ggal_arg = static::getCotizacion('GGAL.BA', $date);
-
-        $ggal_usa = static::getCotizacion('GGAL', $date);
-
-        return static::create([
-            'fecha' => $date,
-            'argentina_pesos' => $ggal_arg,
-            'argentina_dolares' => 0,
-            'extranjero_dolares' => $ggal_usa,
-            'mep' => 0,
-            'ccl' => $ggal_arg / $ggal_usa * 10
-        ]);
+        return $date;
     }
 
     static private function getCotizacion($simbolo, $date)
