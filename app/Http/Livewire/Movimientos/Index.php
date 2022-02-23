@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Movimientos;
 
 use Livewire\Component;
 use Cirote\Ui\Traits\Crud;
+use App\Models\Cuenta;
 use App\Models\Movimientos\Movimiento;
 
 class Index extends Component
@@ -20,7 +21,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.movimientos.index', [
-            'movimientos' => Movimiento::paginate($this->paginate)
+            'movimientos' => Cuenta::bySigla('SX')->movimientos()->orderBy('fecha_operacion')->paginate($this->paginate)
         ]);
     }
 }

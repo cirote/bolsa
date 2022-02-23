@@ -28,6 +28,11 @@ class Movimiento extends Model
         return $this->belongsTo(Broker::class);
     }
 
+    public function getMontoAttribute()
+    {
+    	return $this->monto_en_dolares;
+    }
+
     public function getRemanenteAttribute()
     {
     	return $this->cantidad - $this->cantidad_imputada;

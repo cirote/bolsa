@@ -4,7 +4,10 @@
         <tr>
             <x-ui-th sort="asc">Fecha</x-ui-th>
             <x-ui-th sort="desc">Observaciones</x-ui-th>
-            <x-ui-th >Acciones</x-ui-th>
+            <x-ui-th>Cantidad</x-ui-th>
+            <x-ui-th>Monto</x-ui-th>
+            <x-ui-th>Saldo</x-ui-th>
+            <x-ui-th>Acciones</x-ui-th>
         <tr>
     </x-slot>
 
@@ -22,8 +25,11 @@
 
     @foreach($movimientos as $movimiento)
     <tr>
-        <x-ui-td>{{ $movimiento->fecha_operacion }}</x-ui-td>
+        <x-ui-td>{{ $movimiento->fecha_operacion->format('d-m-Y') }}</x-ui-td>
         <x-ui-td>{{ $movimiento->observaciones }}</x-ui-td>
+        <x-ui-td align='right'>{{ number_format($movimiento->cantidad, 0, ',', '.') }}</x-ui-td>
+        <x-ui-td align='right'>{{ number_format($movimiento->monto, 2, ',', '.') }}</x-ui-td>
+        <x-ui-td align='right'>{{ number_format($movimiento->saldo, 2, ',', '.') }}</x-ui-td>
         <x-ui-td-actions :id="$movimiento->id"/>
     <tr>
     @endforeach
