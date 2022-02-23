@@ -24,6 +24,7 @@ class AccionesTableSeeder extends Seeder
             ->agregarTicker('SAN', 'Acción', 1, 0, 1);
 
         Accion::create([
+            'cusip'  => '465562106',
             'denominacion' => 'ITAU Unibanco S.A.',
             'clase'  => 'Acciones ordinarias'
         ])
@@ -31,6 +32,7 @@ class AccionesTableSeeder extends Seeder
             ->agregarTicker('ITUB', 'CEDEAR', 1, 0, 1);
 
         Accion::create([
+            'cusip'  => '71654V408',
             'denominacion' => 'Petrobras S.A.',
             'clase'  => 'Acciones ordinarias'
         ])

@@ -70,5 +70,14 @@ class BonosTableSeeder extends Seeder
         ])
             ->agregarTicker('TVPA', 'Bono', 1, 1)
             ->agregarTicker('TVPA.BA', 'Bono', 100, 0, 1, 0);
+
+        Bono::create([
+            'cusip'  => '040114HS2',
+            'denominacion' => 'Bonos Internacionales de la República Argentina en dólares estadounidenses',
+            'clase'  => 'Bono'
+        ])
+            ->agregarTicker('GD30')
+            ->agregarTicker('GD30D')
+            ->agregarTicker('GD30C');
     }
 }

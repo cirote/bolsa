@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use League\Csv\Reader;
 use App\Models\Broker;
+use App\Models\Cuenta;
 use App\Models\Activos\Activo;
 use App\Models\Activos\Accion;
 use App\Models\Activos\Adr;
@@ -15,6 +16,8 @@ use App\Models\Movimientos\Movimiento;
 class ImportarDatosDeStoneXAction
 {
     protected $broker;
+
+    protected $cuenta;
 
     protected $file;
 
@@ -31,6 +34,8 @@ class ImportarDatosDeStoneXAction
 
         $this->broker = Broker::bySigla('SX');
 
+        $this->cuenta = Cuenta::bySigla('SX');
+
         $this->crear_reader();
 
         $this->borrar_datos_anteriores();
@@ -40,7 +45,7 @@ class ImportarDatosDeStoneXAction
 
     protected function crear_reader()
     {
-        $this->csv = Reader::createFromPath('/www/wwwroot/bolsa/storage/app/' . $this->file, 'r');
+        $this->csv = Reader::createFromPath(storage_path('app/datos/') . $this->file, 'r');
 
         $this->csv->setHeaderOffset(0);
     }
@@ -54,11 +59,12 @@ class ImportarDatosDeStoneXAction
     {
         foreach($this->csv->getRecords() as $record)
         {
-            dump($record);
+            //  dump($record);
 
             $activo = $this->crear_activo($record["Cusip"], $record["Description"], $record["Symbol"]);
 
             Movimiento::create([
+                'cuenta_id'         => $this->cuenta->id,
                 'fecha_operacion'   => Carbon::create($record["TradeDate"]),
                 'fecha_liquidacion' => Carbon::create($record["ProcessDate"]),
                 'tipo_operacion'    => Str::startsWith($record["Action"], 'Sell') 

@@ -41,7 +41,7 @@ class ImportarTSAction
 
     protected function crear_reader($file)
     {
-        $this->csv = Reader::createFromPath('/www/wwwroot/bolsa/storage/app/datos/' . $file, 'r');
+        $this->csv = Reader::createFromPath(storage_path('app/datos/') . $file, 'r');
 
         $this->csv->setHeaderOffset(0);
     }
