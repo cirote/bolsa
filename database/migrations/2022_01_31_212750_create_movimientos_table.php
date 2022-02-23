@@ -13,6 +13,9 @@ class CreateMovimientosTable extends Migration
         {
             $table->increments('id');
 
+            $table->bigInteger('cuenta_id')->unsigned()->nullable()->default(null);
+            $table->foreign('cuenta_id')->references('id')->on(Config::PREFIJO . Config::CUENTAS);
+
             $table->date('fecha_operacion');
             $table->date('fecha_liquidacion')->nullable()->default(null);
 
@@ -26,6 +29,8 @@ class CreateMovimientosTable extends Migration
 
             $table->double('cantidad')->nullable()->default(null);
             $table->double('cantidad_imputada')->default(0);
+
+            $table->double('saldo')->default(0);
 
             $table->integer('moneda_original_id')->unsigned()->nullable()->default(null);
             $table->foreign('moneda_original_id')->references('id')->on(Config::PREFIJO . Config::ACTIVOS);
