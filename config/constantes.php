@@ -13,6 +13,7 @@ class Constantes
 	const PRECIOS            = 'precios';
 
 	const BROKERS            = 'brokers';
+	const CUENTAS            = 'brokers_cuentas';
 
 	const INEXISTENTES       = 'opciones_inexistentes';
 
