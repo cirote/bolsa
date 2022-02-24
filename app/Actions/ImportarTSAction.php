@@ -34,7 +34,7 @@ class ImportarTSAction
 
         $this->mercado = Mercado::bySigla('NYSE');
 
-        $this->crear_reader('NYSE/TS.csv');
+        $this->crear_reader('NYSE/NYSE/TS.csv');
 
         $this->import();
     }
