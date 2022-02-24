@@ -68,7 +68,7 @@ class ImportarDatosDeStoneXAction
             Movimiento::create([
                 'cuenta_id'         => $this->cuenta->id,
                 'fecha_operacion'   => Carbon::create($record["TradeDate"]),
-                'fecha_liquidacion' => Carbon::create($record["ProcessDate"]),
+                'fecha_liquidacion' => Carbon::create($record["TradeDate"]),
                 'tipo_operacion'    => Str::startsWith($record["Action"], 'Sell') 
                                         ? 'Venta' 
                                         : Str::startsWith($record["Action"], 'Buy') 
