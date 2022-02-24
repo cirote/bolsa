@@ -28,20 +28,20 @@ class ImportarTSAction
 
         $this->mercado = Mercado::bySigla('BCBA');
 
-        $this->crear_reader('TS-pesos.csv');
+        $this->crear_reader('BCBA/BCBA - 48 hs/TS.csv');
 
         $this->import();
 
         $this->mercado = Mercado::bySigla('NYSE');
 
-        $this->crear_reader('TS-dolares.csv');
+        $this->crear_reader('NYSE/TS.csv');
 
         $this->import();
     }
 
     protected function crear_reader($file)
     {
-        $this->csv = Reader::createFromPath(storage_path('app/datos/') . $file, 'r');
+        $this->csv = Reader::createFromPath(storage_path('app/historico/') . $file, 'r');
 
         $this->csv->setHeaderOffset(0);
     }

@@ -47,7 +47,7 @@ class ImportarDatosDeStoneXAction
 
     protected function crear_reader()
     {
-        $this->csv = Reader::createFromPath(storage_path('app/datos/') . $this->file, 'r');
+        $this->csv = Reader::createFromPath(storage_path('app/historico/NYSE/SX/') . $this->file, 'r');
 
         $this->csv->setHeaderOffset(0);
     }

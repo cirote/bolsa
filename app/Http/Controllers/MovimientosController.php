@@ -10,14 +10,14 @@ class MovimientosController extends Controller
 {
     public function index()
     {
-        Importador::do('transactions-17670277-20220213-103026.csv');
+        Importador::do('transactions-17670277-20220224-125600.csv');
 
         return view('movimientos.index');
     }
 
     public function index2()
     {
-        Importador::do('transactions-17670277-20220213-103026.csv');
+        Importador::do('transactions-17670277-20220224-125600.csv');
 
         Imputador::do();
 
