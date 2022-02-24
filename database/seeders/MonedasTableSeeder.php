@@ -19,5 +19,8 @@ class MonedasTableSeeder extends Seeder
 
         Moneda::create(['denominacion' => 'Peso Uruguayo'])
             ->agregarTicker('$U');
+            
+        Moneda::create(['denominacion' => 'Euro'])
+            ->agregarTicker('E');
     }
 }

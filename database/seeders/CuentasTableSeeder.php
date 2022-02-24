@@ -54,6 +54,42 @@ class CuentasTableSeeder extends Seeder
         ]);
 
         Cuenta::create([
+            'nombre' => 'PPI CV 7000',
+            'sigla' => 'PPI7000',
+            'broker_id' => Broker::bySigla('PPI')->id,
+            'moneda_id' => Ticker::byName('USD')->activo->id
+        ]);
+
+        
+        Cuenta::create([
+            'nombre' => 'PPI Global',
+            'sigla' => 'PPIg',
+            'broker_id' => Broker::bySigla('PPI')->id,
+            'moneda_id' => Ticker::byName('USD')->activo->id
+        ]);
+
+        Cuenta::create([
+            'nombre' => 'PPI Instrumentos',
+            'sigla' => 'PPIins',
+            'broker_id' => Broker::bySigla('PPI')->id,
+            'moneda_id' => Ticker::byName('USD')->activo->id
+        ]);
+
+        Cuenta::create([
+            'nombre' => 'PPI COM 7340',
+            'sigla' => 'PPI7340',
+            'broker_id' => Broker::bySigla('PPI')->id,
+            'moneda_id' => Ticker::byName('USD')->activo->id
+        ]);
+
+        Cuenta::create([
+            'nombre' => 'PPI Euros',
+            'sigla' => 'PPIeuro',
+            'broker_id' => Broker::bySigla('PPI')->id,
+            'moneda_id' => Ticker::byName('E')->activo->id
+        ]);
+
+        Cuenta::create([
             'nombre' => 'BELL Pesos',
             'sigla' => 'IOLpesos',
             'broker_id' => Broker::bySigla('BELL')->id,
