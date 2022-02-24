@@ -3,12 +3,15 @@
 namespace App\Models\Movimientos;
 
 use Illuminate\Database\Eloquent\Model;
+use Parental\HasChildren;
 use App\Config\Constantes as Config;
 use App\Models\Broker;
 use App\Models\Activos\Activo;
 
 class Movimiento extends Model
 {
+    use HasChildren;
+
     protected $table = Config::PREFIJO . Config::MOVIMIENTOS;
 
     protected $guarded = [];

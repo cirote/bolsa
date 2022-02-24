@@ -13,6 +13,8 @@ class CreateMovimientosTable extends Migration
         {
             $table->increments('id');
 
+            $table->string('type')->nullable();
+
             $table->bigInteger('cuenta_id')->unsigned()->nullable()->default(null);
             $table->foreign('cuenta_id')->references('id')->on(Config::PREFIJO . Config::CUENTAS);
 
