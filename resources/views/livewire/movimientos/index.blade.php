@@ -4,6 +4,7 @@
         <tr>
             <x-ui-th sort="asc">Fecha</x-ui-th>
             <x-ui-th>Clase</x-ui-th>
+            <x-ui-th>Número</x-ui-th>
             <x-ui-th sort="desc">Observaciones</x-ui-th>
             <x-ui-th>Cantidad</x-ui-th>
             <x-ui-th>Monto</x-ui-th>
@@ -28,6 +29,7 @@
     <tr>
         <x-ui-td>{{ $movimiento->fecha_operacion->format('d-m-Y') }}</x-ui-td>
         <x-ui-td>{{ $movimiento->clase }}</x-ui-td>
+        <x-ui-td>{{ $movimiento->numero_operacion }}</x-ui-td>
         <x-ui-td>{{ $movimiento->observaciones }}</x-ui-td>
         <x-ui-td align='right'>{{ number_format($movimiento->cantidad, 0, ',', '.') }}</x-ui-td>
         <x-ui-td align='right'>{{ number_format($movimiento->monto, 2, ',', '.') }}</x-ui-td>

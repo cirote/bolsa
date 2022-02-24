@@ -11,8 +11,11 @@ use App\Models\Activos\Activo;
 use App\Models\Activos\Accion;
 use App\Models\Activos\Adr;
 use App\Models\Activos\Call;
+use App\Models\Movimientos\Comision;
 use App\Models\Movimientos\Compra;
+use App\Models\Movimientos\Dividendo;
 use App\Models\Movimientos\Movimiento;
+use App\Models\Movimientos\Recepcion;
 use App\Models\Movimientos\Venta;
 
 class ImportarDatosDeStoneXAction
@@ -75,8 +78,29 @@ class ImportarDatosDeStoneXAction
                 $clase = Compra::class;
             }
 
+            elseif (Str::startsWith($record["ActivityType"], 'DividendsNInterest'))
+            {
+                $clase = Dividendo::class;
+            }
+
+            elseif (Str::startsWith($record["ActivityType"], 'ReceiveNDeliver'))
+            {
+                //  dump($record);
+
+                $clase = Recepcion::class;
+            }
+
+            elseif ((double) $record["NetAmount"])
+            {
+                //  dump($record);
+
+                $clase = Comision::class;
+            }
+
             else
             {
+                //  dump($record);
+
                 $clase = Movimiento::class;
             }
 
@@ -91,10 +115,11 @@ class ImportarDatosDeStoneXAction
                                         : Str::startsWith($record["Action"], 'Buy') 
                                             ? 'Compra' 
                                             : null,
+                'numero_operacion'  => $record["SecurityNumber"],
                 'broker_id'         => $this->broker->id,
                 'activo_id'         => $activo ? $activo->id : null,
                 'observaciones'     => $record["Description"],
-                'cantidad'          => abs((double) $record["Quantity"]),
+                'cantidad'          => (double) $record["Quantity"],
                 'precio_en_moneda_original' => (double) $record["Price"],
                 'precio_en_dolares' => (double) $record["Price"],
                 'monto_en_dolares'  => (double) $record["NetAmount"],
