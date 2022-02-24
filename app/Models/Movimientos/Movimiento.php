@@ -31,6 +31,18 @@ class Movimiento extends Model
         return $this->belongsTo(Broker::class);
     }
 
+    public function getClaseAttribute()
+    {
+    	$classname = get_class($this);
+
+        if ($pos = strrpos($classname, '\\')) 
+        {
+            return substr($classname, $pos + 1);
+        }
+
+        return $pos;
+    }
+
     public function getMontoAttribute()
     {
     	return $this->monto_en_dolares;

@@ -11,7 +11,9 @@ use App\Models\Activos\Activo;
 use App\Models\Activos\Accion;
 use App\Models\Activos\Adr;
 use App\Models\Activos\Call;
+use App\Models\Movimientos\Compra;
 use App\Models\Movimientos\Movimiento;
+use App\Models\Movimientos\Venta;
 
 class ImportarDatosDeStoneXAction
 {
@@ -63,9 +65,24 @@ class ImportarDatosDeStoneXAction
         {
             //  dump($record);
 
+            if (Str::startsWith($record["Action"], 'Sell'))
+            {
+                $clase = Venta::class;
+            }
+
+            elseif (Str::startsWith($record["Action"], 'Buy'))
+            {
+                $clase = Compra::class;
+            }
+
+            else
+            {
+                $clase = Movimiento::class;
+            }
+
             $activo = $this->crear_activo($record["Cusip"], $record["Description"], $record["Symbol"]);
 
-            Movimiento::create([
+            $clase::create([
                 'cuenta_id'         => $this->cuenta->id,
                 'fecha_operacion'   => Carbon::create($record["ProcessDate"]),
                 'fecha_liquidacion' => Carbon::create($record["ProcessDate"]),
