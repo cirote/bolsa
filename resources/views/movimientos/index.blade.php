@@ -4,6 +4,6 @@
         Tabla de movimientos
     </x-slot>
 
-    @livewire('movimientos.index')
+    @livewire('movimientos.index', ['cuenta' => $cuenta])
 
 </x-ui-layout>

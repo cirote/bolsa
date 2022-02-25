@@ -11,6 +11,8 @@ class Index extends Component
 {
     use Crud;
 
+    public $cuenta;
+
     public $model_class = Movimiento::class;
 
     protected $rules = [
@@ -21,7 +23,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.movimientos.index', [
-            'movimientos' => Cuenta::bySigla('SX')->movimientos()->orderBy('fecha_operacion')->paginate($this->paginate)
+            'movimientos' => $this->cuenta->movimientos()->orderBy('fecha_operacion')->paginate($this->paginate)
         ]);
     }
 }

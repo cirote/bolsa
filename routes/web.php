@@ -50,6 +50,7 @@ Route::middleware(['auth:sanctum', 'verified'])
             ->group(function () 
             {
                 Route::get('/', 'index')->name('index');
+                Route::get('/{cuenta}', 'show')->name('show');
             });
 
         Route::controller(\App\Http\Controllers\PosicionesController::class)

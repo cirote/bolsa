@@ -17,6 +17,11 @@ class Index extends Component
         'model.nombre' => 'required|string|min:3|max:500'
     ];
 
+    public function ver_cuenta(Cuenta $cuenta)
+    {
+        return redirect()->route('movimientos.show', ['cuenta' => $cuenta]);
+    }
+
     public function render()
     {
         return view('livewire.cuentas.index', [
