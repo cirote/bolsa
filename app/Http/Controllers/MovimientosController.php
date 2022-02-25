@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Actions\ImportarDatosDeStoneXAction as Importador;
+use App\Actions\Importar\ImportarDatosDeStoneXAction as Importador;
 use App\Actions\ImputarMovimientosOriginalesEnPosicionesAction as Imputador;
 use App\Models\Cuenta;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Importar;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
