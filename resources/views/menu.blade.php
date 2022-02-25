@@ -8,6 +8,10 @@
         Broker
     </x-ui-menu-item>
 
+    <x-ui-menu-item route='cuentas.index'>
+        Cuentas
+    </x-ui-menu-item>
+
     <x-ui-menu-item route='activos.index'>
         Activos
     </x-ui-menu-item>

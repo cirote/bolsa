@@ -24,6 +24,16 @@ Route::middleware(['auth:sanctum', 'verified'])
                 Route::get('/', 'index')->name('index');
             });
 
+        Route::controller(\App\Http\Controllers\CuentasController::class)
+            ->prefix('cuentas')
+            ->name('cuentas.')
+            ->group(function () 
+            {
+                Route::get('/', 'index')->name('index');
+                Route::get('/{id}', 'show')->name('show');
+                Route::post('/', 'store')->name('store');
+            });
+
         Route::controller(\App\Http\Controllers\BrokerController::class)
             ->prefix('broker')
             ->name('broker.')
