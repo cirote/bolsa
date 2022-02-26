@@ -21,7 +21,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.posiciones.index', [
-            'posiciones' => Posicion::paginate($this->paginate)
+            'posiciones' => Posicion::orderBy('fecha_apertura', 'DESC')->paginate($this->paginate)
         ]);
     }
 }

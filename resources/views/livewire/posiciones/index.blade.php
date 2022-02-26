@@ -3,6 +3,7 @@
     <x-slot name="header">
         <tr>
             <x-ui-th sort="asc">Fecha de apertura</x-ui-th>
+            <x-ui-th sort="desc">Activo</x-ui-th>
             <x-ui-th sort="desc">Tipo</x-ui-th>
             <x-ui-th sort="desc">Estado</x-ui-th>
             <x-ui-th >Acciones</x-ui-th>
@@ -24,7 +25,8 @@
 
     @foreach($posiciones as $posicion)
     <tr>
-        <x-ui-td>{{ $posicion->fecha_apertura }}</x-ui-td>
+        <x-ui-td>{{ $posicion->fecha_apertura->format('d-m-Y') }}</x-ui-td>
+        <x-ui-td>{{ $posicion->activo->denominacion }}</x-ui-td>
         <x-ui-td>{{ $posicion->tipo }}</x-ui-td>
         <x-ui-td>{{ $posicion->estado }}</x-ui-td>
         <x-ui-td-actions :id="$posicion->id"/>
