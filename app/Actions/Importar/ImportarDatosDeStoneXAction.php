@@ -113,9 +113,9 @@ class ImportarDatosDeStoneXAction
                 'fecha_liquidacion' => Carbon::create($record["ProcessDate"]),
                 'tipo_operacion'    => Str::startsWith($record["Action"], 'Sell') 
                                         ? 'Venta' 
-                                        : Str::startsWith($record["Action"], 'Buy') 
+                                        : (Str::startsWith($record["Action"], 'Buy') 
                                             ? 'Compra' 
-                                            : null,
+                                            : null),
                 'numero_operacion'  => $record["SecurityNumber"],
                 'broker_id'         => $this->broker->id,
                 'activo_id'         => $activo ? $activo->id : null,
