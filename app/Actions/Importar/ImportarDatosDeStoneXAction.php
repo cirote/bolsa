@@ -11,6 +11,7 @@ use App\Models\Activos\Activo;
 use App\Models\Activos\Accion;
 use App\Models\Activos\Adr;
 use App\Models\Activos\Call;
+use App\Models\Activos\Ticker;
 use App\Models\Movimientos\Comision;
 use App\Models\Movimientos\Compra;
 use App\Models\Movimientos\Dividendo;
@@ -120,8 +121,12 @@ class ImportarDatosDeStoneXAction
                 'activo_id'         => $activo ? $activo->id : null,
                 'observaciones'     => $record["Description"],
                 'cantidad'          => (double) $record["Quantity"],
+                
+                'moneda_original_id' => Ticker::byName('USD')->activo->id,
+
                 'precio_en_moneda_original' => (double) $record["Price"],
                 'precio_en_dolares' => (double) $record["Price"],
+                'monto_en_moneda_original' => (double) $record["NetAmount"],
                 'monto_en_dolares'  => (double) $record["NetAmount"],
                 'archivo'           => $this->file
             ]);
