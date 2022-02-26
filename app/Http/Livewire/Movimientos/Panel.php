@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Http\Livewire\Movimientos;
+
+use Livewire\Component;
+
+class Panel extends Component
+{
+    public function importar_stone()
+    {
+        \App\Actions\Importar\ImportarDatosDeStoneXAction::do('transactions-17670277-20220224-125600.csv');
+    }
+
+    public function importar_ppi()
+    {
+        \App\Actions\Importar\ImportarDatosDePpiAction::do();
+    }
+
+    public function imputar_movimientos()
+    {
+        \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
+    }
+
+    public function render()
+    {
+        return view('livewire.movimientos.panel');
+    }
+}

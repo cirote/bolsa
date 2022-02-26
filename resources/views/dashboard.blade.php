@@ -4,6 +4,8 @@
         Panel de control
     </x-slot>
 
+    @livewire('movimientos.panel')
+
     @if($comprar)
     <x-ui-box>
         <x-slot name="header">
