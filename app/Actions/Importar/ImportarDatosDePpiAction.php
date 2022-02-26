@@ -14,6 +14,7 @@ use App\Models\Activos\Call;
 use App\Models\Activos\Ticker;
 use App\Models\Movimientos\Comision;
 use App\Models\Movimientos\Compra;
+use App\Models\Movimientos\Deposito;
 use App\Models\Movimientos\Dividendo;
 use App\Models\Movimientos\Movimiento;
 use App\Models\Movimientos\Recepcion;

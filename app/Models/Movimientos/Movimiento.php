@@ -45,7 +45,12 @@ class Movimiento extends Model
 
     public function getMontoAttribute()
     {
-    	return $this->monto_en_dolares;
+    	return $this->monto_en_moneda_original;
+    }
+
+    public function getSaldoAttribute()
+    {
+    	return $this->saldo_calculado_en_moneda_original;
     }
 
     public function getRemanenteAttribute()

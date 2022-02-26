@@ -32,8 +32,6 @@ class CreateMovimientosTable extends Migration
             $table->double('cantidad')->nullable()->default(null);
             $table->double('cantidad_imputada')->default(0);
 
-            $table->double('saldo')->default(0);
-
             $table->integer('moneda_original_id')->unsigned()->nullable()->default(null);
             $table->foreign('moneda_original_id')->references('id')->on(Config::PREFIJO . Config::ACTIVOS);
 
@@ -47,9 +45,11 @@ class CreateMovimientosTable extends Migration
 
             $table->decimal('precio_en_dolares', 10, 2)->nullable()->default(null);
             $table->decimal('monto_en_dolares', 10, 2)->nullable()->default(null);
+            $table->double('saldo_en_dolares')->default(0);
 
             $table->decimal('precio_en_pesos', 10, 2)->nullable()->default(null);
             $table->decimal('monto_en_pesos', 10, 2)->nullable()->default(null);
+            $table->double('saldo_en_pesos')->default(0);
 
             $table->integer('broker_id')->unsigned();
             $table->foreign('broker_id')->references('id')->on(Config::PREFIJO . Config::BROKERS);

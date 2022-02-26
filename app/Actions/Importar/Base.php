@@ -17,6 +17,7 @@ use App\Models\Activos\Moneda;
 use App\Models\Activos\Ticker;
 use App\Models\Movimientos\Comision;
 use App\Models\Movimientos\Compra;
+use App\Models\Movimientos\Deposito;
 use App\Models\Movimientos\Dividendo;
 use App\Models\Movimientos\Movimiento;
 use App\Models\Movimientos\Recepcion;
@@ -137,7 +138,15 @@ class Base
         {
             unset($datos['valida']);
 
-            Movimiento::create($datos);
+            if ($datos['tipo_operacion'] == static::OP_DEPOSITO)
+            {
+                Deposito::create($datos);                
+            }
+
+            else
+            {
+                Movimiento::create($datos);                
+            }
         }
     }
 

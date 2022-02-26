@@ -23,13 +23,25 @@ class CalcularSaldosAction
 
     protected function cuenta($cuenta)
     {
-        $saldo = 0;
+        $saldo_original = 0;
+
+        $saldo_pesos = 0;
+
+        $saldo_dolares = 0;
 
         foreach($cuenta->movimientos()->orderBy('fecha_operacion')->get() as $movimiento)
         {
-            $saldo += $movimiento->monto;
+            $saldo_original += $movimiento->monto_en_moneda_original;
 
-            $movimiento->saldo = $saldo;
+            $saldo_dolares += $movimiento->monto_en_dolares;
+
+            $saldo_pesos += $movimiento->monto_en_pesos;
+
+            $movimiento->fill([
+                'saldo_calculado_en_moneda_original' => $saldo_original,
+                'saldo_en_dolares' => $saldo_dolares,
+                'saldo_en_pesos' => $saldo_pesos
+            ]);
 
             $movimiento->save();
         }

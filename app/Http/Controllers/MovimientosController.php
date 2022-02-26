@@ -19,7 +19,7 @@ class MovimientosController extends Controller
 
     public function show(Cuenta $cuenta)
     {
-        Imputador::do();
+        \App\Actions\Cuentas\CalcularSaldosAction::do();
         
         return view('movimientos.index')->with('cuenta', $cuenta);
     }
