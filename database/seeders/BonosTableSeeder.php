@@ -79,5 +79,14 @@ class BonosTableSeeder extends Seeder
             ->agregarTicker('GD30')
             ->agregarTicker('GD30D')
             ->agregarTicker('GD30C');
+
+        Bono::create([
+                'denominacion' => 'Bonar X',
+                'clase'  => 'Bono'
+            ])
+                ->agregarTicker('AA17')
+                ->agregarTicker('AA17D')
+                ->agregarTicker('AA17C');
+    
     }
 }

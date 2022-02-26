@@ -15,9 +15,17 @@ class CalcularSaldosAction
 
     protected function execute()
     {
+        foreach(Cuenta::all() as $cuenta)
+        {
+            $this->cuenta($cuenta);
+        }
+    }
+
+    protected function cuenta($cuenta)
+    {
         $saldo = 0;
 
-        foreach(Cuenta::bySigla('SX')->movimientos()->orderBy('fecha_operacion')->get() as $movimiento)
+        foreach($cuenta->movimientos()->orderBy('fecha_operacion')->get() as $movimiento)
         {
             $saldo += $movimiento->monto;
 
