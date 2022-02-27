@@ -60,6 +60,12 @@ class CuentasTableSeeder extends Seeder
             'moneda_id' => Ticker::byName('USD')->activo->id
         ]);
 
+        Cuenta::create([
+            'nombre' => 'PPI CV 10000',
+            'sigla' => 'PPI10000',
+            'broker_id' => Broker::bySigla('PPI')->id,
+            'moneda_id' => Ticker::byName('USD')->activo->id
+        ]);
         
         Cuenta::create([
             'nombre' => 'PPI Global',
