@@ -24,13 +24,53 @@ class ImportarDatosDePpiAction extends Base
 {
     protected $broker = 'PPI';
 
-    protected $archivos = ['Movimientos 01.xlsx', 'Movimientos 2019.xlsx', 'Movimientos 2020.xlsx'];
+    protected $archivos = ['Movimientos 01.xlsx', 'Movimientos 2019.xlsx', 'Movimientos 2020.xlsx', 'Movimientos 2021.xlsx', 'Movimientos 2022.xlsx'];
 
     protected function setCuenta($planilla)
     {
         if ($planilla == 'Pesos')
         {
-            return $this->cuenta = Cuenta::bySigla('IOLpesos');
+            return $this->cuenta = Cuenta::bySigla('PPIpesos');
+        }
+
+        elseif ($planilla == 'Dolares CV 7000')
+        {
+            return $this->cuenta = Cuenta::bySigla('PPI7000');
+        }
+
+        elseif ($planilla == 'Dolar MEP - COM 7340')
+        {
+            return $this->cuenta = Cuenta::bySigla('PPI7340');
+        }
+
+        elseif ($planilla == 'Dolar CV10000')
+        {
+            return $this->cuenta = Cuenta::bySigla('PPI10000');
+        }
+
+        elseif ($planilla == 'Dolar MEP')
+        {
+            return $this->cuenta = Cuenta::bySigla('PPImep');
+        }
+
+        elseif ($planilla == 'Dolar Cable')
+        {
+            return $this->cuenta = Cuenta::bySigla('PPIccl');
+        }
+
+        elseif ($planilla == 'Instrumentos')
+        {
+            return $this->cuenta = Cuenta::bySigla('PPIins');
+        }
+
+        elseif ($planilla == 'Dolar PPI Global')
+        {
+            return $this->cuenta = Cuenta::bySigla('PPIg');
+        }
+
+        elseif ($planilla == 'Euro CV')
+        {
+            return $this->cuenta = Cuenta::bySigla('PPIeuro');
         }
 
         dd($planilla);

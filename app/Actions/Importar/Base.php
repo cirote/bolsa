@@ -215,13 +215,15 @@ class Base
 
     protected function tofloat($num)
     {
+        $signo = (strpos($num, '-') !== false) ? -1 : 1; 
+
         $dotPos = strrpos($num, '.');
         $commaPos = strrpos($num, ',');
         $sep = (($dotPos > $commaPos) && $dotPos) ? $dotPos : ((($commaPos > $dotPos) && $commaPos) ? $commaPos : false);
 
         if (!$sep) 
         {
-            return abs(floatval(preg_replace("/[^0-9]/", "", $num)));
+            return $signo * abs(floatval(preg_replace("/[^0-9]/", "", $num)));
         }
 
         $float = floatval(
@@ -229,7 +231,7 @@ class Base
                 preg_replace("/[^0-9]/", "", substr($num, $sep + 1, strlen($num)))
         );
 
-        return abs($float);
+        return $signo * abs($float);
     }
 
     protected function precio_en_dolares($datos, $planilla, $file): ?float

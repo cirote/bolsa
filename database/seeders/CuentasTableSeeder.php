@@ -82,7 +82,7 @@ class CuentasTableSeeder extends Seeder
         ]);
 
         Cuenta::create([
-            'nombre' => 'PPI COM 7340',
+            'nombre' => 'Dolar MEP - COM 7340',
             'sigla' => 'PPI7340',
             'broker_id' => Broker::bySigla('PPI')->id,
             'moneda_id' => Ticker::byName('USD')->activo->id
