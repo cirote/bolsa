@@ -38,11 +38,23 @@ class Ccl extends Model
                 ->where('mercado_id', $mercado->id)
                 ->where('fecha', $date->format('Y-m-d'))->first();
 
+            if ($h_arg)
+            {
                 $arg = $h_arg->cierre;
 
                 $usa = $h_usa->cierre;
     
-                $rel = 1;    
+                $rel = 1;
+            } 
+
+            else
+            {
+                $arg = 200;
+
+                $usa = 1;
+    
+                $rel = 1;
+            } 
         }
 
         else 

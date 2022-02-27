@@ -108,6 +108,8 @@ class Base
 
     protected function migrarArchivo($file)
     {
+        ini_set('memory_limit', '256M'); 
+
         $libro = $this->leerLibro($file);
 
         $planillas = $libro->getSheetNames();
@@ -153,7 +155,6 @@ class Base
     protected function getDatos($renglon, $planilla, $file)
     {
         return [
-            'cuenta_id'         => $this->cuenta->id,
             'fecha_operacion'   => $this->fecha_operacion($renglon),
             'fecha_liquidacion' => $this->fecha_liquidacion($renglon),
 
@@ -190,6 +191,8 @@ class Base
             'observaciones' => $this->observaciones($renglon),
 
             'valida' => $this->valida($renglon),
+
+            'cuenta_id'         => $this->cuenta ? $this->cuenta->id : null,
         ];
     }
 

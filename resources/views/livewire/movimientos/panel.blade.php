@@ -12,7 +12,7 @@
             Importar PPI
         </x-ui-button>
 
-        <x-ui-button wire:click="">
+        <x-ui-button wire:click="importar_iol">
             Importar IOL
         </x-ui-button>
 
