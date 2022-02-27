@@ -200,16 +200,19 @@ class Base
     {
         if (!$datos['valida']) 
         {
+            dump('Sin valida');
             return false;
         }
 
         if (!$datos['fecha_operacion']) 
         {
+            dump('Sin fecha de operacion');
             return false;
         }
 
         if (!$datos['monto_en_moneda_original']) 
         {
+            dump('Sin moneda original');
             return false;
         }
 
@@ -327,7 +330,14 @@ class Base
             return null;
 
         if (is_numeric($fecha))
-            return null;
+        {
+            $fecha = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($fecha);
+        }
+
+        if ($fecha instanceof \DateTime)
+    	{
+    		return Carbon::instance($fecha);
+    	}
 
         if (strlen($fecha) == 8) 
         {

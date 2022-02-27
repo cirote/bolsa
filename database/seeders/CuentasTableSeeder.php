@@ -97,7 +97,7 @@ class CuentasTableSeeder extends Seeder
 
         Cuenta::create([
             'nombre' => 'BELL Pesos',
-            'sigla' => 'IOLpesos',
+            'sigla' => 'BELLpesos',
             'broker_id' => Broker::bySigla('BELL')->id,
             'moneda_id' => Ticker::byName('$A')->activo->id
         ]);

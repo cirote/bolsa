@@ -207,6 +207,8 @@ class ImportarDatosDeIolAction extends Base
             return static::ADMINISTRADA_PESOS;
         }
 
+        $this->cuenta = null;
+
     	return 'Cuenta Inexistente';
     }
 }

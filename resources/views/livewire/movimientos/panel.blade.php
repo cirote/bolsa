@@ -16,7 +16,7 @@
             Importar IOL
         </x-ui-button>
 
-        <x-ui-button wire:click="">
+        <x-ui-button wire:click="importar_bel">
             Importar BELL
         </x-ui-button>
 

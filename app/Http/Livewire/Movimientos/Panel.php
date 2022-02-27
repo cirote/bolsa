@@ -23,7 +23,7 @@ class Panel extends Component
 
     public function importar_bell()
     {
-        \App\Actions\Importar\ImportarDatosDePpiAction::do();
+        \App\Actions\Importar\ImportarDatosDeBellAction::do();
     }
 
     public function calcular_saldos()
