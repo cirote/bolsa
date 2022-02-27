@@ -36,6 +36,10 @@
     <br>
 
     <x-ui-row>
+        <x-ui-button wire:click="calcular_saldos">
+            Calculas saldos
+        </x-ui-button>
+
         <x-ui-button wire:click="imputar_movimientos">
             Imputar movimientos
         </x-ui-button>

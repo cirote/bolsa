@@ -16,6 +16,11 @@ class Panel extends Component
         \App\Actions\Importar\ImportarDatosDePpiAction::do();
     }
 
+    public function calcular_saldos()
+    {
+        \App\Actions\Cuentas\CalcularSaldosAction::do();
+    }
+
     public function imputar_movimientos()
     {
         \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();

@@ -47,8 +47,6 @@ class ImportarDatosDeStoneXAction
         $this->borrar_datos_anteriores();
 
         $this->import();
-
-        \App\Actions\Cuentas\CalcularSaldosAction::do();
     }
 
     protected function crear_reader()
