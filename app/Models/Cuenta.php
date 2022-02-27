@@ -27,6 +27,7 @@ class Cuenta extends Model
         return $query->addSelect(['saldo' => Movimiento::select('saldo_calculado_en_moneda_original')
             ->whereColumn('cuenta_id', Config::PREFIJO . Config::CUENTAS . '.id')
             ->orderBy('fecha_operacion', 'DESC')
+            ->orderBy('id', 'DESC')
             ->take(1)
         ]);
     }
