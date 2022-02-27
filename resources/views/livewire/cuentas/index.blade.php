@@ -4,6 +4,7 @@
         <tr>
             <x-ui-th sort="asc">Sigla</x-ui-th>
             <x-ui-th sort="desc">Nombre</x-ui-th>
+            <x-ui-th>Saldo</x-ui-th>
             <x-ui-th>Acciones</x-ui-th>
         <tr>
     </x-slot>
@@ -24,6 +25,7 @@
     <tr>
         <x-ui-td>{{ $cuenta->sigla }}</x-ui-td>
         <x-ui-td>{{ $cuenta->nombre }}</x-ui-td>
+        <x-ui-td align='right'>{{ number_format($cuenta->saldo, 2, ',', '.') }}</x-ui-td>
         <x-ui-td-actions :id="$cuenta->id">
             <x-ui-button wire:click="ver_cuenta({{ $cuenta->id }})">
                 Ver

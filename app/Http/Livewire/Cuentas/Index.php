@@ -25,7 +25,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.cuentas.index', [
-            'cuentas' => Cuenta::paginate($this->paginate)
+            'cuentas' => Cuenta::conSaldos()->paginate($this->paginate)
         ]);
     }
 }
