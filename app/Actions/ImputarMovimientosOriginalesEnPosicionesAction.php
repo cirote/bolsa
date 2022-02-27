@@ -21,7 +21,7 @@ class ImputarMovimientosOriginalesEnPosicionesAction
     {
         foreach (Movimiento::with('activo', 'broker')->whereNotNull('activo_id')->orderBy('fecha_operacion')->get() as $movimiento) 
         {
-            if ($movimiento->tipo_operacion == 'Compra') 
+            if (in_array($movimiento->clase, ['Compra', 'Recepcion'])) 
             {
                 while ($movimiento->remanente) 
                 {
@@ -41,7 +41,7 @@ class ImputarMovimientosOriginalesEnPosicionesAction
                 echo $movimiento->id . ' - ' . $movimiento->cantidad . ' => ' . $this->posicionesCortas($movimiento->activo, $movimiento->broker)->count() . ' => ' . $this->posicionesLargas($movimiento->activo, $movimiento->broker)->count() . "\n";
             }
 
-            if ($movimiento->tipo_operacion == 'Venta') 
+            if ($movimiento->clase == 'Venta') 
             {
                 while ($movimiento->remanente) 
                 {

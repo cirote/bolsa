@@ -120,7 +120,7 @@ class ImportarDatosDeStoneXAction
                 'broker_id'         => $this->broker->id,
                 'activo_id'         => $activo ? $activo->id : null,
                 'observaciones'     => $record["Description"],
-                'cantidad'          => (double) $record["Quantity"],
+                'cantidad'          => abs((double) $record["Quantity"]),
                 
                 'moneda_original_id' => Ticker::byName('USD')->activo->id,
 
