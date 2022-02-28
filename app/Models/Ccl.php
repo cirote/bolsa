@@ -22,39 +22,51 @@ class Ccl extends Model
             return $model;
         }
 
-        $activo = Ticker::byName('TS');
-
-        $mercado = Mercado::bySigla('NYSE');
-
-        $h_usa = Historico::where('activo_id', $activo->id)
-            ->where('mercado_id', $mercado->id)
-            ->where('fecha', $date->format('Y-m-d'))->first();
-
-        if ($h_usa)
+        if ($date->lessThan(Carbon::create(2012, 8, 1)))
         {
-            $mercado = Mercado::bySigla('BCBA');
+            return null;
+        }
 
-            $h_arg = Historico::where('activo_id', $activo->id)
-                ->where('mercado_id', $mercado->id)
-                ->where('fecha', $date->format('Y-m-d'))->first();
+        if ($date->lessThan(Carbon::create(2019, 9, 1)))
+        {
+            $h_usa = static::getHistorico('TS', 'NYSE', $date);
 
-            if ($h_arg)
+            $h_arg = static::getHistorico('TS', 'BCBA', $date);
+
+            if ($h_usa AND $h_arg)
             {
                 $arg = $h_arg->cierre;
 
                 $usa = $h_usa->cierre;
-    
+
                 $rel = 1;
-            } 
+            }
 
             else
             {
-                $arg = 200;
+                return static::byDate($date->subDays(1));
+            }
+        }
 
-                $usa = 1;
-    
-                $rel = 1;
-            } 
+        if ($date->lessThan(Carbon::create(2022, 3, 1)))
+        {
+            $h_usa = static::getHistorico('GGAL', 'NYSE', $date);
+
+            $h_arg = static::getHistorico('GGAL', 'BCBA', $date);
+
+            if ($h_usa AND $h_arg)
+            {
+                $arg = $h_arg->cierre;
+
+                $usa = $h_usa->cierre;
+
+                $rel = 10;
+            }
+
+            else
+            {
+                return static::byDate($date->subDays(1));
+            }
         }
 
         else 
@@ -74,6 +86,18 @@ class Ccl extends Model
             'mep' => 0,
             'ccl' => $arg / $usa * $rel
         ]);
+    }
+
+    static public function getHistorico(string $ticker, string $mercado, Carbon $date)
+    {
+        $activo = Ticker::byName($ticker);
+
+        $mercado = Mercado::bySigla($mercado);
+
+        return Historico::where('activo_id', $activo->id)
+            ->where('mercado_id', $mercado->id)
+            ->where('fecha', $date->format('Y-m-d'))
+            ->first();
     }
 
     static public function getDate($date = null): Carbon

@@ -37,6 +37,10 @@ class test extends Command
      */
     public function handle()
     {
+        dd(
+            \App\Models\Ccl::byDate('2021-09-22')->ccl
+        );
+
         return \App\Actions\ImportarGGALAction::do();
         
         return \App\Actions\Importar\ImportarDatosDeBellAction::do();
