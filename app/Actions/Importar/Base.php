@@ -392,9 +392,35 @@ abstract class Base
 
     abstract protected function setCuenta($planilla);
 
+    abstract protected function cantidad($datos): ?float;
+
+    abstract protected function cuenta_corriente($datos, $planilla, $file): ?string;
+
     abstract protected function fecha_operacion($datos): ?Carbon;
 
     abstract protected function fecha_liquidacion($datos): ?Carbon;
 
     abstract protected function activo($datos): ?Activo;
+
+    abstract protected function monto_en_moneda_original($datos): ?float;
+
+    abstract protected function precio_en_moneda_original($datos): ?float;
+
+    abstract protected function iva_en_moneda_original($datos): ?float;
+
+    abstract protected function otros_impuestos_en_moneda_original($datos): ?float;
+
+    abstract protected function numero_operacion($datos): ?String;
+
+    abstract protected function numero_boleto($datos): ?String;
+
+    abstract protected function tipo_operacion($datos): ?String;
+
+    abstract protected function valida($datos): ?String;
+
+    abstract protected function observaciones($datos): ?String;
+
+    abstract protected function comisiones_en_moneda_original($datos): ?float;
+
+    abstract protected function saldo_en_moneda_original($datos): ?float;
 }
