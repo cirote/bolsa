@@ -19,11 +19,12 @@ use App\Models\Movimientos\Comision;
 use App\Models\Movimientos\Compra;
 use App\Models\Movimientos\Deposito;
 use App\Models\Movimientos\Dividendo;
+use App\Models\Movimientos\Extraccion;
 use App\Models\Movimientos\Movimiento;
 use App\Models\Movimientos\Recepcion;
 use App\Models\Movimientos\Venta;
 
-class Base
+abstract class Base
 {
     const DOLAR_MEP = 'Dolar MEP';
 
@@ -145,6 +146,21 @@ class Base
                 Deposito::create($datos);                
             }
 
+            elseif ($datos['tipo_operacion'] == static::OP_RETIRO)
+            {
+                Extraccion::create($datos);                
+            }
+
+            elseif ($datos['tipo_operacion'] == static::OP_COMPRA)
+            {
+                Compra::create($datos);                
+            }
+
+            elseif ($datos['tipo_operacion'] == static::OP_VENTA)
+            {
+                Venta::create($datos);                
+            }
+
             else
             {
                 Movimiento::create($datos);                
@@ -201,18 +217,21 @@ class Base
         if (!$datos['valida']) 
         {
             dump('Sin valida');
+
             return false;
         }
 
         if (!$datos['fecha_operacion']) 
         {
             dump('Sin fecha de operacion');
+
             return false;
         }
 
         if (!$datos['monto_en_moneda_original']) 
         {
             dump('Sin moneda original');
+
             return false;
         }
 
@@ -370,4 +389,12 @@ class Base
                 return null;
         }
     }
+
+    abstract protected function setCuenta($planilla);
+
+    abstract protected function fecha_operacion($datos): ?Carbon;
+
+    abstract protected function fecha_liquidacion($datos): ?Carbon;
+
+    abstract protected function activo($datos): ?Activo;
 }
