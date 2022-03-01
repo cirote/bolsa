@@ -32,6 +32,8 @@ class CreateMovimientosPosicionesTable extends Migration
 
             $table->decimal('precio_en_pesos', 10, 2)->nullable();
             $table->decimal('monto_parcial_en_pesos', 10, 2)->nullable();
+
+            $table->timestamps();
         });
     }
 

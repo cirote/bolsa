@@ -36,7 +36,7 @@ class AccionesTableSeeder extends Seeder
             'denominacion' => 'Petrobras S.A.',
             'clase'  => 'Acciones ordinarias'
         ])
-            ->agregarTicker('APBR', 'Acción', 1, 0, 1)
+            ->agregarTicker('APBR', 'Acción', 0.5, 0, 1)
             ->agregarTicker('PBR', 'ADR', 1, 1, 0, 1);
 
         Accion::create([

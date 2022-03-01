@@ -37,6 +37,10 @@ class test extends Command
      */
     public function handle()
     {
-        return \App\Actions\Importar\ImportarDatosDeBellAction::do();
+        \App\Actions\Importar\ImportarDatosDeBellAction::do();
+
+        \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
+
+        return 0;
     }
 }

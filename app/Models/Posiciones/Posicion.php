@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Models\Movimientos;
+namespace App\Models\Posiciones;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Config\Constantes as Config;
 use App\Models\Broker;
 use App\Models\Activos\Activo;
+use App\Models\Posiciones\Movimiento;
 
 class Posicion extends Model
 {
@@ -30,8 +31,7 @@ class Posicion extends Model
 
     public function Movimientos()
     {
-        return $this->belongsToMany(Movimiento::class, Config::PREFIJO . Config::MOVIMIENTOS_POSICIONES)
-            ->as('asignado');
+        return $this->hasMany(Movimiento::class);
     }
 
     public function scopeAbiertas($query)
@@ -72,6 +72,20 @@ class Posicion extends Model
     public function scopeByCierre($query)
     {
         return $query->orderByDesc('fecha_cierre');
+    }
+
+    public function scopeConResultados($query)
+    {
+        return $query->withSum('movimientos', 'monto_parcial_en_moneda_original');
+        
+        return $query->addSelect(['resultado_en_moneda_original' => Movimiento::whereColumn('posicion_id', Config::PREFIJO . Config::MOVIMIENTOS_POSICIONES . '.id')
+            ->sum('monto_parcial_en_moneda_original')
+        ]);
+    }
+
+    public function getResultadoAttribute()
+    {
+        return $this->movimientos_sum_monto_parcial_en_moneda_original;
     }
 
     public function scopeResumir($query)

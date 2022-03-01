@@ -57,9 +57,20 @@ class ImportarDatosDeBellAction extends Base
 
     protected function activo($datos): ?Activo
     {
-        if ($activo = Ticker::byName($this->nombreTicker($this->observaciones($datos))))
+        $observaciones = $this->observaciones($datos);
+
+        if ($activo = Ticker::byName($this->nombreTicker($datos)))
         {
             return $activo->activo;
+        }
+
+        if (Str::contains($observaciones, ['(C)']))
+        {
+            return Call::firstOrCreate([
+                'cusip'        => null,
+                'denominacion' => $observaciones,
+                'simbolo'      => $observaciones
+            ]);
         }
 
         return null;
@@ -112,10 +123,12 @@ class ImportarDatosDeBellAction extends Base
             'COBR' => static::OP_DEPOSITO,
             'PAU$' => static::OP_RETIRO,
             'CPRA' => static::OP_COMPRA,
+            'COPR' => static::OP_COMPRA,
             'CPU$' => static::OP_COMPRA,
             'SUSC' => static::OP_COMPRA,
             'VTAS' => static::OP_VENTA,
-            'EJPV' => static::OP_VENTA,
+            'VTPR' => static::OP_VENTA,
+//            'EJPV' => static::OP_VENTA,
         ][trim($datos['D'])] ?? null;
     }
 

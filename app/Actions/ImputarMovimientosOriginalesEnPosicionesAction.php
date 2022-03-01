@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use App\Models\Broker;
 use App\Models\Activos\Activo;
 use App\Models\Movimientos\Movimiento;
-use App\Models\Movimientos\Posicion;
+use App\Models\Posiciones\Posicion;
 
 class ImputarMovimientosOriginalesEnPosicionesAction
 {
@@ -75,9 +75,10 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
     private function crearPosicion(Movimiento $movimiento, $cantidad_solicitada = 0)
     {
-        if (!$cantidad_remanente = $movimiento->cantidad - $movimiento->cantidad_imputada) 
+        if (!$cantidad_remanente = abs($movimiento->cantidad) - $movimiento->cantidad_imputada) 
         {
-            dd('chau');
+            die('Chau');
+
             return null;
         }
 
@@ -102,16 +103,16 @@ class ImputarMovimientosOriginalesEnPosicionesAction
     {
         $posicion->cantidad = $cantidad_solicitada;
 
-        $ponderador_movimiento = $cantidad_solicitada / $movimiento->cantidad;
+        $ponderador_movimiento = $cantidad_solicitada / abs($movimiento->cantidad);
 
-        $posicion->precio_en_moneda_original = $movimiento->precio_en_moneda_original;
-        $posicion->monto_en_moneda_original = $ponderador_movimiento * $movimiento->monto_en_moneda_original;
+        //$posicion->precio_en_moneda_original = $movimiento->precio_en_moneda_original;
+        //$posicion->monto_en_moneda_original = $ponderador_movimiento * $movimiento->monto_en_moneda_original;
 
-        $posicion->precio_en_dolares = $movimiento->precio_en_dolares;
-        $posicion->monto_en_dolares = $ponderador_movimiento * $movimiento->monto_en_dolares;
+        //$posicion->precio_en_dolares = $movimiento->precio_en_dolares;
+        //$posicion->monto_en_dolares = $ponderador_movimiento * $movimiento->monto_en_dolares;
 
-        $posicion->precio_en_pesos = $movimiento->precio_en_pesos;
-        $posicion->monto_en_pesos = $ponderador_movimiento * $movimiento->monto_en_pesos;
+        //$posicion->precio_en_pesos = $movimiento->precio_en_pesos;
+        //$posicion->monto_en_pesos = $ponderador_movimiento * $movimiento->monto_en_pesos;
 
         $posicion->save();
 
@@ -120,18 +121,16 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
     private function agregarMovimiento(Posicion $posicion, Movimiento $movimiento, $cantidad_solicitada, $ponderador_movimiento)
     {
-        $posicion->movimientos()->save($movimiento, [
-            'cantidad'      => $cantidad_solicitada,
-
-            'moneda_original_id' => $movimiento->moneda_original_id,
-            'precio_en_moneda_original'        => $movimiento->precio_en_moneda_original,
-            'monto_parcial_en_moneda_original' => $ponderador_movimiento * $movimiento->monto_en_moneda_original,
-
-            'precio_en_dolares'        => $movimiento->precio_en_dolares,
-            'monto_parcial_en_dolares' => $ponderador_movimiento * $movimiento->monto_en_dolares,
-
-            'precio_en_pesos'        => $movimiento->precio_en_pesos,
-            'monto_parcial_en_pesos' => $ponderador_movimiento * $movimiento->monto_en_pesos,
+        $posicion->movimientos()->create([
+            'movimiento_id'                     => $movimiento->id,
+            'cantidad'                          => $cantidad_solicitada,
+            'moneda_original_id'                => $movimiento->moneda_original_id,
+            'precio_en_moneda_original'         => $movimiento->precio_en_moneda_original,
+            'monto_parcial_en_moneda_original'  => $ponderador_movimiento * $movimiento->monto_en_moneda_original,
+            'precio_en_dolares'                 => $movimiento->precio_en_dolares,
+            'monto_parcial_en_dolares'          => $ponderador_movimiento * $movimiento->monto_en_dolares,
+            'precio_en_pesos'                   => $movimiento->precio_en_pesos,
+            'monto_parcial_en_pesos'            => $ponderador_movimiento * $movimiento->monto_en_pesos,
         ]);
 
         $movimiento->cantidad_imputada += $cantidad_solicitada;
@@ -141,8 +140,10 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
     private function sumarMovimiento(Posicion $posicion, Movimiento $movimiento, $cantidad_solicitada)
     {
-        if ($cantidad_remanente = $movimiento->cantidad - $movimiento->cantidad_imputada) {
-            if ($cantidad_solicitada > $cantidad_remanente) {
+        if ($cantidad_remanente = abs($movimiento->cantidad) - $movimiento->cantidad_imputada) 
+        {
+            if ($cantidad_solicitada > $cantidad_remanente) 
+            {
                 die("Error en la cantidad solicitada");
             }
 
@@ -154,31 +155,29 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
             $ponderador_remanente = $cantidad_solicitada / $posicion->cantidad;
 
-            $ponderador_movimiento = $cantidad_solicitada / $movimiento->cantidad;
+            $ponderador_movimiento = $cantidad_solicitada / abs($movimiento->cantidad);
 
-            $posicion->precio_en_moneda_original = ($posicion->precio_en_moneda_original * $ponderador_original) + ($movimiento->precio_en_moneda_original * $ponderador_remanente);
-            $posicion->monto_en_moneda_original += $ponderador_movimiento * $movimiento->monto_en_moneda_original;
+            //$posicion->precio_en_moneda_original = ($posicion->precio_en_moneda_original * $ponderador_original) + ($movimiento->precio_en_moneda_original * $ponderador_remanente);
+            //$posicion->monto_en_moneda_original += $ponderador_movimiento * $movimiento->monto_en_moneda_original;
 
-            $posicion->precio_en_dolares = ($posicion->precio_en_dolares * $ponderador_original) + ($movimiento->precio_en_dolares * $ponderador_remanente);
-            $posicion->monto_en_dolares += $ponderador_movimiento * $movimiento->monto_en_dolares;
+            //$posicion->precio_en_dolares = ($posicion->precio_en_dolares * $ponderador_original) + ($movimiento->precio_en_dolares * $ponderador_remanente);
+            //$posicion->monto_en_dolares += $ponderador_movimiento * $movimiento->monto_en_dolares;
 
-            $posicion->precio_en_pesos = ($posicion->precio_en_pesos * $ponderador_original) + ($movimiento->precio_en_pesos * $ponderador_remanente);
-            $posicion->monto_en_pesos += $ponderador_movimiento * $movimiento->monto_en_pesos;
+            //$posicion->precio_en_pesos = ($posicion->precio_en_pesos * $ponderador_original) + ($movimiento->precio_en_pesos * $ponderador_remanente);
+            //$posicion->monto_en_pesos += $ponderador_movimiento * $movimiento->monto_en_pesos;
 
             $posicion->save();
 
-            $posicion->movimientos()->save($movimiento, [
-                'cantidad'      => $cantidad_solicitada,
-
-                'moneda_original_id' => $movimiento->moneda_original_id,
-                'precio_en_moneda_original'        => $movimiento->precio_en_moneda_original,
-                'monto_parcial_en_moneda_original' => $ponderador_movimiento * $movimiento->monto_en_moneda_original,
-
-                'precio_en_dolares'        => $movimiento->precio_en_dolares,
-                'monto_parcial_en_dolares' => $ponderador_movimiento * $movimiento->monto_en_dolares,
-
-                'precio_en_pesos'        => $movimiento->precio_en_pesos,
-                'monto_parcial_en_pesos' => $ponderador_movimiento * $movimiento->monto_en_pesos,
+            $posicion->movimientos()->create([
+                'movimiento_id'                     => $movimiento->id,
+                'cantidad'                          => $cantidad_solicitada,
+                'moneda_original_id'                => $movimiento->moneda_original_id,
+                'precio_en_moneda_original'         => $movimiento->precio_en_moneda_original,
+                'monto_parcial_en_moneda_original'  => $ponderador_movimiento * $movimiento->monto_en_moneda_original,
+                'precio_en_dolares'                 => $movimiento->precio_en_dolares,
+                'monto_parcial_en_dolares'          => $ponderador_movimiento * $movimiento->monto_en_dolares,
+                'precio_en_pesos'                   => $movimiento->precio_en_pesos,
+                'monto_parcial_en_pesos'            => $ponderador_movimiento * $movimiento->monto_en_pesos,
             ]);
 
             $movimiento->cantidad_imputada += $cantidad_solicitada;
@@ -191,38 +190,45 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
     private function cerrarPosicion(Posicion $posicion, Movimiento $movimiento, $cantidad_solicitada = null)
     {
-        if (!$cantidad_remanente = $movimiento->cantidad - $movimiento->cantidad_imputada) {
+        if (!$cantidad_remanente = abs($movimiento->cantidad) - $movimiento->cantidad_imputada) 
+        {
             return null;
         }
 
-        if (!$cantidad_solicitada) {
+        if (!$cantidad_solicitada) 
+        {
             $cantidad_solicitada = $cantidad_remanente;
         }
 
-        if ($cantidad_solicitada > $cantidad_remanente) {
+        if ($cantidad_solicitada > $cantidad_remanente) 
+        {
             die("Error en la cantidad solicitada");
         }
 
-        if ($movimiento->remanente < $posicion->cantidad) {
+        if ($movimiento->remanente < $posicion->cantidad) 
+        {
             $this->split($posicion, $movimiento->remanente);
 
-            return;
+            $posicion->refresh();
+
+            //dd($posicion);
         }
 
-        if ($movimiento->remanente >= $posicion->cantidad) {
-            $ponderador = $posicion->cantidad / $movimiento->cantidad;
+        if ($movimiento->remanente >= $posicion->cantidad) 
+        {
+            $ponderador = $posicion->cantidad / abs($movimiento->cantidad);
 
             $posicion->fecha_cierre = $movimiento->fecha_operacion;
 
-            $posicion->precio_de_cierre_en_dolares = $movimiento->precio_en_dolares;
+            //$posicion->precio_de_cierre_en_dolares = $movimiento->precio_en_dolares;
 
             $posicion->estado = 'Cerrada';
 
-            $posicion->resultado_en_moneda_original = ($ponderador * $movimiento->monto_en_moneda_original) - $posicion->monto_en_moneda_original;
+            //$posicion->resultado_en_moneda_original = ($ponderador * $movimiento->monto_en_moneda_original) + $posicion->monto_en_moneda_original;
 
-            $posicion->resultado_en_dolares = ($ponderador * $movimiento->monto_en_dolares) - $posicion->monto_en_dolares;
+            //$posicion->resultado_en_dolares = ($ponderador * $movimiento->monto_en_dolares) + $posicion->monto_en_dolares;
 
-            $posicion->resultado_en_pesos = ($ponderador * $movimiento->monto_en_pesos) - $posicion->monto_en_pesos;
+            //$posicion->resultado_en_pesos = ($ponderador * $movimiento->monto_en_pesos) + $posicion->monto_en_pesos;
 
             $posicion->save();
 
@@ -231,7 +237,8 @@ class ImputarMovimientosOriginalesEnPosicionesAction
             return;
         }
 
-        if ($movimiento->remanente > $posicion->cantidad) {
+        if ($movimiento->remanente > $posicion->cantidad) 
+        {
             dd('Hay que cerrar la posicion usando parcialmente el movimiento');
         }
 
@@ -240,22 +247,49 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
     private function split(Posicion $posicion, $cantidad)
     {
-        /*  Esta funcion divide una posicion en dos posiciones. La primera de esas posiciones, que conserva el id de la
-            original, contiene $cantidad
+        /*  Esta funcion divide una posicion en dos posiciones. 
+            La primera de esas posiciones, que conserva el id de la original, contiene $cantidad
             La nueva posicion, contiene el resto de las cantidades
-            La implementación actual solo contempla el caso en que la posicion tenia un solo movimiento. Habria que analizar como implementar en el caso de multiples movimientos
         */
 
-        $movimiento_orginal = $posicion->movimientos()->first();
+        $cantidad_nueva = $posicion->cantidad - $cantidad;
 
-        $movimiento_orginal->cantidad_imputada = 0;
+        $ponderador = $cantidad / $posicion->cantidad;
 
-        $movimiento_orginal->save();
+        $nueva_posicion = $posicion->replicate();
 
-        $posicion->movimientos()->detach($movimiento_orginal);
+        $nueva_posicion->cantidad = $cantidad_nueva;
 
-        $this->crearPosicion($movimiento_orginal, $posicion->cantidad - $cantidad);
+        $nueva_posicion->save();
 
-        $this->primerMovimiento($posicion, $movimiento_orginal, $cantidad);
+        $posicion->cantidad = $cantidad;
+
+        $posicion->save();
+        
+        foreach($posicion->movimientos as $movimiento)
+        {
+            $nueva_posicion->movimientos()->create([
+                'movimiento_id'                     => $movimiento->movimiento_id,
+                'cantidad'                          => $cantidad_nueva,
+                'moneda_original_id'                => $movimiento->moneda_original_id,
+                'precio_en_moneda_original'         => $movimiento->precio_en_moneda_original,
+                'monto_parcial_en_moneda_original'  => $movimiento->monto_parcial_en_moneda_original * (1 - $ponderador),
+                'precio_en_dolares'                 => $movimiento->precio_en_dolares,
+                'monto_parcial_en_dolares'          => $movimiento->monto_parcial_en_dolares * (1 - $ponderador),
+                'precio_en_pesos'                   => $movimiento->precio_en_pesos,
+                'monto_parcial_en_pesos'            => $movimiento->monto_parcial_en_pesos * (1 - $ponderador),
+            ]);
+    
+            $movimiento->fill([
+                'cantidad'                          => $cantidad,
+                'monto_parcial_en_moneda_original'  => $movimiento->monto_parcial_en_moneda_original * $ponderador,
+                'monto_parcial_en_dolares'          => $movimiento->monto_parcial_en_dolares * $ponderador,
+                'monto_parcial_en_pesos'            => $movimiento->monto_parcial_en_pesos * $ponderador,
+            ]);
+
+            $movimiento->save();
+        }
+
+        // dd($posicion);
     }
 }

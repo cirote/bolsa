@@ -30,19 +30,19 @@ class CreatePosicionesTable extends Migration
             $table->integer('moneda_original_id')->unsigned()->nullable();
             $table->foreign('moneda_original_id')->references('id')->on(Config::PREFIJO . Config::ACTIVOS);
 
-            $table->decimal('precio_en_moneda_original', 10, 2)->default(0);
-            $table->decimal('monto_en_moneda_original', 10, 2)->default(0);
-            $table->decimal('resultado_en_moneda_original', 10, 2)->nullable()->default(null);
+            // $table->decimal('precio_en_moneda_original', 10, 2)->default(0);
+            //  $table->decimal('monto_en_moneda_original', 10, 2)->default(0);
+            //  $table->decimal('resultado_en_moneda_original', 10, 2)->nullable()->default(null);
 
-            $table->decimal('precio_en_dolares', 10, 2)->nullable()->default(null);
-            $table->decimal('monto_en_dolares', 10, 2)->nullable()->default(null);
-            $table->decimal('resultado_en_dolares', 10, 2)->nullable()->default(null);
+            // $table->decimal('precio_en_dolares', 10, 2)->nullable()->default(null);
+            //  $table->decimal('monto_en_dolares', 10, 2)->nullable()->default(null);
+            //  $table->decimal('resultado_en_dolares', 10, 2)->nullable()->default(null);
 
-            $table->decimal('precio_en_pesos', 10, 2)->nullable()->default(null);
-            $table->decimal('monto_en_pesos', 10, 2)->nullable()->default(null);
-            $table->decimal('resultado_en_pesos', 10, 2)->nullable()->default(null);
+            // $table->decimal('precio_en_pesos', 10, 2)->nullable()->default(null);
+            //  $table->decimal('monto_en_pesos', 10, 2)->nullable()->default(null);
+            //  $table->decimal('resultado_en_pesos', 10, 2)->nullable()->default(null);
 
-            $table->decimal('precio_de_cierre_en_dolares', 10, 2)->nullable()->default(null);
+            // $table->decimal('precio_de_cierre_en_dolares', 10, 2)->nullable()->default(null);
 
             $table->timestamps();
         });

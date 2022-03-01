@@ -55,7 +55,7 @@ class Movimiento extends Model
 
     public function getRemanenteAttribute()
     {
-    	return $this->cantidad - $this->cantidad_imputada;
+    	return abs($this->cantidad) - $this->cantidad_imputada;
     }
 
     public function scopeDeFondos($query)
