@@ -128,7 +128,9 @@ class ImportarDatosDeBellAction extends Base
             'SUSC' => static::OP_COMPRA,
             'VTAS' => static::OP_VENTA,
             'VTPR' => static::OP_VENTA,
-//            'EJPV' => static::OP_VENTA,
+            'DECC' => static::OP_COMISION,
+
+            //            'EJPV' => static::OP_VENTA,
         ][trim($datos['D'])] ?? null;
     }
 

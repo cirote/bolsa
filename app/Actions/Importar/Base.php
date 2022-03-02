@@ -46,6 +46,8 @@ abstract class Base
 
     const OP_VENTA = 'Venta';
 
+    const OP_COMISION = 'Comision';
+
     protected $cuenta;
 
     static public function do()
@@ -159,6 +161,11 @@ abstract class Base
             elseif ($datos['tipo_operacion'] == static::OP_VENTA)
             {
                 Venta::create($datos);                
+            }
+
+            elseif ($datos['tipo_operacion'] == static::OP_COMISION)
+            {
+                Comision::create($datos);                
             }
 
             else
