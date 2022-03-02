@@ -3,6 +3,7 @@
 namespace App\Models\Posiciones;
 
 use Illuminate\Database\Eloquent\Model;
+use Parental\HasChildren;
 use App\Config\Constantes as Config;
 use App\Models\Broker;
 use App\Models\Activos\Activo;
@@ -10,6 +11,8 @@ use App\Models\Posiciones\Movimiento;
 
 class Posicion extends Model
 {
+    use HasChildren;
+
     protected $table = Config::PREFIJO . Config::POSICIONES;
 
     protected $guarded = [];

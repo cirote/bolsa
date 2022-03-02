@@ -7,7 +7,9 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use App\Models\Broker;
 use App\Models\Activos\Activo;
+use App\Models\Movimientos\Ejercicio;
 use App\Models\Movimientos\Movimiento;
+use App\Models\Movimientos\Venta;
 use App\Models\Posiciones\Posicion;
 
 class ImputarMovimientosOriginalesEnPosicionesAction
@@ -19,8 +21,13 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
     public function execute()
     {
+        $this->detectarEjerciciosCall();
+
         foreach (Movimiento::with('activo', 'broker')->whereNotNull('activo_id')->orderBy('fecha_operacion')->get() as $movimiento) 
         {
+            dump($movimiento->clase);
+            dump($movimiento->cantidad);
+
             if (in_array($movimiento->clase, ['Compra', 'Recepcion'])) 
             {
                 while ($movimiento->remanente) 
@@ -47,6 +54,11 @@ class ImputarMovimientosOriginalesEnPosicionesAction
                 {
                     if ($posicion_a_cerrar = $this->posicionesLargas($movimiento->activo, $movimiento->broker)->first()) 
                     {
+                        if (isset($this->ejercicios[$movimiento->id]))
+                        {
+                            dump($movimiento);
+                        }
+
                         $this->cerrarPosicion($posicion_a_cerrar, $movimiento);
                     } 
                     
@@ -105,15 +117,6 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
         $ponderador_movimiento = $cantidad_solicitada / abs($movimiento->cantidad);
 
-        //$posicion->precio_en_moneda_original = $movimiento->precio_en_moneda_original;
-        //$posicion->monto_en_moneda_original = $ponderador_movimiento * $movimiento->monto_en_moneda_original;
-
-        //$posicion->precio_en_dolares = $movimiento->precio_en_dolares;
-        //$posicion->monto_en_dolares = $ponderador_movimiento * $movimiento->monto_en_dolares;
-
-        //$posicion->precio_en_pesos = $movimiento->precio_en_pesos;
-        //$posicion->monto_en_pesos = $ponderador_movimiento * $movimiento->monto_en_pesos;
-
         $posicion->save();
 
         $this->agregarMovimiento($posicion, $movimiento, $cantidad_solicitada, $ponderador_movimiento);
@@ -156,15 +159,6 @@ class ImputarMovimientosOriginalesEnPosicionesAction
             $ponderador_remanente = $cantidad_solicitada / $posicion->cantidad;
 
             $ponderador_movimiento = $cantidad_solicitada / abs($movimiento->cantidad);
-
-            //$posicion->precio_en_moneda_original = ($posicion->precio_en_moneda_original * $ponderador_original) + ($movimiento->precio_en_moneda_original * $ponderador_remanente);
-            //$posicion->monto_en_moneda_original += $ponderador_movimiento * $movimiento->monto_en_moneda_original;
-
-            //$posicion->precio_en_dolares = ($posicion->precio_en_dolares * $ponderador_original) + ($movimiento->precio_en_dolares * $ponderador_remanente);
-            //$posicion->monto_en_dolares += $ponderador_movimiento * $movimiento->monto_en_dolares;
-
-            //$posicion->precio_en_pesos = ($posicion->precio_en_pesos * $ponderador_original) + ($movimiento->precio_en_pesos * $ponderador_remanente);
-            //$posicion->monto_en_pesos += $ponderador_movimiento * $movimiento->monto_en_pesos;
 
             $posicion->save();
 
@@ -220,15 +214,7 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
             $posicion->fecha_cierre = $movimiento->fecha_operacion;
 
-            //$posicion->precio_de_cierre_en_dolares = $movimiento->precio_en_dolares;
-
             $posicion->estado = 'Cerrada';
-
-            //$posicion->resultado_en_moneda_original = ($ponderador * $movimiento->monto_en_moneda_original) + $posicion->monto_en_moneda_original;
-
-            //$posicion->resultado_en_dolares = ($ponderador * $movimiento->monto_en_dolares) + $posicion->monto_en_dolares;
-
-            //$posicion->resultado_en_pesos = ($ponderador * $movimiento->monto_en_pesos) + $posicion->monto_en_pesos;
 
             $posicion->save();
 
@@ -289,7 +275,33 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
             $movimiento->save();
         }
+    }
 
-        // dd($posicion);
+    protected $ejercicios = [];
+
+    protected function detectarEjerciciosCall()
+    {
+        foreach(Ejercicio::all() as $ejercicio)
+        {
+            /*
+                Un ejercicio debe estar acompañado de la venta del activo y de la compra de la opción realizadas ese mismo dia
+            */
+
+            $venta = Venta::where('fecha_operacion', $ejercicio->fecha_operacion)->get();
+
+            if (count($venta) != 1)
+            {
+                die('No se pudo localizar la venta y/o existen varias ventas para el mismo día');
+            }
+
+            $call = Movimiento::where('fecha_operacion', $ejercicio->fecha_operacion)->where('cantidad', $venta[0]->cantidad / 100)->get();
+
+            if (count($call) != 1)
+            {
+                die('No se pudo localizar la anulación del call y/o existen varios ejercicios para el mismo día');
+            }
+
+            $this->ejercicios[$venta[0]->id] = [$ejercicio->id, $call[0]->id];
+        }
     }
 }

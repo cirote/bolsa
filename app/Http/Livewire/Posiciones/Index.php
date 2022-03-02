@@ -31,7 +31,7 @@ class Index extends Component
 
         $this->mes = Carbon::now()->month();
 
-        $this->anio = 2015;
+        $this->anio = 2022;
 
         $this->mes = 1;
     }

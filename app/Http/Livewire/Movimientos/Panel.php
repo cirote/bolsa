@@ -8,7 +8,7 @@ class Panel extends Component
 {
     public function importar_stone()
     {
-        \App\Actions\Importar\ImportarDatosDeStoneXAction::do('transactions-17670277-20220224-125600.csv');
+        \App\Actions\Importar\ImportarDatosDeStoneXAction::do('transactions-17670277-20220302-015730.csv');
     }
 
     public function importar_ppi()

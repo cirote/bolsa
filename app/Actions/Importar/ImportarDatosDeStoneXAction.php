@@ -15,6 +15,7 @@ use App\Models\Activos\Ticker;
 use App\Models\Movimientos\Comision;
 use App\Models\Movimientos\Compra;
 use App\Models\Movimientos\Dividendo;
+use App\Models\Movimientos\Ejercicio;
 use App\Models\Movimientos\Movimiento;
 use App\Models\Movimientos\Recepcion;
 use App\Models\Movimientos\Venta;
@@ -89,6 +90,13 @@ class ImportarDatosDeStoneXAction
                 $clase = Recepcion::class;
             }
 
+            elseif (Str::startsWith($record["Description"], 'OPTION EXERCISE'))
+            {
+                //  dump($record);
+
+                $clase = Ejercicio::class;
+            }
+
             elseif ((double) $record["NetAmount"])
             {
                 //  dump($record);
@@ -134,10 +142,17 @@ class ImportarDatosDeStoneXAction
 
     protected function crear_activo($cusip, $denominacion, $simbolo)
     {
+        $denominacion = Str::replace('  ', ' ', $denominacion);
+
         if (! $cusip)
         {
             if (! $simbolo)
             {
+                if ($activo = Activo::where('denominacion', $denominacion)->first())
+                {
+                    return $activo;
+                }
+        
                 return null;
             }
 

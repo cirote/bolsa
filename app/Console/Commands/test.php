@@ -6,38 +6,20 @@ use Illuminate\Console\Command;
 
 class test extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'test:do';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Command description';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         parent::__construct();
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle()
     {
-        \App\Actions\Importar\ImportarDatosDeBellAction::do();
+//        \App\Actions\Importar\ImportarDatosDeStoneXAction::do('transactions-17670277-20220302-015730.csv');
+
+//        \App\Actions\Importar\ImportarDatosDeBellAction::do();
 
         \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
 

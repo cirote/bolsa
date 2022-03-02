@@ -16,7 +16,8 @@ class CreatePosicionesTable extends Migration
             $table->date('fecha_apertura');
             $table->date('fecha_cierre')->nullable()->default(null);
 
-            $table->string('tipo');
+            $table->string('type')->nullable();
+            $table->string('tipo')->nullable();
             $table->string('estado');
 
             $table->integer('activo_id')->unsigned()->nullable();
