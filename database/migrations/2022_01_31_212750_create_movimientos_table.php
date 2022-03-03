@@ -59,6 +59,8 @@ class CreateMovimientosTable extends Migration
             $table->string('archivo')->nullable()->default(null);
             $table->string('hoja')->nullable();
 
+            $table->boolean('pendiente')->default(true);
+
             $table->timestamps();
         });
     }
