@@ -59,16 +59,6 @@ class Posicion extends Model
         return $query->where('estado', 'Cerrada');
     }
 
-    public function scopeCortas($query)
-    {
-        return $query->where('tipo', 'Corta');
-    }
-
-    public function scopeLargas($query)
-    {
-        return $query->where('tipo', 'Larga');
-    }
-
     public function scopeByActivo($query, Activo $activo)
     {
         return $query->where('activo_id', $activo->id);

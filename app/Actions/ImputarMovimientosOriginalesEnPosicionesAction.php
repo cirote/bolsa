@@ -25,7 +25,7 @@ class ImputarMovimientosOriginalesEnPosicionesAction
     {
         $this->detectarEjerciciosCall();
 
-        foreach (Movimiento::with('activo', 'broker')->where('pendiente', true)->orderBy('fecha_operacion')->get() as $movimiento) 
+        foreach (Movimiento::with('activo', 'broker')->where('pendiente', true)->orderBy('fecha_operacion')->cursor() as $movimiento) 
         {
             dump($movimiento->clase);
 
@@ -57,14 +57,68 @@ class ImputarMovimientosOriginalesEnPosicionesAction
             {
                 while ($movimiento->remanente) 
                 {
+                    // $posiciones_largas = $this->posicionesLargas($movimiento->activo, $movimiento->broker)->get();
+
+                    // if (count($posiciones_largas))
+                    // {
+                    //     $cantidad_a_cerrar = 0;
+
+                    //     $posiciones_a_cerrar = [];
+
+                    //     foreach($posiciones_largas as $posicion)
+                    //     {
+                    //         $cantidad_a_cerrar += $posicion->cantidad;
+
+                    //         $posiciones_a_cerrar[] = $posicion;
+
+                    //         if ($cantidad_a_cerrar == $movimiento->cantidad)
+                    //         {
+                    //             break;
+                    //         }
+
+                    //         if ($cantidad_a_cerrar > $movimiento->cantidad)
+                    //         {
+                    //             dump($posicion->cantidad - ($cantidad_a_cerrar - $movimiento->cantidad));
+
+                    //             $this->split($posicion, $posicion->cantidad - ($cantidad_a_cerrar - $movimiento->cantidad));
+
+                    //             $posicion->refresh();
+
+                    //             break;
+                    //         }
+                    //     }
+
+                    //     if (count($posiciones_a_cerrar) == 1)
+                    //     {
+                    //         $this->cerrarPosicion($posiciones_a_cerrar[0], $movimiento);
+                    //     }
+
+                    //     else
+                    //     {
+                    //         dd($posiciones_a_cerrar);
+                    //     }
+                    // }
+
                     if ($posicion_a_cerrar = $this->posicionesLargas($movimiento->activo, $movimiento->broker)->first()) 
                     {
+                        $this->cerrarPosicion($posicion_a_cerrar, $movimiento);
+
                         if (isset($this->ejercicios[$movimiento->id]))
                         {
-                            dump($movimiento);
-                        }
+                            $cantidad_total = $this->ejercicios[$movimiento->id]['venta']->cantidad;
 
-                        $this->cerrarPosicion($posicion_a_cerrar, $movimiento);
+                            $parcial = $posicion_a_cerrar->cantidad;
+
+                            $ponderador_movimiento = $parcial / $cantidad_total;
+
+                            //  $this->agregarMovimiento($posicion_a_cerrar, $this->ejercicios[$movimiento->id]['venta'], $parcial, $ponderador_movimiento);
+
+                            $this->agregarMovimiento($posicion_a_cerrar, $this->ejercicios[$movimiento->id]['ejercicio'], $parcial, $ponderador_movimiento);
+
+                            $this->agregarMovimiento($posicion_a_cerrar, $this->ejercicios[$movimiento->id]['call'], $parcial, $ponderador_movimiento);
+
+                            dump("Paso con {$parcial} de {$cantidad_total}");
+                        }
                     } 
                     
                     else
@@ -311,7 +365,11 @@ class ImputarMovimientosOriginalesEnPosicionesAction
                 die('No se pudo localizar la anulación del call y/o existen varios ejercicios para el mismo día');
             }
 
-            $this->ejercicios[$venta[0]->id] = [$ejercicio->id, $call[0]->id];
+            $this->ejercicios[$venta[0]->id] = [
+                'venta'     => $venta[0],
+                'ejercicio' => $ejercicio, 
+                'call'      => $call[0]
+            ];
         }
     }
 }
