@@ -37,6 +37,18 @@ class Posicion extends Model
         return $this->hasMany(Movimiento::class);
     }
 
+    public function getClaseAttribute()
+    {
+    	$classname = get_class($this);
+
+        if ($pos = strrpos($classname, '\\')) 
+        {
+            return substr($classname, $pos + 1);
+        }
+
+        return $pos;
+    }
+
     public function scopeAbiertas($query)
     {
         return $query->where('estado', 'Abierta');

@@ -31,8 +31,8 @@
         <x-ui-td>{{ $posicion->fecha_apertura->format('d-m-Y') }}</x-ui-td>
         <x-ui-td>@if ($posicion->fecha_cierre) {{ $posicion->fecha_cierre->format('d-m-Y') }} @endif</x-ui-td>
         <x-ui-td>{{ $posicion->activo->denominacion }}</x-ui-td>
-        <x-ui-td>{{ $posicion->tipo }}</x-ui-td>
-        <x-ui-td align='right'>{{ $posicion->cantidad }}</x-ui-td>
+        <x-ui-td>{{ $posicion->clase }}</x-ui-td>
+        <x-ui-td align='right'>{{ number_format($posicion->cantidad, 0, ',', '.') }}</x-ui-td>
         <x-ui-td>{{ $posicion->estado }}</x-ui-td>
         <x-ui-td align='right'>@if ($posicion->fecha_cierre) {{ number_format($posicion->resultado, 2, ',', '.') }} @endif</x-ui-td>
         <x-ui-td-actions :id="$posicion->id"/>

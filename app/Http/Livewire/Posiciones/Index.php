@@ -44,8 +44,8 @@ class Index extends Component
 
         return view('livewire.posiciones.index', [
             'posiciones' => Posicion::conResultados()
-                ->where('fecha_apertura', '>=', $inicio)
-                ->where('fecha_apertura', '<', $fin)
+//                ->where('fecha_apertura', '>=', $inicio)
+//                ->where('fecha_apertura', '<', $fin)
                 ->orderBy('fecha_apertura', 'ASC')
                 ->paginate($this->paginate)
         ]);

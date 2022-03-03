@@ -10,6 +10,8 @@ use App\Models\Activos\Activo;
 use App\Models\Movimientos\Ejercicio;
 use App\Models\Movimientos\Movimiento;
 use App\Models\Movimientos\Venta;
+use App\Models\Posiciones\Corta;
+use App\Models\Posiciones\Larga;
 use App\Models\Posiciones\Posicion;
 
 class ImputarMovimientosOriginalesEnPosicionesAction
@@ -23,32 +25,35 @@ class ImputarMovimientosOriginalesEnPosicionesAction
     {
         $this->detectarEjerciciosCall();
 
-        foreach (Movimiento::with('activo', 'broker')->whereNotNull('activo_id')->orderBy('fecha_operacion')->get() as $movimiento) 
+        foreach (Movimiento::with('activo', 'broker')->where('pendiente', true)->orderBy('fecha_operacion')->get() as $movimiento) 
         {
             dump($movimiento->clase);
-            dump($movimiento->cantidad);
 
             if (in_array($movimiento->clase, ['Compra', 'Recepcion'])) 
             {
-                while ($movimiento->remanente) 
-                {
-                    if ($posicion_a_cerrar = $this->posicionesCortas($movimiento->activo, $movimiento->broker)->first()) 
-                    {
-                        $this->cerrarPosicion($posicion_a_cerrar, $movimiento);
-                    } 
+            //     while ($movimiento->remanente) 
+            //     {
+            //         if ($posicion_a_cerrar = $this->posicionesCortas($movimiento->activo, $movimiento->broker)->first()) 
+            //         {
+            //             $this->cerrarPosicion($posicion_a_cerrar, $movimiento);
+            //         } 
                     
-                    else 
+            //         else 
                     {
-                        $this->crearPosicion($movimiento);
+                        $this->crearPosicion(Larga::class, $movimiento);
                     }
 
                     $movimiento->refresh();
-                }
+                //}
 
-                echo $movimiento->id . ' - ' . $movimiento->cantidad . ' => ' . $this->posicionesCortas($movimiento->activo, $movimiento->broker)->count() . ' => ' . $this->posicionesLargas($movimiento->activo, $movimiento->broker)->count() . "\n";
+                $movimiento->pendiente = false;
+
+                $movimiento->save();
+
+            //     echo $movimiento->id . ' - ' . $movimiento->cantidad . ' => ' . $this->posicionesCortas($movimiento->activo, $movimiento->broker)->count() . ' => ' . $this->posicionesLargas($movimiento->activo, $movimiento->broker)->count() . "\n";
             }
 
-            if ($movimiento->clase == 'Venta') 
+            elseif ($movimiento->clase == 'Venta') 
             {
                 while ($movimiento->remanente) 
                 {
@@ -64,28 +69,32 @@ class ImputarMovimientosOriginalesEnPosicionesAction
                     
                     else
                     {
-                        $this->crearPosicion($movimiento);
+                        $this->crearPosicion(Corta::class, $movimiento);
                     }
 
                     $movimiento->refresh();
                 }
 
-                echo $movimiento->id . ' - ' . $movimiento->cantidad . ' => ' . $this->posicionesCortas($movimiento->activo, $movimiento->broker)->count() . ' => ' . $this->posicionesLargas($movimiento->activo, $movimiento->broker)->count() . "\n";
+                $movimiento->pendiente = false;
+
+                $movimiento->save();
+
+            //     echo $movimiento->id . ' - ' . $movimiento->cantidad . ' => ' . $this->posicionesCortas($movimiento->activo, $movimiento->broker)->count() . ' => ' . $this->posicionesLargas($movimiento->activo, $movimiento->broker)->count() . "\n";
             }
         }
     }
 
-    private function posicionesCortas(Activo $activo, Broker $broker)
-    {
-        return Posicion::cortas()->abiertas()->byActivo($activo)->byBroker($broker)->byApertura();
-    }
+    // private function posicionesCortas(Activo $activo, Broker $broker)
+    // {
+    //     return Posicion::cortas()->abiertas()->byActivo($activo)->byBroker($broker)->byApertura();
+    // }
 
     private function posicionesLargas(Activo $activo, Broker $broker)
     {
-        return Posicion::largas()->abiertas()->byActivo($activo)->byBroker($broker)->byApertura();
+        return Larga::abiertas()->byActivo($activo)->byBroker($broker)->byApertura();
     }
 
-    private function crearPosicion(Movimiento $movimiento, $cantidad_solicitada = 0)
+    private function crearPosicion($clase, Movimiento $movimiento, $cantidad_solicitada = 0)
     {
         if (!$cantidad_remanente = abs($movimiento->cantidad) - $movimiento->cantidad_imputada) 
         {
@@ -99,16 +108,17 @@ class ImputarMovimientosOriginalesEnPosicionesAction
             die("Error en la cantidad solicitada");
         }
 
-        $posicion = Posicion::create([
-            'fecha_apertura' => $movimiento->fecha_operacion,
-            'tipo'           => $movimiento->tipo_operacion == 'Compra' ? 'Larga' : 'Corta',
-            'estado'         => 'Abierta',
-            'activo_id'      => $movimiento->activo_id,
-            'broker_id'      => $movimiento->broker_id,
+        $posicion = $clase::create([
+            'fecha_apertura'     => $movimiento->fecha_operacion,
+            'estado'             => 'Abierta',
+            'activo_id'          => $movimiento->activo_id,
+            'broker_id'          => $movimiento->broker_id,
             'moneda_original_id' => $movimiento->moneda_original_id
         ]);
 
         $this->primerMovimiento($posicion, $movimiento, $cantidad_solicitada ?: $cantidad_remanente);
+
+        return $posicion;
     }
 
     private function primerMovimiento(Posicion $posicion, Movimiento $movimiento, $cantidad_solicitada)
@@ -184,7 +194,7 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
     private function cerrarPosicion(Posicion $posicion, Movimiento $movimiento, $cantidad_solicitada = null)
     {
-        if (!$cantidad_remanente = abs($movimiento->cantidad) - $movimiento->cantidad_imputada) 
+        if (!$cantidad_remanente = (abs($movimiento->cantidad) - $movimiento->cantidad_imputada)) 
         {
             return null;
         }
