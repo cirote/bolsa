@@ -156,10 +156,13 @@ class ImportarDatosDeStoneXAction
                 return null;
             }
 
+            $principal = Ticker::byName(Str::substr($denominacion, 0, 3));
+
             return Call::firstOrCreate([
                 'cusip'        => $cusip,
                 'denominacion' => $denominacion,
-                'simbolo'      => $simbolo
+                'simbolo'      => $simbolo,
+                'principal_id' => $principal ? $principal->activo->id : null
             ]);
         }
 

@@ -18,6 +18,9 @@ class CreateSeguimientosTable extends Migration
 
             $table->string('type')->nullable();
 
+            $table->string('comentarios')->nullable()->default(null);
+            $table->string('tipo')->nullable()->default(null);
+
             $table->date('fecha_1')->nullable()->default(null);
             $table->date('fecha_2')->nullable()->default(null);
 
