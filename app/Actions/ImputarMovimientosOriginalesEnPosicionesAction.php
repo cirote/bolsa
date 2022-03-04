@@ -10,7 +10,9 @@ use App\Models\Activos\Activo;
 use App\Models\Movimientos\Ejercicio;
 use App\Models\Movimientos\Movimiento;
 use App\Models\Movimientos\Venta;
+use App\Models\Posiciones\Comision;
 use App\Models\Posiciones\Corta;
+use App\Models\Posiciones\Dividendo;
 use App\Models\Posiciones\Larga;
 use App\Models\Posiciones\Posicion;
 
@@ -135,6 +137,28 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
             //     echo $movimiento->id . ' - ' . $movimiento->cantidad . ' => ' . $this->posicionesCortas($movimiento->activo, $movimiento->broker)->count() . ' => ' . $this->posicionesLargas($movimiento->activo, $movimiento->broker)->count() . "\n";
             }
+
+            elseif (in_array($movimiento->clase, ['Comision'])) 
+            {
+                $this->crearPosicion(Comision::class, $movimiento);
+
+                $movimiento->refresh();
+
+                $movimiento->pendiente = false;
+
+                $movimiento->save();
+            }
+
+            elseif (in_array($movimiento->clase, ['Dividendo'])) 
+            {
+                $this->crearPosicion(Dividendo::class, $movimiento);
+
+                $movimiento->refresh();
+
+                $movimiento->pendiente = false;
+
+                $movimiento->save();
+            }
         }
     }
 
@@ -150,40 +174,49 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
     private function crearPosicion($clase, Movimiento $movimiento, $cantidad_solicitada = 0)
     {
-        if (!$cantidad_remanente = abs($movimiento->cantidad) - $movimiento->cantidad_imputada) 
+        if (in_array($movimiento->clase, ['Compra', 'Venta', 'Recepcion'])) 
         {
-            die('Chau');
+            if (!$cantidad_remanente = abs($movimiento->cantidad) - $movimiento->cantidad_imputada) 
+            {
+                dd('Chau');
 
-            return null;
+                return null;
+            }
+            
+            if ($cantidad_solicitada > $cantidad_remanente) 
+            {
+                dd("Error en la cantidad solicitada");
+            }
+
+            $estado = 'Abierta';
+
+            $cantidad = $cantidad_solicitada ?: $cantidad_remanente;
+
+            $ponderador_movimiento = $cantidad / abs($movimiento->cantidad);
         }
 
-        if ($cantidad_solicitada > $cantidad_remanente) 
+        else
         {
-            die("Error en la cantidad solicitada");
+            $estado = 'Cerrada';
+
+            $cantidad = 0;
+
+            $ponderador_movimiento = 1;
         }
 
         $posicion = $clase::create([
             'fecha_apertura'     => $movimiento->fecha_operacion,
-            'estado'             => 'Abierta',
+            'fecha_cierre'       => ($estado == 'Abierta') ? null : $movimiento->fecha_operacion,
+            'estado'             => $estado,
             'activo_id'          => $movimiento->activo_id,
             'broker_id'          => $movimiento->broker_id,
+            'cantidad'           => $cantidad,
             'moneda_original_id' => $movimiento->moneda_original_id
         ]);
 
-        $this->primerMovimiento($posicion, $movimiento, $cantidad_solicitada ?: $cantidad_remanente);
+        $this->agregarMovimiento($posicion, $movimiento, $cantidad, $ponderador_movimiento);
 
         return $posicion;
-    }
-
-    private function primerMovimiento(Posicion $posicion, Movimiento $movimiento, $cantidad_solicitada)
-    {
-        $posicion->cantidad = $cantidad_solicitada;
-
-        $ponderador_movimiento = $cantidad_solicitada / abs($movimiento->cantidad);
-
-        $posicion->save();
-
-        $this->agregarMovimiento($posicion, $movimiento, $cantidad_solicitada, $ponderador_movimiento);
     }
 
     private function agregarMovimiento(Posicion $posicion, Movimiento $movimiento, $cantidad_solicitada, $ponderador_movimiento)
