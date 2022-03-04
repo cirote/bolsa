@@ -6,8 +6,10 @@
             <x-ui-th>Cierre</x-ui-th>
             <x-ui-th sort="desc">Activo</x-ui-th>
             <x-ui-th sort="desc">Tipo</x-ui-th>
-            <x-ui-th>Cantidad</x-ui-th>
             <x-ui-th sort="desc">Estado</x-ui-th>
+            <x-ui-th>Cantidad</x-ui-th>
+            <x-ui-th>Unitario</x-ui-th>
+            <x-ui-th>Costo / Ingreso</x-ui-th>
             <x-ui-th>Resultado</x-ui-th>
             <x-ui-th >Acciones</x-ui-th>
         <tr>
@@ -29,11 +31,25 @@
     @foreach($posiciones as $posicion)
     <tr>
         <x-ui-td>{{ $posicion->fecha_apertura->format('d-m-Y') }}</x-ui-td>
-        <x-ui-td>@if ($posicion->fecha_cierre) {{ $posicion->fecha_cierre->format('d-m-Y') }} @endif</x-ui-td>
-        <x-ui-td>{{ $posicion->activo->denominacion }}</x-ui-td>
+        <x-ui-td>@if($posicion->fecha_cierre) {{ $posicion->fecha_cierre->format('d-m-Y') }} @endif</x-ui-td>
+        <x-ui-td>
+            @if($posicion->activo)
+            {{ $posicion->activo->denominacion }}
+            @endif
+        </x-ui-td>
         <x-ui-td>{{ $posicion->clase }}</x-ui-td>
-        <x-ui-td align='right'>{{ number_format($posicion->cantidad, 0, ',', '.') }}</x-ui-td>
         <x-ui-td>{{ $posicion->estado }}</x-ui-td>
+        <x-ui-td align='right'>
+            @if($c = $posicion->cantidad)
+            {{ number_format($c, 0, ',', '.') }}
+            @endif
+        </x-ui-td>
+        <x-ui-td align='right'>
+            @if ($c AND (! $posicion->fecha_cierre)) 
+            {{ number_format($posicion->resultado / $c, 2, ',', '.') }} 
+            @endif
+        </x-ui-td>
+        <x-ui-td align='right'>@if (! $posicion->fecha_cierre) {{ number_format($posicion->resultado, 2, ',', '.') }} @endif</x-ui-td>
         <x-ui-td align='right'>@if ($posicion->fecha_cierre) {{ number_format($posicion->resultado, 2, ',', '.') }} @endif</x-ui-td>
         <x-ui-td-actions :id="$posicion->id"/>
     <tr>
