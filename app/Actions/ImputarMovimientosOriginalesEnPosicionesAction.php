@@ -2,9 +2,9 @@
 
 namespace App\Actions;
 
-use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use App\Models\Broker;
 use App\Models\Activos\Activo;
 use App\Models\Movimientos\Ejercicio;
@@ -14,6 +14,7 @@ use App\Models\Posiciones\Comision;
 use App\Models\Posiciones\Corta;
 use App\Models\Posiciones\Dividendo;
 use App\Models\Posiciones\Larga;
+use App\Models\Posiciones\LanzamientoCubierto;
 use App\Models\Posiciones\Posicion;
 
 class ImputarMovimientosOriginalesEnPosicionesAction
@@ -29,24 +30,24 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
         foreach (Movimiento::with('activo', 'broker')->where('pendiente', true)->orderBy('fecha_operacion')->cursor() as $movimiento) 
         {
-            dump($movimiento->clase);
+            // dump($movimiento->clase);
 
             if (in_array($movimiento->clase, ['Compra', 'Recepcion'])) 
             {
-            //     while ($movimiento->remanente) 
-            //     {
-            //         if ($posicion_a_cerrar = $this->posicionesCortas($movimiento->activo, $movimiento->broker)->first()) 
-            //         {
-            //             $this->cerrarPosicion($posicion_a_cerrar, $movimiento);
-            //         } 
+                while ($movimiento->remanente) 
+                {
+                    if ($posicion_a_cerrar = $this->posicionesCortas($movimiento->activo, $movimiento->broker)->first()) 
+                    {
+                        $this->cerrarPosicion($posicion_a_cerrar, $movimiento);
+                    } 
                     
-            //         else 
+                    else 
                     {
                         $this->crearPosicion(Larga::class, $movimiento);
                     }
 
                     $movimiento->refresh();
-                //}
+                }
 
                 $movimiento->pendiente = false;
 
@@ -59,48 +60,6 @@ class ImputarMovimientosOriginalesEnPosicionesAction
             {
                 while ($movimiento->remanente) 
                 {
-                    // $posiciones_largas = $this->posicionesLargas($movimiento->activo, $movimiento->broker)->get();
-
-                    // if (count($posiciones_largas))
-                    // {
-                    //     $cantidad_a_cerrar = 0;
-
-                    //     $posiciones_a_cerrar = [];
-
-                    //     foreach($posiciones_largas as $posicion)
-                    //     {
-                    //         $cantidad_a_cerrar += $posicion->cantidad;
-
-                    //         $posiciones_a_cerrar[] = $posicion;
-
-                    //         if ($cantidad_a_cerrar == $movimiento->cantidad)
-                    //         {
-                    //             break;
-                    //         }
-
-                    //         if ($cantidad_a_cerrar > $movimiento->cantidad)
-                    //         {
-                    //             dump($posicion->cantidad - ($cantidad_a_cerrar - $movimiento->cantidad));
-
-                    //             $this->split($posicion, $posicion->cantidad - ($cantidad_a_cerrar - $movimiento->cantidad));
-
-                    //             $posicion->refresh();
-
-                    //             break;
-                    //         }
-                    //     }
-
-                    //     if (count($posiciones_a_cerrar) == 1)
-                    //     {
-                    //         $this->cerrarPosicion($posiciones_a_cerrar[0], $movimiento);
-                    //     }
-
-                    //     else
-                    //     {
-                    //         dd($posiciones_a_cerrar);
-                    //     }
-                    // }
-
                     if ($posicion_a_cerrar = $this->posicionesLargas($movimiento->activo, $movimiento->broker)->first()) 
                     {
                         $this->cerrarPosicion($posicion_a_cerrar, $movimiento);
@@ -115,11 +74,29 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
                             //  $this->agregarMovimiento($posicion_a_cerrar, $this->ejercicios[$movimiento->id]['venta'], $parcial, $ponderador_movimiento);
 
+                            $posicion_a_cerrar = $this->convertirPosicion($posicion_a_cerrar, LanzamientoCubierto::class);
+
                             $this->agregarMovimiento($posicion_a_cerrar, $this->ejercicios[$movimiento->id]['ejercicio'], $parcial, $ponderador_movimiento);
 
                             $this->agregarMovimiento($posicion_a_cerrar, $this->ejercicios[$movimiento->id]['call'], $parcial, $ponderador_movimiento);
 
-                            dump("Paso con {$parcial} de {$cantidad_total}");
+                            // dump("Paso con {$parcial} de {$cantidad_total}");
+
+                            $quedan_parciales = $parcial / 100;
+
+                            while ($quedan_parciales)
+                            {
+                                if ($call_a_cerrar = $this->posicionesCortas($this->ejercicios[$movimiento->id]['call']->activo, $movimiento->broker)->first()) 
+                                {
+                                    $cantidad_a_transferir = min(abs($call_a_cerrar->cantidad), $quedan_parciales);
+
+                                    // dump("- {$quedan_parciales} de {$cantidad_a_transferir}");
+
+                                    $this->transferirPosicion($call_a_cerrar, $posicion_a_cerrar, $cantidad_a_transferir);
+
+                                    $quedan_parciales -= $cantidad_a_transferir;
+                                }
+                            }
                         }
                     } 
                     
@@ -162,10 +139,19 @@ class ImputarMovimientosOriginalesEnPosicionesAction
         }
     }
 
-    // private function posicionesCortas(Activo $activo, Broker $broker)
-    // {
-    //     return Posicion::cortas()->abiertas()->byActivo($activo)->byBroker($broker)->byApertura();
-    // }
+    private function convertirPosicion(Posicion $posicion, $clase)
+    {
+        $posicion->type = $clase;
+
+        $posicion->save();
+
+        return Posicion::find($posicion->id);
+    }
+
+    private function posicionesCortas(Activo $activo, Broker $broker)
+    {
+        return Corta::abiertas()->byActivo($activo)->byBroker($broker)->byApertura();
+    }
 
     private function posicionesLargas(Activo $activo, Broker $broker)
     {
@@ -277,6 +263,25 @@ class ImputarMovimientosOriginalesEnPosicionesAction
         }
 
         return $this;
+    }
+
+    private function transferirPosicion(Posicion $posicion, Posicion $nueva_posicion, $cantidad_solicitada)
+    {
+        if ($posicion->cantidad > $cantidad_solicitada) 
+        {
+            $this->split($posicion, $cantidad_solicitada);
+        }
+
+        foreach($posicion->movimientos as $movimiento)
+        {
+            $movimiento->posicion_id = $nueva_posicion->id;
+
+            $movimiento->save();
+        }
+
+        $posicion->delete();
+
+        return $nueva_posicion;
     }
 
     private function cerrarPosicion(Posicion $posicion, Movimiento $movimiento, $cantidad_solicitada = null)
@@ -405,4 +410,47 @@ class ImputarMovimientosOriginalesEnPosicionesAction
             ];
         }
     }
+
+    // $posiciones_largas = $this->posicionesLargas($movimiento->activo, $movimiento->broker)->get();
+
+    // if (count($posiciones_largas))
+    // {
+    //     $cantidad_a_cerrar = 0;
+
+    //     $posiciones_a_cerrar = [];
+
+    //     foreach($posiciones_largas as $posicion)
+    //     {
+    //         $cantidad_a_cerrar += $posicion->cantidad;
+
+    //         $posiciones_a_cerrar[] = $posicion;
+
+    //         if ($cantidad_a_cerrar == $movimiento->cantidad)
+    //         {
+    //             break;
+    //         }
+
+    //         if ($cantidad_a_cerrar > $movimiento->cantidad)
+    //         {
+    //             dump($posicion->cantidad - ($cantidad_a_cerrar - $movimiento->cantidad));
+
+    //             $this->split($posicion, $posicion->cantidad - ($cantidad_a_cerrar - $movimiento->cantidad));
+
+    //             $posicion->refresh();
+
+    //             break;
+    //         }
+    //     }
+
+    //     if (count($posiciones_a_cerrar) == 1)
+    //     {
+    //         $this->cerrarPosicion($posiciones_a_cerrar[0], $movimiento);
+    //     }
+
+    //     else
+    //     {
+    //         dd($posiciones_a_cerrar);
+    //     }
+    // }
+
 }

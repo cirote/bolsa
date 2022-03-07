@@ -90,7 +90,7 @@ class ImportarDatosDeStoneXAction
                 $clase = Recepcion::class;
             }
 
-            elseif (Str::startsWith($record["Description"], 'OPTION EXERCISE'))
+            elseif (Str::startsWith($record["ActivityType"], 'ExerciseNExpiration') OR Str::startsWith($record["Description"], 'OPTION EXERCISE'))
             {
                 //  dump($record);
 
@@ -117,11 +117,7 @@ class ImportarDatosDeStoneXAction
                 'cuenta_id'         => $this->cuenta->id,
                 'fecha_operacion'   => Carbon::create($record["ProcessDate"]),
                 'fecha_liquidacion' => Carbon::create($record["ProcessDate"]),
-                'tipo_operacion'    => Str::startsWith($record["Action"], 'Sell') 
-                                        ? 'Venta' 
-                                        : (Str::startsWith($record["Action"], 'Buy') 
-                                            ? 'Compra' 
-                                            : null),
+                'tipo_operacion'    => 'Nada',
                 'numero_operacion'  => $record["SecurityNumber"],
                 'broker_id'         => $this->broker->id,
                 'activo_id'         => $activo ? $activo->id : null,

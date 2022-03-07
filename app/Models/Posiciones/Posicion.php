@@ -3,6 +3,7 @@
 namespace App\Models\Posiciones;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Parental\HasChildren;
 use App\Config\Constantes as Config;
 use App\Models\Broker;
@@ -43,10 +44,10 @@ class Posicion extends Model
 
         if ($pos = strrpos($classname, '\\')) 
         {
-            return substr($classname, $pos + 1);
+            return Str::title(Str::snake(substr($classname, $pos + 1), ' '));
         }
 
-        return $pos;
+        return Str::title(Str::snake($pos, ' '));
     }
 
     public function scopeAbiertas($query)

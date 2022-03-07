@@ -17,9 +17,9 @@ class test extends Command
 
     public function handle()
     {
-//        \App\Actions\Importar\ImportarDatosDeStoneXAction::do('transactions-17670277-20220302-015730.csv');
+        // \App\Actions\Importar\ImportarDatosDeStoneXAction::do('transactions-17670277-20220307-030041 - corregido.csv');
 
-//        \App\Actions\Importar\ImportarDatosDeBellAction::do();
+        // \App\Actions\Importar\ImportarDatosDeBellAction::do();
 
         \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
 
