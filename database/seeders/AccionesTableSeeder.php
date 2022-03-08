@@ -88,6 +88,7 @@ class AccionesTableSeeder extends Seeder
             ->agregarTicker('YPFD', 'Acción', 1, 1);
 
         Accion::create([
+            'cusip'  => '30303M102',
             'denominacion' => 'Meta Platforms, Inc.',
             'clase'  => 'Acciones ordinarias'
         ])
