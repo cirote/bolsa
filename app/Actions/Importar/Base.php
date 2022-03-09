@@ -18,6 +18,7 @@ use App\Models\Activos\Ticker;
 use App\Models\Movimientos\Comision;
 use App\Models\Movimientos\Compra;
 use App\Models\Movimientos\Deposito;
+use App\Models\Movimientos\Ejercicio;
 use App\Models\Movimientos\Dividendo;
 use App\Models\Movimientos\Extraccion;
 use App\Models\Movimientos\Movimiento;
@@ -39,6 +40,8 @@ abstract class Base
     const ADMINISTRADA_PESOS = 'Administrada Pesos';
 
     const OP_DEPOSITO = 'Deposito';
+
+    const OP_EJERCICIO = 'Ejercicio';
 
     const OP_RETIRO = 'Extraccion';
 
@@ -171,6 +174,11 @@ abstract class Base
             elseif ($tipo_operacion == static::OP_COMISION)
             {
                 Comision::create($datos);                
+            }
+
+            elseif ($tipo_operacion == static::OP_EJERCICIO)
+            {
+                Ejercicio::create($datos);                
             }
 
             else

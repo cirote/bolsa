@@ -46,6 +46,7 @@ class AccionesTableSeeder extends Seeder
         ])
             ->agregarTicker('TXAR', 'Acción', 1, 1)
             ->agregarTicker('TXAR.BA', 'Acción', 1, 0, 1, 0)
+            ->agregarTicker('ERA', 'Base')
             ->agregarTicker('ERAR', 'Acción', 1);
 
         Accion::create([

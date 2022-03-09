@@ -71,7 +71,7 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
                             if (isset($this->ejercicios[$movimiento->id]))
                             {
-                                $cantidad_total = $this->ejercicios[$movimiento->id]['venta']->cantidad;
+                                $cantidad_total = abs($this->ejercicios[$movimiento->id]['venta']->cantidad);
 
                                 $parcial = $posicion_a_cerrar->cantidad;
 
@@ -85,9 +85,13 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
                                 $this->agregarMovimiento($posicion_a_cerrar, $this->ejercicios[$movimiento->id]['call'], $parcial, $ponderador_movimiento);
 
+                                $quedan_parciales = $parcial / 100;
+
                                 // dump("Paso con {$parcial} de {$cantidad_total}");
 
-                                $quedan_parciales = $parcial / 100;
+                                // dump($this->ejercicios[$movimiento->id]['call']->activo);
+
+                                // dump($movimiento->broker);
 
                                 while ($quedan_parciales)
                                 {
@@ -395,10 +399,25 @@ class ImputarMovimientosOriginalesEnPosicionesAction
                 Un ejercicio debe estar acompañado de la venta del activo y de la compra de la opción realizadas ese mismo dia
             */
 
-            $venta = Venta::where('fecha_operacion', $ejercicio->fecha_operacion)->get();
+            if ($ejercicio->activo_id)
+            {
+                // dump($ejercicio->activo_id);
+
+                $venta = Venta::where('activo_id', $ejercicio->activo->principal_id)
+                ->where('fecha_operacion', $ejercicio->fecha_operacion)
+                ->get();
+            }
+
+            else
+            {
+                $venta = Venta::where('fecha_operacion', $ejercicio->fecha_operacion)
+                ->get();
+            }
 
             if (count($venta) != 1)
             {
+                // dump($venta[0]->cantidad / 100);
+
                 die('No se pudo localizar la venta y/o existen varias ventas para el mismo día');
             }
 
@@ -406,6 +425,8 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
             if (count($call) != 1)
             {
+                // dump($venta[0]->cantidad / 100);
+
                 die('No se pudo localizar la anulación del call y/o existen varios ejercicios para el mismo día');
             }
 

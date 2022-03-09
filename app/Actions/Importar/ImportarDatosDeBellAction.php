@@ -15,6 +15,7 @@ use App\Models\Activos\Ticker;
 use App\Models\Movimientos\Comision;
 use App\Models\Movimientos\Compra;
 use App\Models\Movimientos\Deposito;
+use App\Models\Movimientos\Ejercicio;
 use App\Models\Movimientos\Dividendo;
 use App\Models\Movimientos\Movimiento;
 use App\Models\Movimientos\Recepcion;
@@ -66,10 +67,13 @@ class ImportarDatosDeBellAction extends Base
 
         if (Str::contains($observaciones, ['(C)']))
         {
+            $principal = Ticker::byName(Str::substr($observaciones, 0, 3));
+
             return Call::firstOrCreate([
                 'cusip'        => null,
                 'denominacion' => $observaciones,
-                'simbolo'      => $observaciones
+                'simbolo'      => $observaciones,
+                'principal_id' => $principal ? $principal->activo->id : null
             ]);
         }
 
@@ -86,19 +90,20 @@ class ImportarDatosDeBellAction extends Base
         }
 
         return [
-            'BANCO SANTANDER C.H.'                  => 'SAN',
-            'BONO REP ARGENTINA 7,125% 28/06/2117'  => 'AC17',
-            'BPLD - PROV BSAS 2035 4% USD'          => 'BPLD',
-            'CARBOCLOR SA'                          => 'CARC',
-            'CEDEAR PETROLEO BRASILEIRO'            => 'PBR',
-            'DICA BONO DISCOUNT U$S 8,28% 2033'     => 'DICA',
-            'DICY BONO DISCOUNT U$S 8,28% 2033'     => 'DICY',
-            'GRUPO FIN.GALICIA'                     => 'GGAL',
-            'GRUPO SUPERVIELLE ACC.ORD. "B" 1'      => 'SUPV',
-            'PHOENIX GLOBAL RESOURCES PLC. ORD SHS' => 'PGR',
-            'TERNIUM ARG S.A.ORDS. A 1 VOTO ESC'    => 'TXAR',
-            'TVPA VAL.NEG. PBI 2035'                => 'TVPA',
-            'YPF S.A.'                              => 'YPFD',
+            'BANCO SANTANDER C.H.'                   => 'SAN',
+            'BONO REP ARGENTINA 7,125% 28/06/2117'   => 'AC17',
+            'BPLD - PROV BSAS 2035 4% USD'           => 'BPLD',
+            'CARBOCLOR SA'                           => 'CARC',
+            'CEDEAR PETROLEO BRASILEIRO'             => 'PBR',
+            'CEDEAR PETROLEO BRASILEIRO - PETROBRAS' => 'PBR',
+            'DICA BONO DISCOUNT U$S 8,28% 2033'      => 'DICA',
+            'DICY BONO DISCOUNT U$S 8,28% 2033'      => 'DICY',
+            'GRUPO FIN.GALICIA'                      => 'GGAL',
+            'GRUPO SUPERVIELLE ACC.ORD. "B" 1'       => 'SUPV',
+            'PHOENIX GLOBAL RESOURCES PLC. ORD SHS'  => 'PGR',
+            'TERNIUM ARG S.A.ORDS. A 1 VOTO ESC'     => 'TXAR',
+            'TVPA VAL.NEG. PBI 2035'                 => 'TVPA',
+            'YPF S.A.'                               => 'YPFD',
         ][$nombre] ?? null;
     }
 
@@ -126,11 +131,13 @@ class ImportarDatosDeBellAction extends Base
             'COPR' => static::OP_COMPRA,
             'CPU$' => static::OP_COMPRA,
             'SUSC' => static::OP_COMPRA,
+            'EJPC' => static::OP_COMPRA,
             'VTAS' => static::OP_VENTA,
             'VTPR' => static::OP_VENTA,
             'DECC' => static::OP_COMISION,
-
-            //            'EJPV' => static::OP_VENTA,
+            'EJPV' => static::OP_VENTA,
+            'EJERCICIO' => static::OP_EJERCICIO,
+            // Ejercicio PUT
         ][trim($datos['D'])] ?? null;
     }
 

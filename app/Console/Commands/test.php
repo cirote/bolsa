@@ -19,7 +19,7 @@ class test extends Command
     {
         // \App\Actions\Importar\ImportarDatosDeStoneXAction::do('transactions-17670277-20220307-030041 - corregido hasta 7-3-2022.csv');
 
-        // \App\Actions\Importar\ImportarDatosDeBellAction::do();
+        \App\Actions\Importar\ImportarDatosDeBellAction::do();
 
         \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
 

@@ -47,6 +47,7 @@ class Index extends Component
                 ->conResultados()
 //                ->where('fecha_apertura', '>=', $inicio)
 //                ->where('fecha_apertura', '<', $fin)
+                ->where('estado', 'Abierta')
                 ->orderBy('fecha_apertura', 'ASC')
                 ->paginate($this->paginate)
         ]);
