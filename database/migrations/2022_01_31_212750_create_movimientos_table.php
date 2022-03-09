@@ -24,7 +24,6 @@ class CreateMovimientosTable extends Migration
             $table->integer('activo_id')->unsigned()->nullable()->default(null);
             $table->foreign('activo_id')->references('id')->on(Config::PREFIJO . Config::ACTIVOS);
 
-            $table->string('tipo_operacion')->nullable()->default(null);
             $table->string('numero_operacion')->nullable()->default(null);
             $table->string('numero_boleto')->nullable()->default(null);
             $table->string('observaciones')->default(null);

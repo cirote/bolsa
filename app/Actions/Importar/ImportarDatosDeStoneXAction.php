@@ -64,7 +64,14 @@ class ImportarDatosDeStoneXAction
 
     protected function import()
     {
+        $registros = [];
+
         foreach($this->csv->getRecords() as $record)
+        {
+            array_unshift($registros, $record);
+        }
+
+        foreach($registros as $record)
         {
             //  dump($record);
 
@@ -117,7 +124,6 @@ class ImportarDatosDeStoneXAction
                 'cuenta_id'         => $this->cuenta->id,
                 'fecha_operacion'   => Carbon::create($record["ProcessDate"]),
                 'fecha_liquidacion' => Carbon::create($record["ProcessDate"]),
-                'tipo_operacion'    => 'Nada',
                 'numero_operacion'  => $record["SecurityNumber"],
                 'broker_id'         => $this->broker->id,
                 'activo_id'         => $activo ? $activo->id : null,
