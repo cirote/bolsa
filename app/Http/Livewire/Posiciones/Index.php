@@ -43,7 +43,8 @@ class Index extends Component
         $fin = Carbon::create($this->anio, 12, 1)->addMonth(1);
 
         return view('livewire.posiciones.index', [
-            'posiciones' => Posicion::conResultados()
+            'posiciones' => Posicion::with('activo')
+                ->conResultados()
 //                ->where('fecha_apertura', '>=', $inicio)
 //                ->where('fecha_apertura', '<', $fin)
                 ->orderBy('fecha_apertura', 'ASC')
