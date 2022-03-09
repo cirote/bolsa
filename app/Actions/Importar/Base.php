@@ -143,27 +143,32 @@ abstract class Base
         {
             unset($datos['valida']);
 
-            if ($datos['tipo_operacion'] == static::OP_DEPOSITO)
+            $tipo_operacion = $datos['tipo_operacion'];
+
+            unset($datos['tipo_operacion']);
+
+
+            if ($tipo_operacion == static::OP_DEPOSITO)
             {
                 Deposito::create($datos);                
             }
 
-            elseif ($datos['tipo_operacion'] == static::OP_RETIRO)
+            elseif ($tipo_operacion == static::OP_RETIRO)
             {
                 Extraccion::create($datos);                
             }
 
-            elseif ($datos['tipo_operacion'] == static::OP_COMPRA)
+            elseif ($tipo_operacion == static::OP_COMPRA)
             {
                 Compra::create($datos);                
             }
 
-            elseif ($datos['tipo_operacion'] == static::OP_VENTA)
+            elseif ($tipo_operacion == static::OP_VENTA)
             {
                 Venta::create($datos);                
             }
 
-            elseif ($datos['tipo_operacion'] == static::OP_COMISION)
+            elseif ($tipo_operacion == static::OP_COMISION)
             {
                 Comision::create($datos);                
             }

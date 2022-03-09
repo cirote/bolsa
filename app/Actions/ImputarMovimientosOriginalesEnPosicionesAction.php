@@ -34,85 +34,91 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
             if (in_array($movimiento->clase, ['Compra', 'Recepcion'])) 
             {
-                while ($movimiento->remanente) 
+                if($movimiento->activo)
                 {
-                    if ($posicion_a_cerrar = $this->posicionesCortas($movimiento->activo, $movimiento->broker)->first()) 
+                    while ($movimiento->remanente) 
                     {
-                        $this->cerrarPosicion($posicion_a_cerrar, $movimiento);
-                    } 
-                    
-                    else 
-                    {
-                        $this->crearPosicion(Larga::class, $movimiento);
+                        if ($posicion_a_cerrar = $this->posicionesCortas($movimiento->activo, $movimiento->broker)->first()) 
+                        {
+                            $this->cerrarPosicion($posicion_a_cerrar, $movimiento);
+                        } 
+                        
+                        else 
+                        {
+                            $this->crearPosicion(Larga::class, $movimiento);
+                        }
+
+                        $movimiento->refresh();
                     }
 
-                    $movimiento->refresh();
+                    $movimiento->pendiente = false;
+
+                    $movimiento->save();
+
+                //     echo $movimiento->id . ' - ' . $movimiento->cantidad . ' => ' . $this->posicionesCortas($movimiento->activo, $movimiento->broker)->count() . ' => ' . $this->posicionesLargas($movimiento->activo, $movimiento->broker)->count() . "\n";
                 }
-
-                $movimiento->pendiente = false;
-
-                $movimiento->save();
-
-            //     echo $movimiento->id . ' - ' . $movimiento->cantidad . ' => ' . $this->posicionesCortas($movimiento->activo, $movimiento->broker)->count() . ' => ' . $this->posicionesLargas($movimiento->activo, $movimiento->broker)->count() . "\n";
             }
 
             elseif ($movimiento->clase == 'Venta') 
             {
-                while ($movimiento->remanente) 
+                if($movimiento->activo)
                 {
-                    if ($posicion_a_cerrar = $this->posicionesLargas($movimiento->activo, $movimiento->broker)->first()) 
+                    while ($movimiento->remanente) 
                     {
-                        $this->cerrarPosicion($posicion_a_cerrar, $movimiento);
-
-                        if (isset($this->ejercicios[$movimiento->id]))
+                        if ($posicion_a_cerrar = $this->posicionesLargas($movimiento->activo, $movimiento->broker)->first()) 
                         {
-                            $cantidad_total = $this->ejercicios[$movimiento->id]['venta']->cantidad;
+                            $this->cerrarPosicion($posicion_a_cerrar, $movimiento);
 
-                            $parcial = $posicion_a_cerrar->cantidad;
-
-                            $ponderador_movimiento = $parcial / $cantidad_total;
-
-                            //  $this->agregarMovimiento($posicion_a_cerrar, $this->ejercicios[$movimiento->id]['venta'], $parcial, $ponderador_movimiento);
-
-                            $posicion_a_cerrar = $this->convertirPosicion($posicion_a_cerrar, LanzamientoCubierto::class);
-
-                            $this->agregarMovimiento($posicion_a_cerrar, $this->ejercicios[$movimiento->id]['ejercicio'], $parcial, $ponderador_movimiento);
-
-                            $this->agregarMovimiento($posicion_a_cerrar, $this->ejercicios[$movimiento->id]['call'], $parcial, $ponderador_movimiento);
-
-                            // dump("Paso con {$parcial} de {$cantidad_total}");
-
-                            $quedan_parciales = $parcial / 100;
-
-                            while ($quedan_parciales)
+                            if (isset($this->ejercicios[$movimiento->id]))
                             {
-                                if ($call_a_cerrar = $this->posicionesCortas($this->ejercicios[$movimiento->id]['call']->activo, $movimiento->broker)->first()) 
+                                $cantidad_total = $this->ejercicios[$movimiento->id]['venta']->cantidad;
+
+                                $parcial = $posicion_a_cerrar->cantidad;
+
+                                $ponderador_movimiento = $parcial / $cantidad_total;
+
+                                //  $this->agregarMovimiento($posicion_a_cerrar, $this->ejercicios[$movimiento->id]['venta'], $parcial, $ponderador_movimiento);
+
+                                $posicion_a_cerrar = $this->convertirPosicion($posicion_a_cerrar, LanzamientoCubierto::class);
+
+                                $this->agregarMovimiento($posicion_a_cerrar, $this->ejercicios[$movimiento->id]['ejercicio'], $parcial, $ponderador_movimiento);
+
+                                $this->agregarMovimiento($posicion_a_cerrar, $this->ejercicios[$movimiento->id]['call'], $parcial, $ponderador_movimiento);
+
+                                // dump("Paso con {$parcial} de {$cantidad_total}");
+
+                                $quedan_parciales = $parcial / 100;
+
+                                while ($quedan_parciales)
                                 {
-                                    $cantidad_a_transferir = min(abs($call_a_cerrar->cantidad), $quedan_parciales);
+                                    if ($call_a_cerrar = $this->posicionesCortas($this->ejercicios[$movimiento->id]['call']->activo, $movimiento->broker)->first()) 
+                                    {
+                                        $cantidad_a_transferir = min(abs($call_a_cerrar->cantidad), $quedan_parciales);
 
-                                    // dump("- {$quedan_parciales} de {$cantidad_a_transferir}");
+                                        // dump("- {$quedan_parciales} de {$cantidad_a_transferir}");
 
-                                    $this->transferirPosicion($call_a_cerrar, $posicion_a_cerrar, $cantidad_a_transferir);
+                                        $this->transferirPosicion($call_a_cerrar, $posicion_a_cerrar, $cantidad_a_transferir);
 
-                                    $quedan_parciales -= $cantidad_a_transferir;
+                                        $quedan_parciales -= $cantidad_a_transferir;
+                                    }
                                 }
                             }
+                        } 
+                        
+                        else
+                        {
+                            $this->crearPosicion(Corta::class, $movimiento);
                         }
-                    } 
-                    
-                    else
-                    {
-                        $this->crearPosicion(Corta::class, $movimiento);
+
+                        $movimiento->refresh();
                     }
 
-                    $movimiento->refresh();
+                    $movimiento->pendiente = false;
+
+                    $movimiento->save();
+
                 }
-
-                $movimiento->pendiente = false;
-
-                $movimiento->save();
-
-            //     echo $movimiento->id . ' - ' . $movimiento->cantidad . ' => ' . $this->posicionesCortas($movimiento->activo, $movimiento->broker)->count() . ' => ' . $this->posicionesLargas($movimiento->activo, $movimiento->broker)->count() . "\n";
+                //     echo $movimiento->id . ' - ' . $movimiento->cantidad . ' => ' . $this->posicionesCortas($movimiento->activo, $movimiento->broker)->count() . ' => ' . $this->posicionesLargas($movimiento->activo, $movimiento->broker)->count() . "\n";
             }
 
             elseif (in_array($movimiento->clase, ['Comision'])) 
