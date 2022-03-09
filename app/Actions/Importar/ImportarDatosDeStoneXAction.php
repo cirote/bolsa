@@ -144,7 +144,7 @@ class ImportarDatosDeStoneXAction
         {
             if (! $simbolo)
             {
-                if ($activo = Activo::where('denominacion', $denominacion)->first())
+                if ($activo = Activo::where('denominacion', 'LIKE', $denominacion)->first())
                 {
                     return $activo;
                 }

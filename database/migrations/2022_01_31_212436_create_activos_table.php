@@ -15,7 +15,7 @@ class CreateActivosTable extends Migration
 
             $table->char('cusip', 9)->index()->nullable()->default(null);
 
-            $table->string('denominacion');
+            $table->char('denominacion', 255)->index();
             $table->string('clase')->nullable();
             $table->string('type')->nullable();
 
