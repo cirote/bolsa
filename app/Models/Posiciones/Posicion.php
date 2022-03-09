@@ -82,6 +82,8 @@ class Posicion extends Model
 
     public function scopeConResultados($query)
     {
+        return $query->withSum('movimientos', 'monto_parcial_en_dolares');
+
         return $query->withSum('movimientos', 'monto_parcial_en_moneda_original');
         
         return $query->addSelect(['resultado_en_moneda_original' => Movimiento::whereColumn('posicion_id', Config::PREFIJO . Config::MOVIMIENTOS_POSICIONES . '.id')
@@ -91,6 +93,8 @@ class Posicion extends Model
 
     public function getResultadoAttribute()
     {
+        return $this->movimientos_sum_monto_parcial_en_dolares;
+
         return $this->movimientos_sum_monto_parcial_en_moneda_original;
     }
 
