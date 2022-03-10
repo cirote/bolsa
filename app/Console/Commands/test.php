@@ -21,9 +21,11 @@ class test extends Command
 
         // \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
 
-        \App\Actions\Mover\MoverIolAStoneXAction::do();
+        // \App\Actions\Mover\MoverIolAStoneXAction::do();
 
-        \App\Actions\Mover\MoverIolAPpiAction::do();
+        // \App\Actions\Mover\MoverIolAPpiAction::do();
+
+        \App\Actions\Mover\MoverStoneXAPpiAction::do();
 
         return 0;
     }

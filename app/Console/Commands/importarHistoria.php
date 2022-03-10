@@ -43,6 +43,10 @@ class importarHistoria extends Command
 
         \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
 
+        \App\Actions\Mover\MoverStoneXAPpiAction::do();
+
+        //  PPI
+
         return 0;
     }
 }
