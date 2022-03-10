@@ -117,6 +117,16 @@ class General extends Model
         return $this->precio;
     }
 
+    public function getValorAttribute()
+    {
+        if (!$this->getCantidadAttribute())
+        {
+            return null;
+        }
+
+        return $this->getCantidadAttribute() * $this->precio;
+    }
+
     public function getResultadoAttribute()
     {
         if (!$this->getCantidadAttribute())
@@ -126,10 +136,10 @@ class General extends Model
 
         if ($this->clase == 'Larga')
         {
-            return ($this->getCantidadAttribute() * $this->precio) + $this->getInversionAttribute();
+            return $this->getValorAttribute() + $this->getInversionAttribute();
         }
 
-        return $this->getInversionAttribute() - ($this->getCantidadAttribute() * $this->precio);
+        return $this->getInversionAttribute() - $this->getValorAttribute();
     }
 
     public function scopeConCantidad($query)

@@ -8,6 +8,7 @@
             <x-ui-th>Inversión</x-ui-th>
             <x-ui-th>Costo Unitario</x-ui-th>
             <x-ui-th>Precio Actual</x-ui-th>
+            <x-ui-th>Valor Actual</x-ui-th>
             <x-ui-th>Resultado Esperado</x-ui-th>
         <tr>
     </x-slot>
@@ -25,6 +26,9 @@
         @endif
     </x-slot>
 
+    @php($ii = 0)
+    @php($rr = 0)
+    @php($vv = 0)
     @foreach($posiciones as $posicion)
     <tr>
         <x-ui-td>
@@ -40,7 +44,8 @@
         </x-ui-td>
         <x-ui-td align='right'>
             @if($i = $posicion->inversion)
-                {{ number_format($i, 0, ',', '.') }}
+            @php($ii += $i)
+                {{ number_format($i, 2, ',', '.') }}
             @endif
         </x-ui-td>
         <x-ui-td align='right'>
@@ -55,10 +60,45 @@
         </x-ui-td>
         <x-ui-td align='right'>
             @if($c)
+            @php($vv += $posicion->valor)
+                {{ number_format($posicion->valor, 2, ',', '.') }}
+            @endif
+        </x-ui-td>
+        <x-ui-td align='right'>
+            @if($c)
+            @php($rr += $posicion->resultado)
                 {{ number_format($posicion->resultado, 2, ',', '.') }}
             @endif
         </x-ui-td>
     <tr>
     @endforeach
+
+    <tr>
+        <x-ui-td rowspan="3" align="center">
+            <b>Totales</b>
+        </x-ui-td>
+        <x-ui-td></x-ui-td>
+        <x-ui-td align='right'>
+        </x-ui-td>
+        <x-ui-td align='right'>
+            @if($ii)
+                {{ number_format($ii, 2, ',', '.') }}
+            @endif
+        </x-ui-td>
+        <x-ui-td align='right'>
+        </x-ui-td>
+        <x-ui-td align='right'>
+        </x-ui-td>
+        <x-ui-td align='right'>
+            @if($vv)
+                {{ number_format($vv, 2, ',', '.') }}
+            @endif
+        </x-ui-td>
+        <x-ui-td align='right'>
+            @if($rr)
+                {{ number_format($rr, 2, ',', '.') }}
+            @endif
+        </x-ui-td>
+    <tr>
 
 </x-ui-crud-table>
