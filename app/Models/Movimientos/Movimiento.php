@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Parental\HasChildren;
 use App\Config\Constantes as Config;
 use App\Models\Broker;
+use App\Models\Cuenta;
 use App\Models\Activos\Activo;
 
 class Movimiento extends Model
@@ -24,6 +25,11 @@ class Movimiento extends Model
     public function Activo()
     {
         return $this->belongsTo(Activo::class);
+    }
+
+    public function Cuenta()
+    {
+        return $this->belongsTo(Cuenta::class);
     }
 
     public function Broker()

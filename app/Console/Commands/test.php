@@ -17,17 +17,13 @@ class test extends Command
 
     public function handle()
     {
-        \App\Actions\Importar\ImportarDatosDeBellAction::do();
+        // \App\Actions\Importar\ImportarDatosDeIolAction::do();
 
-        \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
+        // \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
 
-        \App\Actions\Mover\MoverBellAStoneXAction::do();
+        \App\Actions\Mover\MoverIolAStoneXAction::do();
 
-        \App\Actions\Mover\MoverBellAPpiAction::do();
-
-        \App\Actions\Importar\ImportarDatosDeStoneXAction::do('transactions-17670277-20220307-030041 - corregido hasta 7-3-2022.csv');
-
-        \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
+        \App\Actions\Mover\MoverIolAPpiAction::do();
 
         return 0;
     }

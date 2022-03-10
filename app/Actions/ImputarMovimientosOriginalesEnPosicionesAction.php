@@ -32,7 +32,7 @@ class ImputarMovimientosOriginalesEnPosicionesAction
         {
             // dump($movimiento->clase);
 
-            if (in_array($movimiento->clase, ['Compra', 'Recepcion'])) 
+            if (in_array($movimiento->clase, ['Compra'])) 
             {
                 if($movimiento->activo)
                 {
@@ -393,7 +393,7 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
     protected function detectarEjerciciosCall()
     {
-        foreach(Ejercicio::all() as $ejercicio)
+        foreach(Ejercicio::with('cuenta:broker_id')->get() as $ejercicio)
         {
             /*
                 Un ejercicio debe estar acompañado de la venta del activo y de la compra de la opción realizadas ese mismo dia
@@ -405,12 +405,14 @@ class ImputarMovimientosOriginalesEnPosicionesAction
 
                 $venta = Venta::where('activo_id', $ejercicio->activo->principal_id)
                 ->where('fecha_operacion', $ejercicio->fecha_operacion)
+                ->where('broker_id', $ejercicio->broker_id)
                 ->get();
             }
 
             else
             {
                 $venta = Venta::where('fecha_operacion', $ejercicio->fecha_operacion)
+                ->where('broker_id', $ejercicio->broker_id)
                 ->get();
             }
 
