@@ -10,6 +10,7 @@
             <x-ui-th>Precio Actual</x-ui-th>
             <x-ui-th>Valor Actual</x-ui-th>
             <x-ui-th>Resultado Esperado</x-ui-th>
+            <x-ui-th>Utilidad</x-ui-th>
         <tr>
     </x-slot>
 
@@ -70,6 +71,11 @@
                 {{ number_format($posicion->resultado, 2, ',', '.') }}
             @endif
         </x-ui-td>
+        <x-ui-td align='right'>
+            @if($u = $posicion->utilidad)
+                {{ number_format($u * 100, 2, ',', '.') }} %
+            @endif
+        </x-ui-td>
     <tr>
     @endforeach
 
@@ -98,6 +104,8 @@
             @if($rr)
                 {{ number_format($rr, 2, ',', '.') }}
             @endif
+        </x-ui-td>
+        <x-ui-td align='right'>
         </x-ui-td>
     <tr>
 

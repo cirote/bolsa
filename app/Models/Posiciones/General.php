@@ -142,6 +142,11 @@ class General extends Model
         return $this->getInversionAttribute() - $this->getValorAttribute();
     }
 
+    public function getUtilidadAttribute()
+    {
+        return $this->getResultadoAttribute() / (- $this->getInversionAttribute());
+    }
+
     public function scopeConCantidad($query)
     {
         return $query->withSum('posiciones', 'cantidad');
