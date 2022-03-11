@@ -94,6 +94,12 @@ class AccionesTableSeeder extends Seeder
             'clase'  => 'Acciones ordinarias'
         ])
             ->agregarTicker('FB', 'Acción', 1, 1, 0, 1);
+
+        Accion::create([
+            'denominacion' => 'Oi Br.',
+            'clase'  => 'Acciones ordinarias'
+        ])
+            ->agregarTicker('OIBZQ', 'Acción', 1, 1, 0, 1);
     
         Accion::create([
             'cusip'  => '931142103',
