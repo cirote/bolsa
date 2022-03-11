@@ -150,7 +150,9 @@ class ImportarDatosDePpiAction extends Base
 
     protected function cantidad($datos): ?float
     {
-    	return $this->toFloat($datos['C']) ?: null;
+    	return $this->toFloat($datos['C']) 
+            ? abs($this->toFloat($datos['C']))
+            : null;
     }
 
     protected function precio_en_moneda_original($datos): ?float

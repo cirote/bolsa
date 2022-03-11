@@ -10,7 +10,7 @@ class MoverIolAPpiAction extends Base
     {
         $this->mover_varios(
             Broker::bySigla('IOL'),
-            Broker::bySigla('SX'),
+            Broker::bySigla('PPI'),
             ['TXAR', 'YPF']
         );
 

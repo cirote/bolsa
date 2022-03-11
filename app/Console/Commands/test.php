@@ -25,7 +25,13 @@ class test extends Command
 
         // \App\Actions\Mover\MoverIolAPpiAction::do();
 
-        \App\Actions\Mover\MoverStoneXAPpiAction::do();
+        // \App\Actions\Mover\MoverStoneXAPpiAction::do();
+
+        // \App\Actions\Importar\ImportarDatosDePpiAction::do();
+
+        // \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
+
+        \App\Actions\Mover\AjustarMetaEnStoneXAction::do();
 
         return 0;
     }

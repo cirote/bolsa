@@ -47,6 +47,12 @@ class importarHistoria extends Command
 
         //  PPI
 
+        \App\Actions\Importar\ImportarDatosDePpiAction::do();
+
+        \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
+
+        \App\Actions\Mover\AjustarMetaEnStoneXAction::do();
+
         return 0;
     }
 }
