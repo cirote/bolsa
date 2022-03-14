@@ -51,7 +51,7 @@ class Index extends Component
                 // ->where('fecha_cierre', '<', $fin)
                 // ->where('estado', 'Cerrada')
                 ->where('estado', 'Abierta')
-                ->orderBy('fecha_apertura', 'ASC')
+                ->orderBy('fecha_apertura', 'DESC')
                 ->paginate($this->paginate)
         ]);
     }
