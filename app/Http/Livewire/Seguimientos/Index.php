@@ -20,7 +20,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.seguimientos.index', [
-            'seguimientos' => Seguimiento::paginate($this->paginate)
+            'seguimientos' => Seguimiento::with('activo')->paginate($this->paginate)
         ]);
     }
 }
