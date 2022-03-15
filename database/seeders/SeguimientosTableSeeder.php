@@ -98,5 +98,16 @@ class SeguimientosTableSeeder extends Seeder
             'techo'     => 0.8
         ]);
 
+        Seguimiento::create([
+            'activo_id' => Ticker::where('ticker', 'PGR')->first()->activo->id,
+            'fecha_1'   => null,
+            'fecha_2'   => null,
+            'base_1'    => 0.1,
+            'base_2'    => null,
+            'amplitud'  => 0.2,
+            'piso'      => 8,
+            'techo'     => 13
+        ]);
+
     }
 }
