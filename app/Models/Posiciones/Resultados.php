@@ -47,7 +47,7 @@ trait Resultados
             return null;
         }
 
-        return $this->getCantidadAttribute() * $this->precio;
+        return $this->getCantidadAttribute() * $this->getPrecioAttribute();
     }
 
     public function getResultadoAttribute()
