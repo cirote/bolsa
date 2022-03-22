@@ -10,4 +10,9 @@ class PosicionesController extends Controller
     {
         return view('posiciones.index');
     }
+
+    public function corto_index()
+    {
+        return view('posiciones.corto.index');
+    }
 }

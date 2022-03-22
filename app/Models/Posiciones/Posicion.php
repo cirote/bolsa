@@ -12,6 +12,8 @@ use App\Models\Posiciones\Movimiento;
 
 class Posicion extends Model
 {
+    use Resultados;
+
     use HasChildren;
 
     protected $table = Config::PREFIJO . Config::POSICIONES;
@@ -48,6 +50,18 @@ class Posicion extends Model
         }
 
         return Str::title(Str::snake($pos, ' '));
+    }
+
+    public function getCantidadAttribute()
+    {
+        return $this->attributes['cantidad'];
+    }
+
+    protected $inversion;
+
+    public function getInversionAttribute()
+    {
+        return $this->movimientos_sum_monto_parcial_en_dolares;
     }
 
     public function scopeAbiertas($query)
@@ -89,13 +103,6 @@ class Posicion extends Model
         return $query->addSelect(['resultado_en_moneda_original' => Movimiento::whereColumn('posicion_id', Config::PREFIJO . Config::MOVIMIENTOS_POSICIONES . '.id')
             ->sum('monto_parcial_en_moneda_original')
         ]);
-    }
-
-    public function getResultadoAttribute()
-    {
-        return $this->movimientos_sum_monto_parcial_en_dolares;
-
-        return $this->movimientos_sum_monto_parcial_en_moneda_original;
     }
 
     public function scopeResumir($query)

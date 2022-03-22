@@ -24,6 +24,10 @@
         Posiciones
     </x-ui-menu-item>
 
+    <x-ui-menu-item route='posiciones.corto.index'>
+        Posiciones C. Plazo
+    </x-ui-menu-item>
+
     <x-ui-menu-item route='globales.index'>
         Posiciones Globales
     </x-ui-menu-item>

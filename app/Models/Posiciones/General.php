@@ -12,6 +12,8 @@ use App\Models\Posiciones\Movimiento;
 
 class General extends Model
 {
+    use Resultados;
+
     public $timestamps = false;
 
     protected $table = Config::PREFIJO . Config::POSICIONES;
@@ -91,60 +93,6 @@ class General extends Model
         }
 
         return $this->inversion;
-    }
-
-    public function getUnitarioAttribute()
-    {
-        if (!$this->getCantidadAttribute())
-        {
-            return null;
-        }
-
-        return abs($this->getInversionAttribute() / $this->getCantidadAttribute());
-    }
-
-    protected $precio;
-
-    public function getPrecioAttribute()
-    {
-        if (!$this->precio)
-        {
-            $p = $this->activo->cotizacion;
-
-            $this->precio = is_numeric($p) ? $p : 0;
-        }
-
-        return $this->precio;
-    }
-
-    public function getValorAttribute()
-    {
-        if (!$this->getCantidadAttribute())
-        {
-            return null;
-        }
-
-        return $this->getCantidadAttribute() * $this->precio;
-    }
-
-    public function getResultadoAttribute()
-    {
-        if (!$this->getCantidadAttribute())
-        {
-            return null;
-        }
-
-        if ($this->clase == 'Larga')
-        {
-            return $this->getValorAttribute() + $this->getInversionAttribute();
-        }
-
-        return $this->getInversionAttribute() - $this->getValorAttribute();
-    }
-
-    public function getUtilidadAttribute()
-    {
-        return $this->getResultadoAttribute() / (- $this->getInversionAttribute());
     }
 
     public function scopeConCantidad($query)

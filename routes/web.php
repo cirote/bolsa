@@ -59,6 +59,7 @@ Route::middleware(['auth:sanctum', 'verified'])
             ->group(function () 
             {
                 Route::get('/', 'index')->name('index');
+                Route::get('/corto', 'corto_index')->name('corto.index');
             });
 
         Route::controller(\App\Http\Controllers\GlobalesController::class)

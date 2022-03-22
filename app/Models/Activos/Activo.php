@@ -30,7 +30,7 @@ class Activo extends Model
     {
         if (! $this->cotizacion)
         {
-            if ($ticker = $this->tickers()->where('precio_referencia_dolares', true)->first())
+            if ($ticker = $this->tickers->where('precio_referencia_dolares', true)->first())
             {
                 $cliente = \App\Apis\YahooFinanceApi::get();
     
@@ -45,7 +45,7 @@ class Activo extends Model
                 }
             }
     
-            elseif ($ticker = $this->tickers()->where('precio_referencia_pesos', true)->first())
+            elseif ($ticker = $this->tickers->where('precio_referencia_pesos', true)->first())
             {
                 $cliente = \App\Apis\YahooFinanceApi::get();
     
