@@ -39,7 +39,7 @@
                 T.I.R.
             </x-slot>
     
-            {{ number_format(\App\Actions\Calcular\CalcularTIRAction::do() * 100, 2, ',', '.') }} %
+            {{ number_format(\App\Actions\Calcular\CalcularTIRActualAction::do() * 100, 2, ',', '.') }} %
         </x-ui-tarjeta>
 
     </x-ui-box>

@@ -7,8 +7,12 @@ use Illuminate\Support\Str;
 
 class CalcularTIRAction
 {
-    static function do()
+    static function do(Array $transacciones)
     {
+        return static::xirr($transacciones);
+
+        //  Ejemplo para control
+
         return static::xirr([
             ['cantidad' => 1000, 'fecha' => Carbon::create(2016, 1, 15)],
             ['cantidad' => 2500, 'fecha' => Carbon::create(2016, 2, 8)],
