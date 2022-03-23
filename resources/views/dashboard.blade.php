@@ -15,7 +15,7 @@
                 Aportes en dólares
             </x-slot>
     
-            {{ number_format($aportes = \App\Actions\Calcular\CalcularAportesEnDolaresAction::do(), 2, '.', ',') }}
+            {{ number_format($aportes = \App\Actions\Calcular\CalcularAportesEnDolaresAction::do(), 2, ',', '.') }}
         </x-ui-tarjeta>
 
         <x-ui-tarjeta>
@@ -23,7 +23,7 @@
                 Retiros en dólares
             </x-slot>
     
-            {{ number_format($retiros = \App\Actions\Calcular\CalcularRetirosEnDolaresAction::do(), 2, '.', ',') }}
+            {{ number_format($retiros = \App\Actions\Calcular\CalcularRetirosEnDolaresAction::do(), 2, ',', '.') }}
         </x-ui-tarjeta>
 
         <x-ui-tarjeta>
@@ -31,7 +31,7 @@
                 Aportes Netos
             </x-slot>
     
-            {{ number_format($aportes - $retiros, 2, '.', ',') }}
+            {{ number_format($aportes - $retiros, 2, ',', '.') }}
         </x-ui-tarjeta>
 
         <x-ui-tarjeta>
@@ -39,7 +39,7 @@
                 T.I.R.
             </x-slot>
     
-            {{ number_format(\App\Actions\Calcular\CalcularTIRAction::do(), 2, '.', ',') }}
+            {{ number_format(\App\Actions\Calcular\CalcularTIRAction::do() * 100, 2, ',', '.') }} %
         </x-ui-tarjeta>
 
     </x-ui-box>
@@ -55,7 +55,7 @@
                 Saldo de caja en pesos
             </x-slot>
     
-            {{ number_format($aportes = \App\Actions\Calcular\CalcularSaldoDeCajaEnPesosAction::do(), 2, '.', ',') }}
+            {{ number_format($aportes = \App\Actions\Calcular\CalcularSaldoDeCajaEnPesosAction::do(), 2, ',', '.') }}
         </x-ui-tarjeta>
 
         <x-ui-tarjeta>
@@ -63,7 +63,7 @@
                 Saldo de caja en dólares
             </x-slot>
     
-            {{ number_format($aportes = \App\Actions\Calcular\CalcularSaldoDeCajaEnDolaresAction::do(), 2, '.', ',') }}
+            {{ number_format($aportes = \App\Actions\Calcular\CalcularSaldoDeCajaEnDolaresAction::do(), 2, ',', '.') }}
         </x-ui-tarjeta>
 
     </x-ui-box>
@@ -79,7 +79,7 @@
                 Monto invertido en dólares
             </x-slot>
     
-            {{ number_format(\App\Actions\Calcular\CalcularMontoInvertidoEnDolaresAction::do(), 2, '.', ',') }}
+            {{ number_format(\App\Actions\Calcular\CalcularMontoInvertidoEnDolaresAction::do(), 2, ',', '.') }}
         </x-ui-tarjeta>
 
         <x-ui-tarjeta>
@@ -87,7 +87,7 @@
                 Resultados No Realizados
             </x-slot>
     
-            {{ number_format(\App\Actions\Calcular\CalcularResultadoNoRealizadoEnDolaresAction::do(), 2, '.', ',') }}
+            {{ number_format(\App\Actions\Calcular\CalcularResultadoNoRealizadoEnDolaresAction::do(), 2, ',', '.') }}
         </x-ui-tarjeta>
 
     </x-ui-box>
