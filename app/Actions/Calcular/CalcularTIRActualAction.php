@@ -35,7 +35,7 @@ class CalcularTIRActualAction
 
         $transacciones[] = [
             'fecha'    => Carbon::now(),
-            'cantidad' => -155000
+            'cantidad' => -157000
         ];
 
         return \App\Actions\Calcular\CalcularTIRAction::do($transacciones);

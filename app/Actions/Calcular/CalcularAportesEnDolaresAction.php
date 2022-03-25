@@ -8,9 +8,15 @@ use App\Models\Movimientos\Deposito;
 
 class CalcularAportesEnDolaresAction
 {
-    static function do()
+    static function do(Carbon $fecha = null)
     {
-        $depositos = (double) Deposito::sum('monto_en_dolares');
+        if (! $fecha)
+        {
+            $fecha = Carbon::now();
+        }
+
+        $depositos = (double) Deposito::where('fecha_operacion', '<=', $fecha)
+            ->sum('monto_en_dolares');
 
         return $depositos;
     }

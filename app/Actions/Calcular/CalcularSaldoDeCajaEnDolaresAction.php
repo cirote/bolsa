@@ -9,13 +9,15 @@ use App\Models\Activos\Moneda;
 
 class CalcularSaldoDeCajaEnDolaresAction
 {
-    static function do()
+    static function do(Carbon $fecha = null)
     {
         $saldo = 0;
 
         $moneda = Moneda::where('denominacion', 'like', 'Dolar Americano')->first();
 
-        $cuentas = Cuenta::conSaldos()->where('moneda_id', $moneda->id)->get();
+        $cuentas = Cuenta::conSaldos($fecha)
+            ->where('moneda_id', $moneda->id)
+            ->get();
 
         foreach($cuentas as $cuenta)
         {

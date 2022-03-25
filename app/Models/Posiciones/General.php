@@ -89,7 +89,10 @@ class General extends Model
     {
         if (!$this->inversion)
         {
-            $this->inversion = $this->posiciones()->conResultados()->get()->sum('movimientos_sum_monto_parcial_en_dolares');
+            $this->inversion = $this->posiciones()
+                ->conResultados()
+                ->get()
+                ->sum('movimientos_sum_monto_parcial_en_dolares');
         }
 
         return $this->inversion;

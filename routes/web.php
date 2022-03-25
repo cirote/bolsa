@@ -77,4 +77,20 @@ Route::middleware(['auth:sanctum', 'verified'])
             {
                 Route::get('/', 'index')->name('index');
             });
-    });
+
+        Route::controller(\App\Http\Controllers\EstadosController::class)
+            ->prefix('estados')
+            ->name('estados.')
+            ->group(function () 
+            {
+                Route::get('/', 'index')->name('index');
+            });
+
+        Route::controller(\App\Http\Controllers\ResultadosController::class)
+            ->prefix('resultados')
+            ->name('resultados.')
+            ->group(function () 
+            {
+                Route::get('/', 'index')->name('index');
+            });
+});

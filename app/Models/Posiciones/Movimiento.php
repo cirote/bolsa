@@ -4,7 +4,6 @@ namespace App\Models\Posiciones;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Config\Constantes as Config;
-use App\Models\Movimientos\Movimiento as Operacion;
 
 class Movimiento extends Model
 {
@@ -12,8 +11,8 @@ class Movimiento extends Model
 
     protected $guarded = [];
 
-    public function movimiento()
+    public function operacion()
     {
-        return $this->belongsTo(Operacion::class);
+        return $this->belongsTo(\App\Models\Movimientos\Movimiento::class, 'movimiento_id', 'id');
     }
 }

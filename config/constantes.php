@@ -19,6 +19,9 @@ class Constantes
 
     const HISTORICOS         = 'movimientos_historicos';
 
+	const ESTADOS	 = 'estados';
+	const RESULTADOS = 'resultados';
+
 	const MOVIMIENTOS            = 'movimientos_originales';
 	const SEGUIMIENTOS           = 'seguimientos';
 	const POSICIONES             = 'posiciones';

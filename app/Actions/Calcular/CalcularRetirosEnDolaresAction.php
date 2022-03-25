@@ -8,9 +8,15 @@ use App\Models\Movimientos\Extraccion;
 
 class CalcularRetirosEnDolaresAction
 {
-    static function do()
+    static function do(Carbon $fecha = null)
     {
-        $retiros = (double) Extraccion::sum('monto_en_dolares');
+        if (! $fecha)
+        {
+            $fecha = Carbon::now();
+        }
+
+        $retiros = (double) Extraccion::where('fecha_operacion', '<=', $fecha)
+            ->sum('monto_en_dolares');
 
         return -$retiros;
     }

@@ -36,4 +36,12 @@
         Seguimientos
     </x-ui-menu-item>
 
+    <x-ui-menu-item route='estados.index'>
+        Estados
+    </x-ui-menu-item>
+
+    <x-ui-menu-item route='resultados.index'>
+        Resultados
+    </x-ui-menu-item>
+
 </x-ui-menu>
