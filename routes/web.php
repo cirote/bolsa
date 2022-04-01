@@ -16,6 +16,12 @@ Route::middleware(['auth:sanctum', 'verified'])
             Route::get('/dashboard', 'index')->name('dashboard');
         });
 
+        Route::controller(\App\Http\Controllers\RecomendacionesController::class)
+        ->group(function () 
+        {
+            Route::get('/recomendaciones', 'index')->name('recomendaciones');
+        });
+
         Route::controller(\App\Http\Controllers\ActivosController::class)
             ->prefix('activos')
             ->name('activos.')
