@@ -113,5 +113,26 @@ class AccionesTableSeeder extends Seeder
             'clase'  => 'Acciones ordinarias'
         ])
             ->agregarTicker('MELI', 'Acción', 1, 1, 0, 1);
-    }
+
+        Accion::create([
+            'cusip'  => '08862E109',
+            'denominacion' => 'Beyond Meat Inc.',
+            'clase'  => 'Acciones ordinarias'
+        ])
+            ->agregarTicker('BYND', 'Acción', 1, 1, 0, 1);
+
+        Accion::create([
+            'cusip'  => '46090E103',
+            'denominacion' => 'INVESCO QQQ ETF',
+            'clase'  => 'ETF'
+        ])
+            ->agregarTicker('QQQ', 'ETF', 1, 1, 0, 1);
+
+        Accion::create([
+            'denominacion' => 'Vanguard S&P 500 ETF',
+            'clase'  => 'ETF'
+        ])
+            ->agregarTicker('VOO', 'ETF', 1, 1, 0, 1);
+    
+        }
 }

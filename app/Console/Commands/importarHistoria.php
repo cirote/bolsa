@@ -53,6 +53,14 @@ class importarHistoria extends Command
 
         \App\Actions\Mover\AjustarMetaEnStoneXAction::do();
 
+        //  STONE X
+
+        \App\Actions\Importar\ImportarDatosDeStoneXAction::do('transactions-17670277-20220407-083319.csv');
+
+        \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
+
+        \App\Actions\Cuentas\CalcularSaldosAction::do();
+        
         return 0;
     }
 }

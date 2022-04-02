@@ -31,7 +31,11 @@ class test extends Command
 
         // \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
 
-        \App\Actions\Mover\AjustarMetaEnStoneXAction::do();
+        // \App\Actions\Mover\AjustarMetaEnStoneXAction::do();
+
+        \App\Actions\Importar\ImportarDatosDeStoneXAction::do('transactions-17670277-20220407-083319.csv');
+
+        \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
 
         return 0;
     }
