@@ -45,6 +45,11 @@ class Seguimiento extends Model
 
     public function getPuntajeAttribute()
     {
+        if (!is_numeric($this->activo->cotizacion))
+        {
+            return 0;
+        }
+
         return ($this->activo->cotizacion - $this->base) / $this->amplitud;
     }
 

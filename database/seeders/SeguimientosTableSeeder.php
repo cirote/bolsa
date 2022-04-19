@@ -109,5 +109,38 @@ class SeguimientosTableSeeder extends Seeder
             'techo'     => 13
         ]);
 
+        Seguimiento::create([
+            'activo_id' => Ticker::where('ticker', 'QQQ')->first()->activo->id,
+            'fecha_1'   => '2022-02-08',
+            'fecha_2'   => '2020-11-03',
+            'base_1'    => 266,
+            'base_2'    => 352.58,
+            'amplitud'  => 45,
+            'piso'      => 0.2,
+            'techo'     => 0.8
+        ]);
+
+        Seguimiento::create([
+            'activo_id' => Ticker::where('ticker', 'VOO')->first()->activo->id,
+            'fecha_1'   => '2020-10-30',
+            'fecha_2'   => '2022-01-27',
+            'base_1'    => 295,
+            'base_2'    => 394,
+            'amplitud'  => 55,
+            'piso'      => 0.2,
+            'techo'     => 0.8
+        ]);
+
+        Seguimiento::create([
+            'activo_id' => Ticker::where('ticker', 'BYND')->first()->activo->id,
+            'fecha_1'   => null,
+            'fecha_2'   => null,
+            'base_1'    => 120,
+            'base_2'    => null,
+            'amplitud'  => 40,
+            'piso'      => 8,
+            'techo'     => 13
+        ]);
+
     }
 }
