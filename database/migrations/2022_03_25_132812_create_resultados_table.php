@@ -14,6 +14,16 @@ class CreateResultadosTable extends Migration
             $table->id();
             $table->date('fecha_inicial');
             $table->date('fecha_final');
+            $table->double('capital_en_pesos')->nullable()->default(null);
+            $table->double('capital_en_dolares')->nullable()->default(null);
+            $table->double('opciones_en_pesos')->nullable()->default(null);
+            $table->double('opciones_en_dolares')->nullable()->default(null);
+            $table->double('dividendos_en_pesos')->nullable()->default(null);
+            $table->double('dividendos_en_dolares')->nullable()->default(null);
+            $table->double('rentas_en_pesos')->nullable()->default(null);
+            $table->double('rentas_en_dolares')->nullable()->default(null);
+            $table->double('comisiones_en_pesos')->nullable()->default(null);
+            $table->double('comisiones_en_dolares')->nullable()->default(null);
             $table->double('resultado_en_pesos')->nullable()->default(null);
             $table->double('resultado_en_dolares')->nullable()->default(null);
             $table->timestamps();

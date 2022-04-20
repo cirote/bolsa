@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Resultados;
 
 use Livewire\Component;
 use Cirote\Ui\Traits\Crud;
-use App\Models\Seguimientos\Resultado;
+use App\Models\Contables\Resultado;
 
 class Index extends Component
 {
@@ -16,6 +16,11 @@ class Index extends Component
         'model.fecha_1' => 'required|string',
         'model.fecha_2' => 'required|string|min:3|max:500'
     ];
+
+    public function ver_detalles(Resultado $resultado)
+    {
+        return redirect()->route('resultados.show', ['resultado' => $resultado]);
+    }
 
     public function render()
     {

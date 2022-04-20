@@ -98,5 +98,6 @@ Route::middleware(['auth:sanctum', 'verified'])
             ->group(function () 
             {
                 Route::get('/', 'index')->name('index');
+                Route::get('/{resultado}', 'show')->name('show');
             });
 });

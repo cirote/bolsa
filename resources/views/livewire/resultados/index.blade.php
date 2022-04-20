@@ -6,6 +6,8 @@
             <x-ui-th sort="asc">Hasta</x-ui-th>
             <x-ui-th sort="asc">Capital</x-ui-th>
             <x-ui-th sort="asc">Dividendos</x-ui-th>
+            <x-ui-th sort="asc">Rentas</x-ui-th>
+            <x-ui-th sort="asc">Comisiones</x-ui-th>
             <x-ui-th sort="asc">Total</x-ui-th>
             <x-ui-th >Acciones</x-ui-th>
         <tr>
@@ -31,13 +33,26 @@
         <x-ui-td>
             {{ $resultado->fecha_final->format('d/m/Y') }}
         </x-ui-td>
-        <x-ui-td>
+        <x-ui-td align="right">
+            {{ number_format($resultado->capital, 2, ',', '.') }}
+        </x-ui-td>
+        <x-ui-td align="right">
+            {{ number_format($resultado->dividendos, 2, ',', '.') }}
+        </x-ui-td>
+        <x-ui-td align="right">
+            {{ number_format($resultado->rentas, 2, ',', '.') }}
+        </x-ui-td>
+        <x-ui-td align="right">
+            {{ number_format($resultado->comisiones, 2, ',', '.') }}
+        </x-ui-td>
+        <x-ui-td align="right">
+            {{ number_format($resultado->resultado, 2, ',', '.') }}
         </x-ui-td>
         <x-ui-td>
+            <x-ui-button wire:click="ver_detalles({{ $resultado->id }})">
+                Ver
+            </x-ui-button>
         </x-ui-td>
-        <x-ui-td>
-        </x-ui-td>
-        <x-ui-td-actions :id="$resultado->id"/>
     <tr>
     @endforeach
 
