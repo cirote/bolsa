@@ -5,6 +5,8 @@
             <x-ui-th sort="asc">Desde</x-ui-th>
             <x-ui-th sort="asc">Hasta</x-ui-th>
             <x-ui-th sort="asc">Capital</x-ui-th>
+            <x-ui-th sort="asc">Lanzamientos</x-ui-th>
+            <x-ui-th sort="asc">Opciones</x-ui-th>
             <x-ui-th sort="asc">Dividendos</x-ui-th>
             <x-ui-th sort="asc">Rentas</x-ui-th>
             <x-ui-th sort="asc">Comisiones</x-ui-th>
@@ -35,6 +37,12 @@
         </x-ui-td>
         <x-ui-td align="right">
             {{ number_format($resultado->capital, 2, ',', '.') }}
+        </x-ui-td>
+        <x-ui-td align="right">
+            {{ number_format($resultado->lanzamientos, 2, ',', '.') }}
+        </x-ui-td>
+        <x-ui-td align="right">
+            {{ number_format($resultado->opciones, 2, ',', '.') }}
         </x-ui-td>
         <x-ui-td align="right">
             {{ number_format($resultado->dividendos, 2, ',', '.') }}

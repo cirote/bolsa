@@ -7,6 +7,7 @@ use Illuminate\Support\Carbon;
 use Parental\HasChildren;
 use App\Config\Constantes as Config;
 use App\Models\Activos\Accion;
+use App\Models\Activos\Call;
 use App\Models\Posiciones\Posicion;
 use App\Models\Posiciones\Comision;
 use App\Models\Posiciones\Corta;
@@ -44,8 +45,7 @@ class Resultado extends Model
             ->where(function($query) 
             {
                 $query->where('type', Larga::class)
-                ->orWhere('type', Corta::class)
-                ->orWhere('type', LanzamientoCubierto::class);
+                ->orWhere('type', Corta::class);
             });
     }
 
@@ -62,11 +62,61 @@ class Resultado extends Model
         {
             foreach($this->posicionesCapital as $posicion)
             {
-                $this->capital += $posicion->resultado;
+                if (! ($posicion->activo instanceof Call))
+                {
+                    $this->capital += $posicion->resultado;
+                }
             }
         }
 
         return $this->capital;
+    }
+
+    private $opciones = 0;
+
+    public function getOpcionesAttribute()
+    {
+        if (! $this->opciones)
+        {
+            foreach($this->posicionesCapital as $posicion)
+            {
+                if ($posicion->activo instanceof Call)
+                {
+                    $this->opciones += $posicion->resultado;
+                }
+            }
+        }
+
+        return $this->opciones;
+    }
+
+    public function posiciones_lanzamientos()
+    {
+        return $this->posiciones()
+            ->where(function($query) 
+            {
+                $query->where('type', LanzamientoCubierto::class);
+            });
+    }
+
+    public function getPosicionesLanzamientosAttribute()
+    {
+        return $this->posiciones_lanzamientos()->get();
+    }
+
+    private $lanzamientos = 0;
+
+    public function getLanzamientosAttribute()
+    {
+        if (! $this->lanzamientos)
+        {
+            foreach($this->posicionesLanzamientos as $posicion)
+            {
+                $this->lanzamientos += $posicion->resultado;
+            }
+        }
+
+        return $this->lanzamientos;
     }
 
     public function posiciones_dividendos()
@@ -144,6 +194,6 @@ class Resultado extends Model
 
     public function getResultadoAttribute()
     {
-        return $this->capital + $this->dividendos + $this->rentas + $this->comisiones;
+        return $this->capital + $this->lanzamientos + $this->opciones + $this->dividendos + $this->rentas + $this->comisiones;
     }
 }

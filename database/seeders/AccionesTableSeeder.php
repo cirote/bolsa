@@ -134,5 +134,12 @@ class AccionesTableSeeder extends Seeder
         ])
             ->agregarTicker('VOO', 'ETF', 1, 1, 0, 1);
     
-        }
+        Accion::create([
+            'cusip'  => '64110L106',
+            'denominacion' => 'NETFLIX Inc.',
+            'clase'  => 'Acciones ordinarias'
+        ])
+            ->agregarTicker('NFLX', 'Acción', 1, 1, 0, 1);
+    
+    }
 }

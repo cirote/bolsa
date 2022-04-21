@@ -27,15 +27,15 @@ class test extends Command
 
         // \App\Actions\Mover\MoverStoneXAPpiAction::do();
 
-        // \App\Actions\Importar\ImportarDatosDePpiAction::do();
+        \App\Actions\Importar\ImportarDatosDePpiAction::do('Movimientos 2022-04-07-09-12-37.xlsx');
 
         // \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
 
         // \App\Actions\Mover\AjustarMetaEnStoneXAction::do();
 
-        \App\Actions\Importar\ImportarDatosDeStoneXAction::do('transactions-17670277-20220407-083319.csv');
+        // \App\Actions\Importar\ImportarDatosDeStoneXAction::do('transactions-17670277-20220421-025930.csv');
 
-        \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
+        // \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
 
         return 0;
     }
