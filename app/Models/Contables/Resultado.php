@@ -194,6 +194,44 @@ class Resultado extends Model
 
     public function getResultadoAttribute()
     {
-        return $this->capital + $this->lanzamientos + $this->opciones + $this->dividendos + $this->rentas + $this->comisiones;
+        return $this->getCapitalAttribute() + $this->getLanzamientosAttribute() 
+            + $this->getOpcionesAttribute() + $this->getDividendosAttribute() 
+            + $this->getRentasAttribute() + $this->getComisionesAttribute();
+    }
+
+    public function getResultadoTeoricoAttribute()
+    {
+        return $this->getVariacionInversionAttribute() + $this->getVariacionSaldoEnDolaresAttribute()
+            + $this->getVariacionAportesAttribute();
+    }
+    
+    public function getResultadoAConsolidarAttribute()
+    {
+        return $this->getResultadoAttribute() - $this->getResultadoTeoricoAttribute();
+    }
+
+    public function estado_inicial()
+    {
+        return $this->hasOne(Estado::class, 'fecha', 'fecha_inicial');
+    }
+
+    public function estado_final()
+    {
+        return $this->hasOne(Estado::class, 'fecha', 'fecha_final');
+    }
+
+    public function getVariacionInversionAttribute()
+    {
+        return $this->estado_final->inversion - $this->estado_inicial->inversion;
+    }
+
+    public function getVariacionSaldoEnDolaresAttribute()
+    {
+        return $this->estado_final->cuentasSaldoEnDolares - $this->estado_inicial->cuentasSaldoEnDolares;
+    }
+
+    public function getVariacionAportesAttribute()
+    {
+        return $this->estado_final->aportesNetos - $this->estado_inicial->aportesNetos;
     }
 }
