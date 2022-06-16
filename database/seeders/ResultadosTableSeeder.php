@@ -33,5 +33,45 @@ class ResultadosTableSeeder extends Seeder
             'fecha_inicial' => '2022-03-31',
             'fecha_final'   => '2022-04-30'
         ]);
+
+        Resultado::create([
+            'fecha_inicial' => '2022-04-30',
+            'fecha_final'   => '2022-05-31'
+        ]);
+
+        Resultado::create([
+            'fecha_inicial' => '2022-05-31',
+            'fecha_final'   => '2022-06-30'
+        ]);
+
+        Resultado::create([
+            'fecha_inicial' => '2022-06-30',
+            'fecha_final'   => '2022-07-31'
+        ]);
+
+        Resultado::create([
+            'fecha_inicial' => '2022-07-31',
+            'fecha_final'   => '2022-08-31'
+        ]);
+
+        Resultado::create([
+            'fecha_inicial' => '2022-08-31',
+            'fecha_final'   => '2022-09-30'
+        ]);
+
+        Resultado::create([
+            'fecha_inicial' => '2022-09-30',
+            'fecha_final'   => '2022-10-31'
+        ]);
+
+        Resultado::create([
+            'fecha_inicial' => '2022-10-31',
+            'fecha_final'   => '2022-11-30'
+        ]);
+
+        Resultado::create([
+            'fecha_inicial' => '2022-11-30',
+            'fecha_final'   => '2022-12-31'
+        ]);
     }
 }

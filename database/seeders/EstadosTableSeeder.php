@@ -28,5 +28,37 @@ class EstadosTableSeeder extends Seeder
         Estado::create([
             'fecha' => '2022-04-30'
         ]);
+
+        Estado::create([
+            'fecha' => '2022-05-31'
+        ]);
+
+        Estado::create([
+            'fecha' => '2022-06-30'
+        ]);
+
+        Estado::create([
+            'fecha' => '2022-07-30'
+        ]);
+
+        Estado::create([
+            'fecha' => '2022-08-31'
+        ]);
+
+        Estado::create([
+            'fecha' => '2022-09-30'
+        ]);
+
+        Estado::create([
+            'fecha' => '2022-10-31'
+        ]);
+
+        Estado::create([
+            'fecha' => '2022-11-30'
+        ]);
+
+        Estado::create([
+            'fecha' => '2022-12-31'
+        ]);
     }
 }
