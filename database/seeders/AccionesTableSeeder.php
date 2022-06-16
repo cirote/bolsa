@@ -93,7 +93,8 @@ class AccionesTableSeeder extends Seeder
             'denominacion' => 'Meta Platforms, Inc.',
             'clase'  => 'Acciones ordinarias'
         ])
-            ->agregarTicker('FB', 'Acción', 1, 1, 0, 1);
+            ->agregarTicker('FB', 'Acción', 1, 1)
+            ->agregarTicker('META', 'Acción', 1, 1, 0, 1);
 
         Accion::create([
             'denominacion' => 'Oi Br.',
