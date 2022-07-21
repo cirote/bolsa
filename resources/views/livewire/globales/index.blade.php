@@ -31,7 +31,16 @@
     @php($rr = 0)
     @php($vv = 0)
     @foreach($posiciones as $posicion)
-    <tr>
+
+    @php($text_color = '')
+    @if(($u = $posicion->utilidad) > 0.10)
+        @php($text_color = 'text-green')
+    @endif
+    @if($u < -0.10)
+        @php($text_color = 'text-red')
+    @endif
+
+    <tr class="{{ $text_color }}">
         <x-ui-td>
             @if($posicion->activo)
                 {{ $posicion->activo->denominacion }}
@@ -72,7 +81,7 @@
             @endif
         </x-ui-td>
         <x-ui-td align='right'>
-            @if($u = $posicion->utilidad)
+            @if($u)
                 {{ number_format($u * 100, 2, ',', '.') }} %
             @endif
         </x-ui-td>
@@ -106,6 +115,9 @@
             @endif
         </x-ui-td>
         <x-ui-td align='right'>
+            @if($ii)
+                {{ number_format($rr / $ii * -100, 2, ',', '.') }} %
+            @endif
         </x-ui-td>
     <tr>
 
