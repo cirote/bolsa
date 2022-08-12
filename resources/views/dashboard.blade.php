@@ -34,14 +34,6 @@
             {{ number_format($aportes - $retiros, 2, ',', '.') }}
         </x-ui-tarjeta>
 
-        <x-ui-tarjeta>
-            <x-slot name="header">
-                T.I.R.
-            </x-slot>
-    
-            {{ number_format(\App\Actions\Calcular\CalcularTIRActualAction::do() * 100, 2, ',', '.') }} %
-        </x-ui-tarjeta>
-
     </x-ui-box>
 
     <x-ui-box>
@@ -88,6 +80,14 @@
             </x-slot>
     
             {{ number_format(\App\Actions\Calcular\CalcularResultadoNoRealizadoEnDolaresAction::do(), 2, ',', '.') }}
+        </x-ui-tarjeta>
+
+        <x-ui-tarjeta>
+            <x-slot name="header">
+                T.I.R. Histórica
+            </x-slot>
+    
+            {{ number_format(\App\Actions\Calcular\CalcularTIRActualAction::do() * 100, 2, ',', '.') }} %
         </x-ui-tarjeta>
 
     </x-ui-box>

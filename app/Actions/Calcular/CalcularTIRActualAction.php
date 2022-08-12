@@ -33,9 +33,19 @@ class CalcularTIRActualAction
             ];
         }
 
+        $saldo_caja_en_dolares = \App\Actions\Calcular\CalcularSaldoDeCajaEnDolaresAction::do();
+        
+        $monto_invertido_en_dolares = \App\Actions\Calcular\CalcularMontoInvertidoEnDolaresAction::do();
+
+        $ganancias_no_realizadas = \App\Actions\Calcular\CalcularResultadoNoRealizadoEnDolaresAction::do();
+
+        $valor_inversiones = $monto_invertido_en_dolares + $ganancias_no_realizadas;
+
+        $valor_actual = $saldo_caja_en_dolares + $valor_inversiones;
+
         $transacciones[] = [
             'fecha'    => Carbon::now(),
-            'cantidad' => -157000
+            'cantidad' => -$valor_actual
         ];
 
         return \App\Actions\Calcular\CalcularTIRAction::do($transacciones);
