@@ -71,7 +71,7 @@
                 Monto invertido en dólares
             </x-slot>
     
-            {{ number_format(\App\Actions\Calcular\CalcularMontoInvertidoEnDolaresAction::do(), 2, ',', '.') }}
+            {{ number_format($a = \App\Actions\Calcular\CalcularMontoInvertidoEnDolaresAction::do(), 2, ',', '.') }}
         </x-ui-tarjeta>
 
         <x-ui-tarjeta>
@@ -79,7 +79,15 @@
                 Resultados No Realizados
             </x-slot>
     
-            {{ number_format(\App\Actions\Calcular\CalcularResultadoNoRealizadoEnDolaresAction::do(), 2, ',', '.') }}
+            {{ number_format($b = \App\Actions\Calcular\CalcularResultadoNoRealizadoEnDolaresAction::do(), 2, ',', '.') }}
+        </x-ui-tarjeta>
+
+        <x-ui-tarjeta>
+            <x-slot name="header">
+                Valor actual de la inversión
+            </x-slot>
+    
+            {{ number_format($a + $b, 2, ',', '.') }}
         </x-ui-tarjeta>
 
         <x-ui-tarjeta>
