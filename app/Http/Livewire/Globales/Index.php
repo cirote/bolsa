@@ -42,10 +42,19 @@ class Index extends Component
 
         $fin = Carbon::create($this->anio, 12, 1)->addMonth(1);
 
+        $posiciones = General::with('activo', 'posiciones')
+            ->conCantidad()
+            ->get();
+
+        $posiciones = $posiciones->sort(function ($a, $b) {
+            if ($a->inversion == $b->inversion) {
+                return 0;
+            }
+            return ($a->inversion < $b->inversion) ? -1 : 1;
+        });
+
         return view('livewire.globales.index', [
-            'posiciones' => General::with('activo', 'posiciones')
-                ->conCantidad()
-                ->paginate($this->paginate)
+            'posiciones' => $posiciones
         ]);
     }
 }
