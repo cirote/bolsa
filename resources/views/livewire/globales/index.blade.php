@@ -1,4 +1,4 @@
-<x-ui-crud-table :isOpen="$isOpen" :isEditable="$isEditable" >
+<x-ui-table :isOpen="$isOpen" :isEditable="$isEditable">
 
     <x-slot name="header">
         <tr>
@@ -22,7 +22,7 @@
 
     <x-slot name="buttons">
         <x-ui-button-cancel />
-        @if($isEditable)
+        @if ($isEditable)
             <x-ui-button-store />
         @endif
     </x-slot>
@@ -30,62 +30,61 @@
     @php($ii = 0)
     @php($rr = 0)
     @php($vv = 0)
-    @foreach($posiciones as $posicion)
+    @foreach ($posiciones as $posicion)
+        @php($text_color = '')
+        @if (($u = $posicion->utilidad) > 0.1)
+            @php($text_color = 'text-green')
+        @endif
+        @if ($u < -0.1)
+            @php($text_color = 'text-red')
+        @endif
 
-    @php($text_color = '')
-    @if(($u = $posicion->utilidad) > 0.10)
-        @php($text_color = 'text-green')
-    @endif
-    @if($u < -0.10)
-        @php($text_color = 'text-red')
-    @endif
-
-    <tr class="{{ $text_color }}">
-        <x-ui-td>
-            @if($posicion->activo)
-                {{ $posicion->activo->denominacion }}
-            @endif
-        </x-ui-td>
-        <x-ui-td>{{ $posicion->clase }}</x-ui-td>
-        <x-ui-td align='right'>
-            @if($c = $posicion->cantidad)
-                {{ number_format($c, 0, ',', '.') }}
-            @endif
-        </x-ui-td>
-        <x-ui-td align='right'>
-            @if($i = $posicion->inversion)
-            @php($ii += $i)
-                {{ number_format($i, 2, ',', '.') }}
-            @endif
-        </x-ui-td>
-        <x-ui-td align='right'>
-            @if($c)
-                {{ number_format($posicion->unitario, 2, ',', '.') }}
-            @endif
-        </x-ui-td>
-        <x-ui-td align='right'>
-            @if($p = $posicion->precio)
-                {{ number_format($p, 2, ',', '.') }}
-            @endif
-        </x-ui-td>
-        <x-ui-td align='right'>
-            @if($c)
-            @php($vv += $posicion->valor)
-                {{ number_format($posicion->valor, 2, ',', '.') }}
-            @endif
-        </x-ui-td>
-        <x-ui-td align='right'>
-            @if($c)
-            @php($rr += $posicion->resultado)
-                {{ number_format($posicion->resultado, 2, ',', '.') }}
-            @endif
-        </x-ui-td>
-        <x-ui-td align='right'>
-            @if($u)
-                {{ number_format($u * 100, 2, ',', '.') }} %
-            @endif
-        </x-ui-td>
-    <tr>
+        <tr class="{{ $text_color }}">
+            <x-ui-td>
+                @if ($posicion->activo)
+                    {{ $posicion->activo->denominacion }}
+                @endif
+            </x-ui-td>
+            <x-ui-td>{{ $posicion->clase }}</x-ui-td>
+            <x-ui-td align='right'>
+                @if ($c = $posicion->cantidad)
+                    {{ number_format($c, 0, ',', '.') }}
+                @endif
+            </x-ui-td>
+            <x-ui-td align='right'>
+                @if ($i = $posicion->inversion)
+                    @php($ii += $i)
+                    {{ number_format($i, 2, ',', '.') }}
+                @endif
+            </x-ui-td>
+            <x-ui-td align='right'>
+                @if ($c)
+                    {{ number_format($posicion->unitario, 2, ',', '.') }}
+                @endif
+            </x-ui-td>
+            <x-ui-td align='right'>
+                @if ($p = $posicion->precio)
+                    {{ number_format($p, 2, ',', '.') }}
+                @endif
+            </x-ui-td>
+            <x-ui-td align='right'>
+                @if ($c)
+                    @php($vv += $posicion->valor)
+                    {{ number_format($posicion->valor, 2, ',', '.') }}
+                @endif
+            </x-ui-td>
+            <x-ui-td align='right'>
+                @if ($c)
+                    @php($rr += $posicion->resultado)
+                    {{ number_format($posicion->resultado, 2, ',', '.') }}
+                @endif
+            </x-ui-td>
+            <x-ui-td align='right'>
+                @if ($u)
+                    {{ number_format($u * 100, 2, ',', '.') }} %
+                @endif
+            </x-ui-td>
+        <tr>
     @endforeach
 
     <tr>
@@ -96,7 +95,7 @@
         <x-ui-td align='right'>
         </x-ui-td>
         <x-ui-td align='right'>
-            @if($ii)
+            @if ($ii)
                 {{ number_format($ii, 2, ',', '.') }}
             @endif
         </x-ui-td>
@@ -105,18 +104,18 @@
         <x-ui-td align='right'>
         </x-ui-td>
         <x-ui-td align='right'>
-            @if($vv)
+            @if ($vv)
                 {{ number_format($vv, 2, ',', '.') }}
             @endif
         </x-ui-td>
         <x-ui-td align='right'>
-            @if($rr)
+            @if ($rr)
                 {{ number_format($rr, 2, ',', '.') }}
             @endif
         </x-ui-td>
         <x-ui-td align='right'>
-            @if($ii)
-                {{ number_format($rr / $ii * -100, 2, ',', '.') }} %
+            @if ($ii)
+                {{ number_format(($rr / $ii) * -100, 2, ',', '.') }} %
             @endif
         </x-ui-td>
     <tr>
