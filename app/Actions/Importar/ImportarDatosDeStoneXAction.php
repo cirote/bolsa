@@ -118,7 +118,7 @@ class ImportarDatosDeStoneXAction
                 $clase = Movimiento::class;
             }
 
-            $activo = $this->crear_activo($record["Cusip"], $record["Description"], $record["Symbol"]);
+            $activo = $this->crear_activo($record["Cusip"] ?? null, $record["Description"], $record["Symbol"]);
 
             $clase::create([
                 'cuenta_id'         => $this->cuenta->id,
@@ -127,7 +127,7 @@ class ImportarDatosDeStoneXAction
                 'numero_operacion'  => $record["SecurityNumber"],
                 'broker_id'         => $this->broker->id,
                 'activo_id'         => $activo ? $activo->id : null,
-                'observaciones'     => $record["Description"],
+                'observaciones'     => $record["Description"] ?: 'Vacio',
                 'cantidad'          => abs((double) $record["Quantity"]),
                 
                 'moneda_original_id' => Ticker::byName('USD')->activo->id,

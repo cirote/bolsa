@@ -72,6 +72,8 @@ class importarHistoria extends Command
 
         \App\Actions\Importar\ImportarDatosDeStoneXAction::do('transactions-17670277-20220421-025930.csv');
 
+        \App\Actions\Importar\ImportarDatosDeStoneXAction::do('transactions-17670277-20221222-124407.csv');
+
         \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
 
         \App\Actions\Cuentas\CalcularSaldosAction::do();
