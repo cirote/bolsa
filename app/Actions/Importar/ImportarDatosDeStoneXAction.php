@@ -144,7 +144,32 @@ class ImportarDatosDeStoneXAction
 
     protected function crear_activo($cusip, $denominacion, $simbolo)
     {
-        $denominacion = Str::replace('  ', ' ', $denominacion);
+        $denominacion = trim(Str::replace('  ', ' ', $denominacion));
+
+        for ($i = 1; $i <= 3; $i++)
+        {
+            $simbolo = trim(Str::replace('  ', ' ', $simbolo));
+        }
+
+        if ($denominacion == 'BEYOND MEAT INC')
+        {
+            $cusip = '08862E109';
+        }
+
+        elseif ($denominacion == 'ITAU UNIBANCO HOLDING SA SPONSORED ADR REPRESENTING 500 PFD')
+        {
+            $cusip = '465562106';
+        }
+
+        elseif ($denominacion == 'META PLATFORMS INC CL A')
+        {
+            $cusip = '30303M102';
+        }
+
+        elseif ($denominacion == 'NETFLIX INC')
+        {
+            $cusip = '64110L106';
+        }
 
         if (! $cusip)
         {
