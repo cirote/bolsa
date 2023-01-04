@@ -16,101 +16,27 @@ class test extends Command
     }
 
     public function handle()
-    {<x-ui-layout>
+    {
+        // \App\Actions\Importar\ImportarDatosDeIolAction::do();
 
-    <x-slot name="header">
-        Panel de control
-    </x-slot>
+        // \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
 
-    <x-ui-box>
+        // \App\Actions\Mover\MoverIolAStoneXAction::do();
 
-        <x-slot name="header">
-            Aportes
-        </x-slot>
+        // \App\Actions\Mover\MoverIolAPpiAction::do();
 
-        <x-ui-tarjeta>
-            <x-slot name="header">
-                Aportes en dólares
-            </x-slot>
-    
-            {{ number_format($aportes = \App\Actions\Calcular\CalcularAportesEnDolaresAction::do(), 2, ',', '.') }}
-        </x-ui-tarjeta>
+        // \App\Actions\Mover\MoverStoneXAPpiAction::do();
 
-        <x-ui-tarjeta>
-            <x-slot name="header">
-                Retiros en dólares
-            </x-slot>
-    
-            {{ number_format($retiros = \App\Actions\Calcular\CalcularRetirosEnDolaresAction::do(), 2, ',', '.') }}
-        </x-ui-tarjeta>
+        \App\Actions\Importar\ImportarDatosDePpiAction::do('Movimientos 2022-04-07-09-12-37.xlsx');
 
-        <x-ui-tarjeta>
-            <x-slot name="header">
-                Aportes Netos
-            </x-slot>
-    
-            {{ number_format($aportes - $retiros, 2, ',', '.') }}
-        </x-ui-tarjeta>
+        // \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
 
-        <x-ui-tarjeta>
-            <x-slot name="header">
-                T.I.R.
-            </x-slot>
-    
-            {{ number_format(\App\Actions\Calcular\CalcularTIRActualAction::do() * 100, 2, ',', '.') }} %
-        </x-ui-tarjeta>
+        // \App\Actions\Mover\AjustarMetaEnStoneXAction::do();
 
-    </x-ui-box>
+        // \App\Actions\Importar\ImportarDatosDeStoneXAction::do('transactions-17670277-20220421-025930.csv');
 
-    <x-ui-box>
-        
-        <x-slot name="header">
-            Disponibilidades
-        </x-slot>
+        // \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
 
-        <x-ui-tarjeta>
-            <x-slot name="header">
-                Saldo de caja en pesos
-            </x-slot>
-    
-            {{ number_format($aportes = \App\Actions\Calcular\CalcularSaldoDeCajaEnPesosAction::do(), 2, ',', '.') }}
-        </x-ui-tarjeta>
-
-        <x-ui-tarjeta>
-            <x-slot name="header">
-                Saldo de caja en dólares
-            </x-slot>
-    
-            {{ number_format($aportes = \App\Actions\Calcular\CalcularSaldoDeCajaEnDolaresAction::do(), 2, ',', '.') }}
-        </x-ui-tarjeta>
-
-    </x-ui-box>
-
-    <x-ui-box>
-        
-        <x-slot name="header">
-            Inversión
-        </x-slot>
-
-        <x-ui-tarjeta>
-            <x-slot name="header">
-                Monto invertido en dólares
-            </x-slot>
-    
-            {{ number_format(\App\Actions\Calcular\CalcularMontoInvertidoEnDolaresAction::do(), 2, ',', '.') }}
-        </x-ui-tarjeta>
-
-        <x-ui-tarjeta>
-            <x-slot name="header">
-                Resultados No Realizados
-            </x-slot>
-    
-            {{ number_format(\App\Actions\Calcular\CalcularResultadoNoRealizadoEnDolaresAction::do(), 2, ',', '.') }}
-        </x-ui-tarjeta>
-
-    </x-ui-box>
-
-    @livewire('movimientos.panel')
-
-</x-ui-layout>}
+        return 0;
+    }
 }
