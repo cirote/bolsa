@@ -53,9 +53,9 @@ abstract class Base
 
     protected $cuenta;
 
-    static public function do()
+    static public function do($archivo = null)
     {
-        return (new static())->execute();
+        return (new static($archivo))->execute();
     }
 
     public function execute()
@@ -69,8 +69,15 @@ abstract class Base
 
     protected $dolar;
 
-    public function __construct()
+    protected $archivos = [];
+
+    public function __construct($archivo)
     {
+        if ($archivo)   
+        {
+            $this->archivos = [$archivo];
+        }
+
         $this->peso = Ticker::byName('$')->activo;
 
         $this->dolar = Ticker::byName('USD')->activo;

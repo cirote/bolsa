@@ -67,6 +67,11 @@ trait Resultados
 
     public function getUtilidadAttribute()
     {
-        return $this->getResultadoAttribute() / abs($this->getInversionAttribute());
+        if ($inversion = abs($this->getInversionAttribute()))
+        {
+            return $this->getResultadoAttribute() / $inversion;
+        }
+
+        return 0;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Schema;
 
 class importarHistoria extends Command
 {
@@ -17,6 +18,18 @@ class importarHistoria extends Command
 
     public function handle()
     {
+        //  Limpiar tablas de datos
+
+        Schema::disableForeignKeyConstraints();
+
+        \App\Models\Posiciones\Movimiento::truncate();
+
+        \App\Models\Posiciones\Posicion::truncate();
+
+        \App\Models\Movimientos\Movimiento::truncate();
+
+        Schema::enableForeignKeyConstraints();
+
         //  IOL
 
         \App\Actions\Importar\ImportarDatosDeIolAction::do();
@@ -56,6 +69,10 @@ class importarHistoria extends Command
         //  STONE X
 
         \App\Actions\Importar\ImportarDatosDeStoneXAction::do('transactions-17670277-20220407-083319.csv');
+
+        \App\Actions\Importar\ImportarDatosDeStoneXAction::do('transactions-17670277-20220421-025930.csv');
+
+        \App\Actions\Importar\ImportarDatosDeStoneXAction::do('transactions-17670277-20221222-124407.csv');
 
         \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
 

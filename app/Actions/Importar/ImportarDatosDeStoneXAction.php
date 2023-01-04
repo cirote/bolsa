@@ -118,7 +118,7 @@ class ImportarDatosDeStoneXAction
                 $clase = Movimiento::class;
             }
 
-            $activo = $this->crear_activo($record["Cusip"], $record["Description"], $record["Symbol"]);
+            $activo = $this->crear_activo($record["Cusip"] ?? null, $record["Description"], $record["Symbol"]);
 
             $clase::create([
                 'cuenta_id'         => $this->cuenta->id,
@@ -127,7 +127,7 @@ class ImportarDatosDeStoneXAction
                 'numero_operacion'  => $record["SecurityNumber"],
                 'broker_id'         => $this->broker->id,
                 'activo_id'         => $activo ? $activo->id : null,
-                'observaciones'     => $record["Description"],
+                'observaciones'     => $record["Description"] ?: 'Vacio',
                 'cantidad'          => abs((double) $record["Quantity"]),
                 
                 'moneda_original_id' => Ticker::byName('USD')->activo->id,
@@ -144,7 +144,32 @@ class ImportarDatosDeStoneXAction
 
     protected function crear_activo($cusip, $denominacion, $simbolo)
     {
-        $denominacion = Str::replace('  ', ' ', $denominacion);
+        $denominacion = trim(Str::replace('  ', ' ', $denominacion));
+
+        for ($i = 1; $i <= 3; $i++)
+        {
+            $simbolo = trim(Str::replace('  ', ' ', $simbolo));
+        }
+
+        if ($denominacion == 'BEYOND MEAT INC')
+        {
+            $cusip = '08862E109';
+        }
+
+        elseif ($denominacion == 'ITAU UNIBANCO HOLDING SA SPONSORED ADR REPRESENTING 500 PFD')
+        {
+            $cusip = '465562106';
+        }
+
+        elseif ($denominacion == 'META PLATFORMS INC CL A')
+        {
+            $cusip = '30303M102';
+        }
+
+        elseif ($denominacion == 'NETFLIX INC')
+        {
+            $cusip = '64110L106';
+        }
 
         if (! $cusip)
         {
@@ -161,9 +186,10 @@ class ImportarDatosDeStoneXAction
             $principal = Ticker::byName(Str::substr($simbolo, 0, 3));
 
             return Call::firstOrCreate([
+                'simbolo'      => $simbolo
+            ], [
                 'cusip'        => $cusip,
                 'denominacion' => $denominacion,
-                'simbolo'      => $simbolo,
                 'principal_id' => $principal ? $principal->activo->id : null
             ]);
         }

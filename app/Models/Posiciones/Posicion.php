@@ -64,6 +64,11 @@ class Posicion extends Model
         return $this->movimientos_sum_monto_parcial_en_dolares;
     }
 
+    public function getResultadoAttribute()
+    {
+        return $this->movimientos_sum_monto_parcial_en_dolares;
+    }
+
     public function scopeAbiertas($query)
     {
         return $query->where('estado', 'Abierta');

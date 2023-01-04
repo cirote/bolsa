@@ -98,7 +98,34 @@ class ImportarDatosDePpiAction extends Base
 
     protected function activo($datos): ?Activo
     {
-        $partes = explode(' ', $this->observaciones($datos));
+        $o = $this->observaciones($datos);
+
+        if (Str::contains($o, 'Call'))
+        {
+            $partes = explode('\\', $o);
+
+            if (count($partes) == 2)
+            {
+                if ($activo = Activo::where('simbolo', 'LIKE', trim($partes[1]))->first())
+                {
+                    return $activo;
+                }
+
+                $padre = substr(trim($partes[1]), 0, 3);
+
+                $principal = Ticker::byName($padre);
+
+                return Call::create([
+                    'denominacion' => trim($partes[1]),
+                    'simbolo'      => trim($partes[1]),
+                    'principal_id' => $principal ? $principal->activo->id : null
+                ]);
+            }
+    
+            return null;
+        }
+
+        $partes = explode(' ', $o);
 
         if (count($partes) == 2)
         {
@@ -140,7 +167,17 @@ class ImportarDatosDePpiAction extends Base
         	return static::OP_COMPRA;
         }
 
+        if (Str::startsWith($this->observaciones($datos), 'Compra Call '))
+        {
+        	return static::OP_COMPRA;
+        }
+
         if (Str::startsWith($this->observaciones($datos), 'VENTA '))
+        {
+        	return static::OP_VENTA;
+        }
+
+        if (Str::startsWith($this->observaciones($datos), 'Venta Call '))
         {
         	return static::OP_VENTA;
         }

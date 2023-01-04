@@ -5,6 +5,8 @@ namespace App\Models\Contables;
 use Illuminate\Database\Eloquent\Model;
 use App\Config\Constantes as Config;
 use App\Models\Movimientos\Movimiento;
+use App\Models\Cuenta;
+use App\Models\Activos\Moneda;
 
 class Estado extends Model
 {
@@ -24,6 +26,11 @@ class Estado extends Model
         }
 
         return $this->attributes['aportes'];
+    }
+
+    public function getAportesNetosAttribute($value)
+    {
+        return $this->aportes - $this->retiros;
     }
 
     public function getRetirosAttribute($value)
@@ -66,11 +73,34 @@ class Estado extends Model
     {
         if ($value === null)
         {
-            $this->cuentas_saldo_en_dolares = \App\Actions\Calcular\CalcularSaldoDeCajaEnDolaresAction::do($this->fecha);
+            $saldo = 0;
+
+            foreach($this->getCuentasEnDolaresAttribute() as $cuenta)
+            {
+                $saldo += $cuenta->saldo;
+            }
+    
+            // $this->cuentas_saldo_en_dolares = \App\Actions\Calcular\CalcularSaldoDeCajaEnDolaresAction::do($this->fecha);
+
+            $this->cuentas_saldo_en_dolares = $saldo;
 
             $this->save();
         }
 
         return $this->attributes['cuentas_saldo_en_dolares'];
+    }
+
+    
+    public function getCuentasEnDolaresAttribute()
+    {
+        return Cuenta::conSaldos($this->fecha)
+            ->whereIn('sigla', ['PPIccl', 'PPIg', 'SX'])
+            ->get();
+
+        $moneda = Moneda::where('denominacion', 'like', 'Dolar Americano')->first();
+
+        return Cuenta::conSaldos($this->fecha)
+            ->where('moneda_id', $moneda->id)
+            ->get();
     }
 }

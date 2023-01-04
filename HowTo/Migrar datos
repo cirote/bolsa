@@ -1,0 +1,16 @@
+Agregar datos desde cero
+========================
+
+- Agregar datos iniciales de la base, como lista de acciones, etc.
+  php artisan migrate:fresh --seed
+
+
+- Agregar datos de movimientos
+  php artisan populate:historia
+
+
+
+Actualizar los datos de movimientos
+===================================
+
+php artisan populate:historia
