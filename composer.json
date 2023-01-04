@@ -12,6 +12,7 @@
     ],
     "require": {
         "php": "^7.3|^8.0",
+        "almasaeed2010/adminlte": "~3.2",
         "calebporzio/parental": "^1.0",
         "cirote/ui": "dev-main",
         "fruitcake/laravel-cors": "^2.0",
