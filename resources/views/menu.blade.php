@@ -1,4 +1,4 @@
-<x-ui-menu-item route='dashboard'>
+<x-ui-menu-item route='dashboard' icon="tachometer-alt">
     Panel de Control
 </x-ui-menu-item>
 
