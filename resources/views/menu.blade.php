@@ -7,7 +7,7 @@
 </x-ui-menu-item>
 
 <x-ui-menu-item route='broker.index'>
-    Broker
+    Brokers
 </x-ui-menu-item>
 
 <x-ui-menu-item route='cuentas.index'>
