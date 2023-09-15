@@ -1,4 +1,4 @@
-<x-ui-crud-table :isOpen="$isOpen" :isEditable="$isEditable" >
+<x-ui-crud-table :mode="$mode">
 
     <x-slot name="header">
         <tr>
@@ -9,8 +9,12 @@
             <x-ui-th>Cantidad</x-ui-th>
             <x-ui-th>Monto</x-ui-th>
             <x-ui-th>Saldo</x-ui-th>
-            <x-ui-th>Acciones</x-ui-th>
+            <x-ui-th width="250px">Acciones</x-ui-th>
         <tr>
+    </x-slot>
+
+    <x-slot name="nav">
+        {{ $movimientos->links() }}
     </x-slot>
 
     <x-slot name="form">

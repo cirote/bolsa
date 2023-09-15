@@ -27,8 +27,6 @@ class Index extends Component
 
     public function mount() 
     {  
-        $this->paginate = 1000;
-
         $this->anio = Carbon::now()->year();
 
         $this->mes = Carbon::now()->month();
@@ -44,11 +42,13 @@ class Index extends Component
 
         $fin = Carbon::create($this->anio, 12, 1)->addMonth(1);
 
+        $this->cuenta->calcular_saldos();
+
         return view('livewire.movimientos.index', [
             'movimientos' => $this->cuenta
                 ->movimientos()
-                ->where('fecha_operacion', '>=', $inicio)
-                ->where('fecha_operacion', '<', $fin)
+                // ->where('fecha_operacion', '>=', $inicio)
+                // ->where('fecha_operacion', '<', $fin)
                 ->orderBy('fecha_operacion')
                 ->paginate($this->paginate)
         ]);

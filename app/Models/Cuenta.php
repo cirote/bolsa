@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use App\Config\Constantes as Config;
 use App\Models\Movimientos\Movimiento;
+use App\Models\Activos\Moneda;
 
 class Cuenta extends Model
 {
@@ -18,9 +19,28 @@ class Cuenta extends Model
         return static::where('sigla', $sigla)->first();
     }
 
+    public function moneda()
+    {
+        return $this->belongsTo(Moneda::class);
+    }
+
     public function movimientos()
     {
         return $this->hasMany(Movimiento::class);
+    }
+
+    public function calcular_saldos()
+    {
+        $saldo = 0;
+
+        foreach($this->movimientos as $movimiento)
+        {
+            $saldo += $movimiento->monto_en_moneda_original;
+
+            $movimiento->saldo_calculado_en_moneda_original = $saldo;
+
+            $movimiento->save();
+        }
     }
 
     public function scopeConSaldos($query, Carbon $fecha = null)
