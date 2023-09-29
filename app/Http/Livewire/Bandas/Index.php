@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Activos;
+namespace App\Http\Livewire\Bandas;
 
 use Livewire\Component;
 use Cirote\Ui\Traits\Crud;
@@ -12,19 +12,21 @@ class Index extends Component
 
     public $model_class = Activo::class;
 
+    public $activo;
+
     protected $rules = [
         'model.simbolo' => 'required|string',
         'model.denominacion' => 'required|string|min:3|max:500'
     ];
 
-    public function ver_bandas(Activo $activo)
+    public function mount($activo)
     {
-        return redirect()->route('bandas.index', ['activo' => $activo]);
+        $this->activo = $activo;
     }
 
     public function render()
     {
-        return view('livewire.activos.index', [
+        return view('livewire.bandas.index', [
             'activos' => Activo::paginate($this->paginate)
         ]);
     }
