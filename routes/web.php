@@ -45,14 +45,12 @@ Route::middleware(['auth:sanctum', 'verified'])
                 Route::post('/', 'store')->name('store');
             });
 
-        Route::controller(\App\Http\Controllers\BandasController::class)
-            ->prefix('bandas')
-            ->name('bandas.')
+        Route::controller(\App\Http\Controllers\GrillasController::class)
+            ->prefix('grilla')
+            ->name('grilla.')
             ->group(function () 
             {
-                Route::get('/{activo}', 'index')->name('index');
-                Route::get('/{id}', 'show')->name('show');
-                Route::post('/', 'store')->name('store');
+                Route::get('/', 'index')->name('index');
             });
 
         Route::controller(\App\Http\Controllers\BrokerController::class)

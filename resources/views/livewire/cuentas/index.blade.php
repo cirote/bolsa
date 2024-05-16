@@ -30,9 +30,9 @@
     </x-slot>
 
     <x-slot name="buttons">
-        <x-ui-button-cancel />
+        {{-- <x-ui-button-cancel /> --}}
         @if ($mode == 'EDIT')
-            <x-ui-button-store />
+            {{-- <x-ui-button-store /> --}}
         @endif
     </x-slot>
 

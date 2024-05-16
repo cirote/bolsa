@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Activos\Activo;
 
 
-class BandasController extends Controller
+class GrillasController extends Controller
 {
     public function index(Activo $activo)
     {
-        return view('bandas.index', ['activo' => $activo]);
+        return view('grillas.index', ['activo' => $activo]);
     }
 }

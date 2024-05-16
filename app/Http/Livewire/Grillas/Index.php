@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Bandas;
+namespace App\Http\Livewire\Grillas;
 
 use Livewire\Component;
 use Cirote\Ui\Traits\Crud;
@@ -26,7 +26,7 @@ class Index extends Component
 
     public function render()
     {
-        return view('livewire.bandas.index', [
+        return view('livewire.grillas.index', [
             'activos' => Activo::paginate($this->paginate)
         ]);
     }
