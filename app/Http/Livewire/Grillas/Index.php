@@ -2,32 +2,62 @@
 
 namespace App\Http\Livewire\Grillas;
 
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Cirote\Ui\Traits\Crud;
 use App\Models\Activos\Activo;
+use App\Models\Activos\Ticker;
+use App\Models\Seguimientos\Grilla;
 
 class Index extends Component
 {
     use Crud;
 
-    public $model_class = Activo::class;
+    public $model_class = Grilla::class;
 
     public $activo;
 
+    public $simbolo;
+
+    public $denominacion;
+
     protected $rules = [
-        'model.simbolo' => 'required|string',
-        'model.denominacion' => 'required|string|min:3|max:500'
+        'model.activo_id' => 'required|date',
+        'model.fecha_inicial' => 'required|date'
     ];
 
-    public function mount($activo)
+    public function validar_simbolo($propertyNam)
     {
-        $this->activo = $activo;
+        $campo = str_replace('', '', $propertyNam);
+
+        if ($ticker = Ticker::byName($this->$campo))
+        {
+            $this->model->activo_id = $ticker->activo->id;
+
+            $this->denominacion = $ticker->activo->denominacion;
+        }
+
+        else
+        {
+            $this->denominacion = 'Activo inexistente';
+        }
+    }
+
+    public function initial_values()
+    {
+        $this->model->fecha_inicial = Carbon::Now(); 
+    }
+
+    public function mount($grilla)
+    {
+        $this->activo = $grilla;
     }
 
     public function render()
     {
         return view('livewire.grillas.index', [
-            'activos' => Activo::paginate($this->paginate)
+            'grillas' => Grilla::paginate($this->paginate)
         ]);
     }
 }

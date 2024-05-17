@@ -46,8 +46,8 @@ Route::middleware(['auth:sanctum', 'verified'])
             });
 
         Route::controller(\App\Http\Controllers\GrillasController::class)
-            ->prefix('grilla')
-            ->name('grilla.')
+            ->prefix('grillas')
+            ->name('grillas.')
             ->group(function () 
             {
                 Route::get('/', 'index')->name('index');

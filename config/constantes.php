@@ -11,7 +11,8 @@ class Constantes
 	const BOLSAS             = 'bolsas';
 	const MERCADOS           = 'mercados';
 	const PRECIOS            = 'precios';
-
+	CONST GRILLA			 = 'grillas';
+	
 	const BROKERS            = 'brokers';
 	const CUENTAS            = 'brokers_cuentas';
 

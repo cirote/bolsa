@@ -38,6 +38,10 @@
     Seguimientos
 </x-ui-menu-item>
 
+<x-ui-menu-item route='grillas.index'>
+    Grillas
+</x-ui-menu-item>
+
 <x-ui-menu-item route='estados.index'>
     Estados
 </x-ui-menu-item>
