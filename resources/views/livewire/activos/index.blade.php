@@ -1,4 +1,4 @@
-<x-ui-crud-table title="Lista de activos" :mode="$mode">
+<x-ui-crud-table title="Lista de activos" :model="$activos" :mode="$mode">
 
     <x-slot name="header">
         <tr>
@@ -8,10 +8,6 @@
             <x-ui-th sort="desc">Cabmio</x-ui-th>
             <x-ui-th >Acciones</x-ui-th>
         <tr>
-    </x-slot>
-
-    <x-slot name="nav">
-        {{ $activos->links() }}
     </x-slot>
 
     <x-slot name="form">
