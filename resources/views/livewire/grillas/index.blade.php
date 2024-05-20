@@ -10,8 +10,8 @@
     </x-slot>
 
     <x-slot name="form">
-        <x-ui-input-text wire:model="simbolo" id="simbolo">Simbolo: </x-ui-input-text>
-        <x-ui-input-text wire:model="denominacion">Denominacion: </x-ui-input-text>
+        {{-- <x-ui-input-text wire:model="simbolo" id="simbolo">Simbolo: </x-ui-input-text> --}}
+        <x-ui-input-select item="model.activo_id">Denominacion: </x-ui-input-select>
         <x-ui-input-fecha item="model.fecha_inicial">Fecha: </x-ui-input-fecha>
     </x-slot>
 
