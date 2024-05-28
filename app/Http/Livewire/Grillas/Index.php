@@ -16,6 +16,7 @@ class Index extends Component
     protected $rules = [
         'model.activo_id' => 'required|integer',
         'model.fecha_inicial' => 'required|date',
+        'model.precio_activacion' => 'numeric',
     ];
 
     public function initial_values()
@@ -28,6 +29,13 @@ class Index extends Component
         return view('livewire.grillas.index', [
             'grillas' => $this->model_class::paginate($this->paginate)
         ]);
+    }
+
+    public function activar(Grilla $grilla)
+    {
+        $grilla->precio_activacion = null;
+
+        $grilla->save();
     }
 
     public function ver_bandas(Grilla $grilla)

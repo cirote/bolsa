@@ -15,7 +15,7 @@ class Grillas extends Migration
             $table->date('fecha_inicial');
             $table->integer('activo_id')->unsigned();
             $table->foreign('activo_id')->references('id')->on(Config::PREFIJO . Config::ACTIVOS);
-            $table->double('precio_ultima_operacion')->nullable()->default(null);
+            $table->double('precio_activacion')->nullable()->default(null);
             $table->timestamps();
         });
     }
