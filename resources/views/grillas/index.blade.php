@@ -4,6 +4,6 @@
         Bandas de precios
     </x-slot>
 
-    @livewire('grillas.index', ['grilla' => $grilla])
+    @livewire('grillas.index')
 
 </x-ui-layout>

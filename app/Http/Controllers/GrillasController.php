@@ -8,8 +8,13 @@ use App\Models\Seguimientos\Grilla;
 
 class GrillasController extends Controller
 {
-    public function index(Grilla $grilla)
+    public function index()
     {
-        return view('grillas.index', ['grilla' => $grilla]);
+        return view('grillas.index');
+    }
+
+    public function bandas(Grilla $grilla)
+    {
+        return view('grillas.bandas', ['grilla' => $grilla]);
     }
 }

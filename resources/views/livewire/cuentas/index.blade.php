@@ -1,4 +1,4 @@
-<x-ui-crud-table title="Lista de cuentas corrientes" :mode="$mode">
+<x-ui-crud-table title="Lista de cuentas corrientes" :model="$cuentas" :mode="$mode">
 
     <x-slot name="header">
         <tr>
@@ -18,10 +18,6 @@
             <x-ui-th>Saldo</x-ui-th>
             <x-ui-th width="250px">Acciones</x-ui-th>
         <tr>
-    </x-slot>
-
-    <x-slot name="nav">
-        {{ $cuentas->links() }}
     </x-slot>
 
     <x-slot name="form">

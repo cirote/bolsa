@@ -11,7 +11,7 @@ class Grillas extends Migration
     {
         Schema::create(Config::PREFIJO . Config::GRILLA, function (Blueprint $table) 
         {
-            $table->id();
+            $table->increments('id');
             $table->date('fecha_inicial');
             $table->integer('activo_id')->unsigned();
             $table->foreign('activo_id')->references('id')->on(Config::PREFIJO . Config::ACTIVOS);

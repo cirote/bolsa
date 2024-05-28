@@ -3,6 +3,7 @@
 namespace App\Models\Activos;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Parental\HasChildren;
 use App\Config\Constantes as Config;
 
@@ -42,37 +43,45 @@ class Activo extends Model
         {
             if ($ticker = $this->tickers->where('precio_referencia_dolares', true)->first())
             {
-                $cliente = \App\Apis\YahooFinanceApi::get();
-    
-                if ($cotizador = $cliente->getQuote($ticker->ticker))
+                $this->cotizacion = Cache::remember($ticker->ticker, 90, function () use ($ticker)
                 {
-                    $this->cotizacion = $cotizador->getRegularMarketPrice();
-                }
-    
-                else
-                {
-                    $this->cotizacion = $ticker->ticker;
-                }
+                    $cliente = \App\Apis\YahooFinanceApi::get();
+
+                    if ($cotizador = $cliente->getQuote($ticker->ticker))
+                    {
+                        return $cotizador->getRegularMarketPrice();
+                    }
+        
+                    else
+                    {
+                        return $ticker->ticker;
+                    }
+                });
             }
     
             elseif ($ticker = $this->tickers->where('precio_referencia_pesos', true)->first())
             {
-                $cliente = \App\Apis\YahooFinanceApi::get();
-    
-                if ($cotizador = $cliente->getQuote($ticker->ticker))
+                $this->cotizacion = Cache::remember($ticker->ticker, 90, function () use ($ticker)
                 {
-                    $this->cotizacion = $cotizador->getRegularMarketPrice() / \App\Models\Ccl::byDate()->ccl;
-                }
-    
-                else
-                {
-                    $this->cotizacion = $ticker->ticker;
-                }
+                    $cliente = \App\Apis\YahooFinanceApi::get();
+
+                    if ($cotizador = $cliente->getQuote($ticker->ticker))
+                    {
+                        return $cotizador->getRegularMarketPrice();
+                    }
+        
+                    else
+                    {
+                        return $ticker->ticker;
+                    }
+                });
             }
     
             else
             {
                 $this->cotizacion = 'n/d';
+
+                $this->cotizacion = 26;
             }
         }
 

@@ -51,6 +51,7 @@ Route::middleware(['auth:sanctum', 'verified'])
             ->group(function () 
             {
                 Route::get('/', 'index')->name('index');
+                Route::get('/{grilla}', 'bandas')->name('bandas');
             });
 
         Route::controller(\App\Http\Controllers\BrokerController::class)

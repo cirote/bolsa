@@ -33,7 +33,8 @@
                 {{ $activo->cotizacion }}
             @endif
         </x-ui-td>
-        <x-ui-td>{{ \App\Models\Ccl::byDate('2013-12-12')->ccl }}</x-ui-td>
+        <x-ui-td></x-ui-td>
+        {{-- <x-ui-td>{{ \App\Models\Ccl::byDate('2013-12-12')->ccl }}</x-ui-td> --}}
         <x-ui-td-actions :id="$activo->id">
             <x-ui-button wire:click="ver_bandas({{ $activo->id }})">
                 <i class="fa fa-bars"></i>

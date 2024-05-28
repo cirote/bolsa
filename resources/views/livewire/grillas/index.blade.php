@@ -3,8 +3,9 @@
     <x-slot name="header">
         <tr>
             <x-ui-th sort="asc">Simbolo</x-ui-th>
-            <x-ui-th sort="desc">Denominacion</x-ui-th>
-            <x-ui-th sort="desc">Desde</x-ui-th>
+            <x-ui-th>Denominacion</x-ui-th>
+            <x-ui-th>Desde</x-ui-th>
+            <x-ui-th>Estado</x-ui-th>
             <x-ui-th >Acciones</x-ui-th>
         <tr>
     </x-slot>
@@ -29,7 +30,13 @@
         <x-ui-td>{{ $grilla->activo->simbolo }}</x-ui-td>
         <x-ui-td>{{ $grilla->activo->denominacion }}</x-ui-td>
         <x-ui-td>{{ $grilla->fecha_inicial->format('d/m/Y') }}</x-ui-td>
-        <x-ui-td-actions :id="$grilla->id" />
+        <x-ui-td>{{ $grilla->hayCambioDeBanda ? 'Cambio de banda' : '' }}</x-ui-td>
+        <x-ui-td-actions :id="$grilla->id">
+            <x-ui-button wire:click="ver_bandas({{ $grilla->id }})">
+                <i class="fa fa-bars"></i>
+                Bandas
+            </x-ui-button>
+        </x-ui-td-actions>
     <tr>
     @endforeach
 
