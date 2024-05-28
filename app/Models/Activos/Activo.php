@@ -11,6 +11,8 @@ class Activo extends Model
 {
     use HasChildren;
 
+    const CACHE_EN_SEGUNDOS = 120;
+
     protected $table = Config::PREFIJO . Config::ACTIVOS;
 
     protected $guarded = [];
@@ -43,7 +45,7 @@ class Activo extends Model
         {
             if ($ticker = $this->tickers->where('precio_referencia_dolares', true)->first())
             {
-                $this->cotizacion = Cache::remember($ticker->ticker, 90, function () use ($ticker)
+                $this->cotizacion = Cache::remember($ticker->ticker, $this->CACHE_EN_SEGUNDOS, function () use ($ticker)
                 {
                     $cliente = \App\Apis\YahooFinanceApi::get();
 
@@ -61,7 +63,7 @@ class Activo extends Model
     
             elseif ($ticker = $this->tickers->where('precio_referencia_pesos', true)->first())
             {
-                $this->cotizacion = Cache::remember($ticker->ticker, 90, function () use ($ticker)
+                $this->cotizacion = Cache::remember($ticker->ticker, $this->CACHE_EN_SEGUNDOS, function () use ($ticker)
                 {
                     $cliente = \App\Apis\YahooFinanceApi::get();
 
