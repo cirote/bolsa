@@ -11,7 +11,7 @@ class Activo extends Model
 {
     use HasChildren;
 
-    const CACHE_EN_SEGUNDOS = 120;
+    const CACHE_EN_SEGUNDOS = 30;
 
     protected $table = Config::PREFIJO . Config::ACTIVOS;
 
