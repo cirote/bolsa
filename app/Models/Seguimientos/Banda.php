@@ -37,10 +37,7 @@ class Banda extends Model
 
             else
             {
-                if ($precio > $this->precio)
-                {
-                    return true;    
-                }
+                return true;    
             }
         }
 
@@ -61,8 +58,9 @@ class Banda extends Model
                 ->whereColumn('bandas.precio', '>', 'ac_bandas.precio')
                 ->orderBy('bandas.precio')
                 ->limit(1)
-        ])
-        ->addSelect([
+        ]);
+
+        $query->addSelect([
             'limite_inferior' => Banda::select('precio')
                 ->from('ac_bandas as bandas')
                 ->whereColumn('bandas.grilla_id', 'ac_bandas.grilla_id')
