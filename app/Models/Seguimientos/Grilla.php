@@ -49,51 +49,65 @@ class Grilla extends Model
     {
         if (! $this->_idBandaActual)
         {
-        
-            $bandaActiva = $this->bandaActiva()->first();
-
-            if ($bandaActiva->precioEnEntorno ?? false)
+            if (! $this->bandas()->count())
             {
-                $this->_idBandaActual = $bandaActiva->id;
+                $this->_idBandaActual = 0;
 
                 $this->_hayCambioDeBanda = false;
             }
 
             else
             {
-                $bandas = $this->bandas()->conLimites()->orderBy('precio')->get();
+                $bandaActiva = $this->bandaActiva()->first();
 
-                $filtradas = $bandas->filter(function ($banda, int $key) 
+                if ($bandaActiva->precioEnEntorno ?? false)
                 {
-                    return $banda->precioEnEntorno;
-                });
+                    $this->_idBandaActual = $bandaActiva->id;
 
-                if ($filtradas->count() == 0)
-                {
-                    $bandas = $this->bandas()->conLimites()->first();
-
-                    $this->_idBandaActual = $bandas->id;
-                }
-
-                elseif ($filtradas->count() == 1)
-                {
-                    $this->_idBandaActual = $filtradas->first()->id;
+                    $this->_hayCambioDeBanda = false;
                 }
 
                 else
                 {
-                    if ($filtradas->first()->precio > $bandaActiva->precio)
+                    $bandas = $this->bandas()->conLimites()->orderBy('precio')->get();
+
+                    $filtradas = $bandas->filter(function ($banda, int $key) 
+                    {
+                        return $banda->precioEnEntorno;
+                    });
+
+                    if ($filtradas->count() == 0)
+                    {
+                        $bandas = $this->bandas()->conLimites()->first();
+
+                        $this->_idBandaActual = $bandas->id;
+                    }
+
+                    elseif ($filtradas->count() == 1)
                     {
                         $this->_idBandaActual = $filtradas->first()->id;
                     }
 
                     else
                     {
-                        $this->_idBandaActual = $filtradas->last()->id;
-                    }
-                }
+                        if (! $bandaActiva)
+                        {
+                            $this->_idBandaActual = 0;
+                        }
 
-                $this->_hayCambioDeBanda = true;
+                        elseif ($filtradas->first()->precio > $bandaActiva->precio)
+                        {
+                            $this->_idBandaActual = $filtradas->first()->id;
+                        }
+
+                        else
+                        {
+                            $this->_idBandaActual = $filtradas->last()->id;
+                        }
+                    }
+
+                    $this->_hayCambioDeBanda = true;
+                }
             }
         }
 
