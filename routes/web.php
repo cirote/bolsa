@@ -50,8 +50,8 @@ Route::middleware(['auth:sanctum', 'verified'])
             ->name('grillas.')
             ->group(function () 
             {
-                Route::get('/', 'index')->name('index');
-                Route::get('/{grilla}', 'bandas')->name('bandas');
+                Route::get('/', \App\Http\Livewire\Grillas\Index::class)->name('index');
+                Route::get('/{grilla}', \App\Http\Livewire\Grillas\Bandas::class)->name('bandas');
             });
 
         Route::controller(\App\Http\Controllers\BrokerController::class)

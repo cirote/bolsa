@@ -43,6 +43,7 @@ class Bandas extends Component
     public function render()
     {
         return view('livewire.grillas.bandas', [
+            'header' => 'Bandas de precios detalladas',
             'activo'  => $this->grilla->activo,
             'bandas' => $this->grilla->bandas()
                 ->selectRaw("*,  {$this->grilla->activo->cotizacion} as precio_activo")
