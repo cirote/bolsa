@@ -13,10 +13,9 @@
     </x-slot>
 
     <x-slot name="form">
-        {{-- <x-ui-input-text wire:model="simbolo" id="simbolo">Simbolo: </x-ui-input-text> --}}
         <x-ui-input-select item="model.activo_id">Denominacion: </x-ui-input-select>
         <x-ui-input-fecha item="model.fecha_inicial">Fecha: </x-ui-input-fecha>
-        <x-ui-input-number item="model.precio_activacion">Precio de activación: </x-ui-input-number>
+        <x-ui-input-precio item="model.precio_activacion">Precio de activación: </x-ui-input-precio>
     </x-slot>
 
     <x-slot name="buttons">
@@ -29,7 +28,7 @@
     </x-slot>
 
     @foreach($grillas as $grilla)
-    <x-ui-tr bgcolor=''>
+    <x-ui-tr>
         <x-ui-td>{{ $grilla->activo->simbolo }}</x-ui-td>
         <x-ui-td>{{ $grilla->activo->denominacion }}</x-ui-td>
         <x-ui-td>{{ $grilla->fecha_inicial->format('d/m/Y') }}</x-ui-td>
