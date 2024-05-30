@@ -45,7 +45,7 @@ class Activo extends Model
         {
             if ($ticker = $this->tickers->where('precio_referencia_dolares', true)->first())
             {
-                $this->cotizacion = Cache::remember($ticker->ticker, $this->CACHE_EN_SEGUNDOS, function () use ($ticker)
+                $this->cotizacion = Cache::remember($ticker->ticker, self::CACHE_EN_SEGUNDOS, function () use ($ticker)
                 {
                     $cliente = \App\Apis\YahooFinanceApi::get();
 
@@ -63,7 +63,7 @@ class Activo extends Model
     
             elseif ($ticker = $this->tickers->where('precio_referencia_pesos', true)->first())
             {
-                $this->cotizacion = Cache::remember($ticker->ticker, $this->CACHE_EN_SEGUNDOS, function () use ($ticker)
+                $this->cotizacion = Cache::remember($ticker->ticker, self::CACHE_EN_SEGUNDOS, function () use ($ticker)
                 {
                     $cliente = \App\Apis\YahooFinanceApi::get();
 
