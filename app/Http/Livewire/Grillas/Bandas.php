@@ -15,6 +15,10 @@ class Bandas extends Component
 
     public $model_class = Banda::class;
 
+    public $sort_by = 'precio';
+
+    public $sort_order = 'desc';
+
     public $grilla;
 
     protected $rules = [
@@ -48,7 +52,7 @@ class Bandas extends Component
             'bandas' => $this->grilla->bandas()
                 ->selectRaw("*,  {$this->grilla->activo->cotizacion} as precio_activo")
                 ->conLimites()
-                ->orderBy('ac_bandas.precio', 'DESC')
+                ->orderBy('ac_bandas.' . $this->sort_by, strtoupper($this->sort_order))
                 ->paginate($this->paginate)
         ]);
     }

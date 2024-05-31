@@ -2,9 +2,9 @@
 
     <x-slot name="header">
         <tr>
-            <x-ui-th sort="desc">Precio</x-ui-th>
-            <x-ui-th>Monto</x-ui-th>
-            <x-ui-th>Cantidad</x-ui-th>
+            <x-ui-th sorteable='precio' sortby='{{ $sort_by }}' sortorder='{{ $sort_order }}'>Precio</x-ui-th>
+            <x-ui-th sorteable='monto' sortby='{{ $sort_by }}' sortorder='{{ $sort_order }}'>Monto</x-ui-th>
+            <x-ui-th sorteable='cantidad' sortby='{{ $sort_by }}' sortorder='{{ $sort_order }}'>Cantidad</x-ui-th>
             <x-ui-th>Limite inferior</x-ui-th>
             <x-ui-th>Limite superior</x-ui-th>
             <x-ui-th>Precio activo</x-ui-th>
