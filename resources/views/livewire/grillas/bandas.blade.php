@@ -7,7 +7,6 @@
             <x-ui-th sorteable='cantidad' sortby='{{ $sort_by }}' sortorder='{{ $sort_order }}'>Cantidad</x-ui-th>
             <x-ui-th>Limite inferior</x-ui-th>
             <x-ui-th>Limite superior</x-ui-th>
-            <x-ui-th>Precio activo</x-ui-th>
             <x-ui-th>Estado</x-ui-th>
             <x-ui-th>Entorno</x-ui-th>
             <x-ui-th>Id Actual</x-ui-th>
@@ -37,7 +36,6 @@
         <x-ui-td number="{{ $banda->cantidad }}" decimals='0'/>
         <x-ui-td number="{{ $banda->limite_inferior }}" />
         <x-ui-td number="{{ $banda->limite_superior }}" />
-        <x-ui-td number="{{ $banda->precio_activo }}" />
         <x-ui-td>{{ $banda->estado ? 'Activa' : '' }}</x-ui-td>
         <x-ui-td>{{ $banda->precioEnEntorno ? 'Si' : 'No' }}</x-ui-td>
         <x-ui-td>{{ $banda->grilla->idBandaActual == $banda->id ? "Actual" : '' }}</x-ui-td>
