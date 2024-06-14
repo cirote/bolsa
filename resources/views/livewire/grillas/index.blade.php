@@ -1,15 +1,15 @@
 <x-ui-crud-table title="Bandas de Precios" :model="$grillas" :mode="$mode">
 
     <x-slot name="header">
-        <tr>
-            <x-ui-th sort="asc">Simbolo</x-ui-th>
-            <x-ui-th>Denominacion</x-ui-th>
+        <x-ui-tr>
+            <x-ui-th>Simbolo</x-ui-th>
+            <x-ui-th>Activo</x-ui-th>
             <x-ui-th>Desde</x-ui-th>
-            <x-ui-th>Precio</x-ui-th>
+            <x-ui-th>Cotización</x-ui-th>
             <x-ui-th>Precio de activación</x-ui-th>
             <x-ui-th>Estado</x-ui-th>
             <x-ui-th >Acciones</x-ui-th>
-        <tr>
+        </x-ui-tr>
     </x-slot>
 
     <x-slot name="form">

@@ -95,7 +95,7 @@ Route::middleware(['auth:sanctum', 'verified'])
             ->name('seguimientos.')
             ->group(function () 
             {
-                Route::get('/', 'index')->name('index');
+                Route::get('/', \App\Http\Livewire\Seguimientos\Index::class)->name('index');
             });
 
         Route::controller(\App\Http\Controllers\EstadosController::class)

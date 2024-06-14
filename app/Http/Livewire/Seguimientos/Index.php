@@ -3,18 +3,18 @@
 namespace App\Http\Livewire\Seguimientos;
 
 use Livewire\Component;
-use Cirote\Ui\Traits\Crud;
 use App\Models\Seguimientos\Seguimiento;
 
 class Index extends Component
 {
-    use Crud;
+    use \Cirote\Ui\Traits\Crud;
 
     public $model_class = Seguimiento::class;
 
     protected $rules = [
-        'model.fecha_1' => 'required|string',
-        'model.fecha_2' => 'required|string|min:3|max:500'
+        'model.activo_id' => 'required|integer',
+        'model.fecha_1'   => 'date',
+        'model.fecha_2'   => 'date'
     ];
 
     public function render()

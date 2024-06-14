@@ -34,9 +34,9 @@ class Seguimiento extends Model
             return $this->base_1;
         }
 
-        $dias = $this->fecha_1->diff($this->fecha_2)->days;
+        $dias = $this->fecha_1->diff($this->fecha_2)->days / 7 * 5;
 
-        $dias_hasta_hoy = $this->fecha_1->diff(Carbon::now())->days;
+        $dias_hasta_hoy = $this->fecha_1->diff(Carbon::now())->days / 7 * 5;
 
         $diferencia = $this->base_2 - $this->base_1;
 
