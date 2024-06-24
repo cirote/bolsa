@@ -45,17 +45,13 @@ class Cuenta extends Model
 
     public function scopeConSaldos($query, Carbon $fecha = null)
     {
-        if (! $fecha)
-        {
-            $fecha = Carbon::now();
-        }
-
-        return $query->addSelect(['saldo' => Movimiento::select('saldo_calculado_en_moneda_original')
-            ->whereColumn('cuenta_id', Config::PREFIJO . Config::CUENTAS . '.id')
-            ->where('fecha_operacion', '<=', $fecha)
-            ->orderBy('fecha_operacion', 'DESC')
-            ->orderBy('id', 'DESC')
-            ->take(1)
+        return $query->addSelect([
+            'saldo' => Movimiento::select('saldo_calculado_en_moneda_original')
+                        ->whereColumn('cuenta_id', Config::PREFIJO . Config::CUENTAS . '.id')
+                        ->where('fecha_operacion', '<=', $fecha ?? Carbon::now())
+                        ->orderBy('fecha_operacion', 'DESC')
+                        ->orderBy('id', 'DESC')
+                        ->take(1)
         ]);
     }
 }

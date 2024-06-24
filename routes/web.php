@@ -40,7 +40,7 @@ Route::middleware(['auth:sanctum', 'verified'])
             ->name('cuentas.')
             ->group(function () 
             {
-                Route::get('/', 'index')->name('index');
+                Route::get('/', \App\Http\Livewire\Cuentas\Index::class)->name('index');
                 Route::get('/{id}', 'show')->name('show');
                 Route::post('/', 'store')->name('store');
             });
