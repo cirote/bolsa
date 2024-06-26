@@ -69,7 +69,7 @@ Route::middleware(['auth:sanctum', 'verified'])
             ->name('movimientos.')
             ->group(function () 
             {
-                Route::get('/', 'index')->name('index');
+                Route::get('/', \App\Http\Livewire\Movimientos\Index::class)->name('index');
                 Route::get('/{cuenta}', 'show')->name('show');
             });
 

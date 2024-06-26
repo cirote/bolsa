@@ -21,8 +21,13 @@ class Index extends Component
     public $model_class = Movimiento::class;
 
     protected $rules = [
-        'model.fecha_operacion' => 'required|string',
-        'model.observaciones' => 'required|string|min:3|max:500'
+        'model.fecha_operacion'   => 'required|string',
+        'model.fecha_liquidacion' => 'required|string',
+        'model.observaciones'     => 'required|string|min:3|max:500',
+        'model.numero_operacion'  => 'required|numeric|min:3|max:500',
+        'model.cantidad'          => 'numeric',
+        'model.numero_boleto'     => 'numeric',
+        'model.monto_en_dolares' => 'required|numeric|min:0',
     ];
 
     public function mount() 
