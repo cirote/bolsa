@@ -18,6 +18,10 @@ class Index extends Component
 
     public $mes;
 
+    public $sort_by = 'fecha_operacion';
+
+    public $sort_order = 'ASC';
+
     public $model_class = Movimiento::class;
 
     protected $rules = [
@@ -49,12 +53,20 @@ class Index extends Component
 
         $this->cuenta->calcular_saldos();
 
+        $movimientos = $this->cuenta
+            ->movimientos()
+            // ->where('fecha_operacion', '>=', $inicio)
+            // ->where('fecha_operacion', '<', $fin)
+            ->orderBy($this->sort_by, $this->sort_order);
+
+        if ($this->filtro)
+        {
+            $movimientos->where('observaciones', 'like', '%'. $this->filtro . '%')
+                ->orWhere('numero_operacion', 'like', '%'. $this->filtro . '%')  ;
+        }
+
         return view('livewire.movimientos.index', [
-            'movimientos' => $this->cuenta
-                ->movimientos()
-                // ->where('fecha_operacion', '>=', $inicio)
-                // ->where('fecha_operacion', '<', $fin)
-                ->orderBy('fecha_operacion')
+            'movimientos' => $movimientos
                 ->paginate($this->paginate)
         ]);
     }

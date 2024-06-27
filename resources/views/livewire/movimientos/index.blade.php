@@ -2,10 +2,10 @@
 
     <x-slot name="header">
         <tr>
-            <x-ui-th sort="asc">Fecha</x-ui-th>
+            <x-ui-th sorteable="fecha_operacion" sortby="{{ $sort_by }}" sortorder="{{ $sort_order }}">Fecha</x-ui-th>
             <x-ui-th>Clase</x-ui-th>
-            <x-ui-th>Número</x-ui-th>
-            <x-ui-th sort="desc">Observaciones</x-ui-th>
+            <x-ui-th sorteable="numero_operacion" sortby="{{ $sort_by }}" sortorder="{{ $sort_order }}">Número</x-ui-th>
+            <x-ui-th sorteable="observaciones" sortby="{{ $sort_by }}" sortorder="{{ $sort_order }}">Observaciones</x-ui-th>
             <x-ui-th>Cantidad</x-ui-th>
             <x-ui-th>Monto</x-ui-th>
             <x-ui-th>Saldo</x-ui-th>
