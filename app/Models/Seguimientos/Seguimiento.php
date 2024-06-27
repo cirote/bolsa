@@ -34,6 +34,28 @@ class Seguimiento extends Model
             return $this->base_1;
         }
 
+        return $this->base_logaritmica();
+    }
+
+    protected function base_logaritmica()
+    {
+        $dias = $this->fecha_1->diff($this->fecha_2)->days;
+
+        $dias_hasta_hoy = $this->fecha_1->diff(Carbon::now())->days;
+
+        $diferencia = log($this->base_2) - log($this->base_1);
+
+        $pendiente = $diferencia / $dias;
+
+        $c = log($this->base_1);
+
+        $f_final = $pendiente * $dias_hasta_hoy + $c;
+
+        return exp($f_final);
+    }
+
+    protected function base_lineal()
+    {
         $dias = $this->fecha_1->diff($this->fecha_2)->days / 7 * 5;
 
         $dias_hasta_hoy = $this->fecha_1->diff(Carbon::now())->days / 7 * 5;
@@ -50,7 +72,9 @@ class Seguimiento extends Model
             return 0;
         }
 
-        return ($this->activo->cotizacion - $this->base) / $this->amplitud;
+        return $this->amplitud
+            ? ($this->activo->cotizacion - $this->base) / $this->amplitud
+            : 0;
     }
 
     public function getAccionAttribute()

@@ -66,13 +66,6 @@
 
     </x-slot>
 
-    <x-slot name="buttons">
-        <x-ui-button-cancel />
-        @if($isEditable)
-            <x-ui-button-store />
-        @endif
-    </x-slot>
-
     @if ($mode == 'TABLE')
     @foreach($seguimientos as $seguimiento)
     <x-ui-tr>
@@ -85,5 +78,6 @@
         <x-ui-td-actions :id="$seguimiento->id"/>
     </x-ui-tr>
     @endforeach
-
+    @endif
+    
 </x-ui-crud-table>
