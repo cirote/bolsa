@@ -4,8 +4,10 @@
         <x-ui-tr>
             <x-ui-th>Simbolo</x-ui-th>
             <x-ui-th>Activo</x-ui-th>
+            <x-ui-th>Modelo</x-ui-th>
             <x-ui-th>Cotizacion</x-ui-th>
             <x-ui-th>Base actual</x-ui-th>
+            <x-ui-th>Techo actual</x-ui-th>
             <x-ui-th>Puntaje</x-ui-th>
             <x-ui-th>Estado</x-ui-th>
             <x-ui-th>Acciones</x-ui-th>
@@ -71,13 +73,15 @@
     <x-ui-tr>
         <x-ui-td>{{ $seguimiento->activo->simbolo }}</x-ui-td>
         <x-ui-td>{{ $seguimiento->activo->denominacion }}</x-ui-td>
+        <x-ui-td>{{ $seguimiento->tipo }}</x-ui-td>
         <x-ui-td number="{{ $seguimiento->activo->cotizacion }}" />
         <x-ui-td number="{{ $seguimiento->base }}" />
+        <x-ui-td number="{{ $seguimiento->techoCalculado }}" />
         <x-ui-td number="{{ $seguimiento->puntaje * 100 }}" />
         <x-ui-td>{{ $seguimiento->accion }}</x-ui-td>
         <x-ui-td-actions :id="$seguimiento->id"/>
     </x-ui-tr>
     @endforeach
     @endif
-    
+
 </x-ui-crud-table>

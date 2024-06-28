@@ -22,9 +22,9 @@ class Seguimiento extends Model
         'fecha_2'
     ];
 
-    public function getAmplitudAttribute($value)
+    public function getTechoCalculadoAttribute($value)
     {
-        return $value / $this->base_1 * $this->base;
+        return $this->base + $this->amplitud;
     }
 
     public function getBaseAttribute()
@@ -34,35 +34,59 @@ class Seguimiento extends Model
             return $this->base_1;
         }
 
-        return $this->base_logaritmica();
+        if ($this->tipo == 'LogChannel')
+        {
+            return $this->base_logaritmica();    
+        }
+
+        elseif ($this->tipo == 'Channel')
+        {
+            return $this->base_lineal();    
+        }
+
+        return 0;
     }
 
     protected function base_logaritmica()
     {
-        $dias = $this->fecha_1->diff($this->fecha_2)->days;
+        if (!($this->fecha_1 instanceof Carbon && $this->fecha_2 instanceof Carbon)) 
+        {
+            throw new \Exception('Las fechas deben ser instancias de Carbon');
+        }
 
-        $dias_hasta_hoy = $this->fecha_1->diff(Carbon::now())->days;
+        $diasTotales = $this->fecha_1->diffInDays($this->fecha_2);
 
-        $diferencia = log($this->base_2) - log($this->base_1);
+        $diasHastaHoy = $this->fecha_1->diffInDays(Carbon::now());
 
-        $pendiente = $diferencia / $dias;
+        $diferenciaLogaritmica = log($this->base_2) - log($this->base_1);
 
-        $c = log($this->base_1);
+        $pendiente = $diferenciaLogaritmica / $diasTotales;
 
-        $f_final = $pendiente * $dias_hasta_hoy + $c;
+        $constante = log($this->base_1);
 
-        return exp($f_final);
+        $valorFinalLogaritmico = $pendiente * $diasHastaHoy + $constante;
+
+        return exp($valorFinalLogaritmico);
     }
 
     protected function base_lineal()
     {
-        $dias = $this->fecha_1->diff($this->fecha_2)->days / 7 * 5;
+        if (!($this->fecha_1 instanceof Carbon && $this->fecha_2 instanceof Carbon)) 
+        {
+            throw new \Exception('Las fechas deben ser instancias de Carbon');
+        }
 
-        $dias_hasta_hoy = $this->fecha_1->diff(Carbon::now())->days / 7 * 5;
+        $diasTotales = $this->fecha_1->diffInDays($this->fecha_2);
+
+        $diasHastaHoy = $this->fecha_1->diffInDays(Carbon::now());
 
         $diferencia = $this->base_2 - $this->base_1;
 
-        return $this->base_1 + ($diferencia / $dias) * $dias_hasta_hoy;
+        $pendiente = $diferencia / $diasTotales;
+
+        $constante = $this->base_1;
+
+        return $pendiente * $diasHastaHoy + $constante;
     }
 
     public function getPuntajeAttribute()
@@ -79,6 +103,11 @@ class Seguimiento extends Model
 
     public function getAccionAttribute()
     {
+        if (! $this->tipo)
+        {
+            return '';
+        }
+
         if ($this->puntaje >= 1)
         {
             return 'Vender';
@@ -99,6 +128,7 @@ class Seguimiento extends Model
             return 'Lanzar PUT';
         }
         
+        return '';
         return 'Mantener';
     }
 
