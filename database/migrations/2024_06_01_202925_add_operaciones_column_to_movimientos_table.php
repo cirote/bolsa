@@ -11,8 +11,9 @@ class AddOperacionesColumnToMovimientosTable extends Migration
     {
         Schema::table(Config::PREFIJO . Config::MOVIMIENTOS, function (Blueprint $table) 
         {
-            $table->unsignedInteger('operaciones_id')->nullable()->default(null)->after('pendiente');
-            $table->foreign('operaciones_id')->references('id')->on(Config::PREFIJO . Config::OPERACIONES);
+            $table->boolean('operacion_principal')->default(false)->after('pendiente');
+            $table->unsignedInteger('operacion_id')->nullable()->default(null)->after('pendiente');
+            $table->foreign('operacion_id')->references('id')->on(Config::PREFIJO . Config::OPERACIONES);
         });
     }
 
@@ -20,8 +21,9 @@ class AddOperacionesColumnToMovimientosTable extends Migration
     {
         Schema::table(Config::PREFIJO . Config::MOVIMIENTOS, function (Blueprint $table) 
         {
-            $table->dropForeign(Config::PREFIJO . Config::MOVIMIENTOS . '_operaciones_id_foreign');
-            $table->dropColumn('operaciones_id');
+            $table->dropForeign(Config::PREFIJO . Config::MOVIMIENTOS . '_operacion_id_foreign');
+            $table->dropColumn('operacion_id');
+            $table->dropColumn('operacion_principal');
         });
     }
 }

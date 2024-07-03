@@ -5,8 +5,8 @@ namespace App\Http\Livewire\Movimientos;
 use Livewire\Component;
 use Illuminate\Support\Carbon;
 use Cirote\Ui\Traits\Crud;
-use App\Models\Cuenta;
 use App\Models\Movimientos\Movimiento;
+use App\Models\Operaciones\Operacion;
 
 class Index extends Component
 {
@@ -65,6 +65,21 @@ class Index extends Component
         {
             $this->model->cantidad = null;
         };
+    }
+
+    public function crear_movimiento(Movimiento $movimiento)
+    {
+        $operacion = Operacion::create([
+            'activo_id' => $movimiento->activo_id,
+            'observaciones' => $movimiento->observaciones,
+        ]);
+
+        $movimiento->fill([
+            'operacion_id' => $operacion->id,
+            'operacion_principal' => true,
+        ]);
+
+        $movimiento->save();
     }
 
     public function render()

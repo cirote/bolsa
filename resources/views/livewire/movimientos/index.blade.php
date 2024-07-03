@@ -66,7 +66,14 @@
         <x-ui-td align='right'>{{ number_format($movimiento->cantidad, 0, ',', '.') }}</x-ui-td>
         <x-ui-td align='right'>{{ number_format($movimiento->monto_en_dolares, 2, ',', '.') }}</x-ui-td>
         <x-ui-td align='right'>{{ number_format($movimiento->saldo, 2, ',', '.') }}</x-ui-td>
-        <x-ui-td-actions :id="$movimiento->id"/>
+        <x-ui-td-actions :id="$movimiento->id"> 
+            @if(! $movimiento->operacion_id)
+                <x-ui-button wire:click="crear_movimiento({{ $movimiento->id }})">
+                    <i class="fa fa-plus"></i>
+                    Operación
+                </x-ui-button>
+            @endif
+        </x-ui-td-actions> 
     <tr>
     @endforeach
 
