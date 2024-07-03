@@ -16,7 +16,7 @@ class Index extends Component
     protected $rules = [
         'model.activo_id' => 'required|integer',
         'model.fecha_inicial' => 'required|date',
-        'model.precio_activacion' => 'numeric',
+        'model.precio_activacion' => 'nullable|numeric|min:0',
     ];
 
     public function initial_values()

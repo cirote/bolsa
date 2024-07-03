@@ -25,6 +25,8 @@ class Constantes
 	const RESULTADOS 			 = 'resultados';
 
 	const MOVIMIENTOS            = 'movimientos_originales';
+	const OPERACIONES            = 'operaciones';
+
 	const SEGUIMIENTOS           = 'seguimientos';
 	const POSICIONES             = 'posiciones';
 	const MOVIMIENTOS_POSICIONES = 'posiciones_movimientos';

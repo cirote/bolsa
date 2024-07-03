@@ -28,10 +28,11 @@ class Index extends Component
         'model.fecha_operacion'   => 'required|string',
         'model.fecha_liquidacion' => 'required|string',
         'model.observaciones'     => 'required|string|min:3|max:500',
-        'model.numero_operacion'  => 'required|numeric|min:3|max:500',
-        'model.cantidad'          => 'numeric',
-        'model.numero_boleto'     => 'numeric',
-        'model.monto_en_dolares' => 'required|numeric|min:0',
+        'model.numero_operacion'  => 'nullable|numeric',
+        'model.cantidad'          => 'nullable|numeric',
+        'model.numero_boleto'     => 'nullable:numeric',
+        'model.monto_en_dolares'  => 'required|numeric|min:0',
+        'model.type'              => 'required|string',
     ];
 
     public function mount() 
@@ -43,6 +44,27 @@ class Index extends Component
         $this->anio = 2022;
 
         $this->mes = 1;
+    }
+
+    public function initial_values()
+    {
+        $this->model->fecha_operacion = Carbon::now();
+
+        $this->model->fecha_liquidacion = Carbon::now();
+
+        $this->model->type = '';
+    }
+
+    public function before_save()
+    {
+        $this->model->broker_id = $this->cuenta->broker_id;
+
+        $this->model->cuenta_id = $this->cuenta->id;
+
+        if (! $this->model->cantidad)
+        {
+            $this->model->cantidad = null;
+        };
     }
 
     public function render()

@@ -16,8 +16,9 @@
 
     <x-slot name="form">
         <x-ui-row>
+
             <x-ui-column number='12'>
-                <x-ui-input-select item="model.activo_id">Denominacion: </x-ui-input-select>
+                <x-ui-input-select item="model.activo_id" options="{{ \App\Models\Activos\Activo::toOptions() }}">Denominacion: </x-ui-input-select>
             </x-ui-column>
         </x-ui-row>
 

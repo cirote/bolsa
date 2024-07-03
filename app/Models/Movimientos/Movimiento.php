@@ -39,7 +39,7 @@ class Movimiento extends Model
 
     public function getClaseAttribute()
     {
-    	$classname = get_class($this);
+        $classname = get_class($this);
 
         if ($pos = strrpos($classname, '\\')) 
         {

@@ -11,7 +11,7 @@ class Activo extends Model
 {
     use HasChildren;
 
-    const CACHE_EN_SEGUNDOS = 120;
+    const CACHE_EN_SEGUNDOS = 300;
 
     protected $table = Config::PREFIJO . Config::ACTIVOS;
 
@@ -88,6 +88,18 @@ class Activo extends Model
         }
 
         return $this->cotizacion;
+    }
+
+    static public function toOptions()
+    {
+        return self::whereIn('type', ['App\Models\Activos\Accion'])
+            ->orderBy('denominacion')
+            ->pluck('denominacion', 'id')
+            ->map(function ($descripcion, $id) 
+            { 
+                return "{$id}:{$descripcion}"; 
+            }
+        )->implode('|');
     }
 
     public function tickers()
