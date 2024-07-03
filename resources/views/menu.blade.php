@@ -22,6 +22,10 @@
     Movimientos
 </x-ui-menu-item>
 
+<x-ui-menu-item route='operaciones.index'>
+    Operaciones
+</x-ui-menu-item>
+
 <x-ui-menu-item route='posiciones.index'>
     Posiciones
 </x-ui-menu-item>

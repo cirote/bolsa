@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use App\Config\Constantes as Config;
 
-class CreateMovimientosTable extends Migration
+class CreateOperacionesTable extends Migration
 {
     public function up()
     {

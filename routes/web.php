@@ -82,6 +82,13 @@ Route::middleware(['auth:sanctum', 'verified'])
                 Route::get('/corto', 'corto_index')->name('corto.index');
             });
 
+        Route::prefix('operaciones')
+            ->name('operaciones.')
+            ->group(function () 
+            {
+                Route::get('/', \App\Http\Livewire\Operaciones\Index::class)->name('index');
+            });
+
         Route::controller(\App\Http\Controllers\GlobalesController::class)
             ->prefix('globales')
             ->name('globales.')
