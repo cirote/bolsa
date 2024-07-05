@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Operaciones;
 use Livewire\Component;
 use Cirote\Ui\Traits\Crud;
 use App\Models\Operaciones\Operacion;
+use App\Config\Constantes as Config;
 
 class Index extends Component
 {
@@ -17,8 +18,9 @@ class Index extends Component
     public $sort_order = 'ASC';
 
     protected $rules = [
-        'model.simbolo' => 'required|string',
-        'model.denominacion' => 'required|string|min:3|max:500'
+        'model.activo_id' => 'nullable',
+        'model.type' => 'nullable',
+        'model.observaciones' => 'nullable|string'
     ];
 
     public function render()
