@@ -12,8 +12,6 @@ class Index extends Component
 {
     use Crud;
 
-    public $paginationView = 'ui::pagination';
-
     public $cuenta;
 
     public $anio;
@@ -33,7 +31,7 @@ class Index extends Component
         'model.numero_operacion'  => 'nullable|numeric',
         'model.cantidad'          => 'nullable|numeric',
         'model.numero_boleto'     => 'nullable:numeric',
-        'model.monto_en_dolares'  => 'required|numeric|min:0',
+        'model.monto_en_dolares'  => 'required|numeric',
         'model.type'              => 'required|string',
     ];
 
@@ -74,6 +72,7 @@ class Index extends Component
         $operacion = Operacion::create([
             'activo_id' => $movimiento->activo_id,
             'observaciones' => $movimiento->observaciones,
+            'type' => str_replace('\Models\Movimientos', '\Models\Operaciones', $movimiento->type),
         ]);
 
         $movimiento->fill([
@@ -88,6 +87,8 @@ class Index extends Component
             Movimiento::whereIn('id', $this->selectedRows)
                 ->update(['operacion_id' => $operacion->id]);
         }
+
+        $this->selectedRows = [];
     }
 
     public function render()

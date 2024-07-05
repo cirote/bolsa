@@ -35,7 +35,7 @@
 
         <x-ui-row>
             <x-ui-column number='12'>
-                <x-ui-input-select item="model.type" options="App\Models\Movimientos\Comision:Comisión|App\Models\Movimientos\Compra:Compra|App\Models\Movimientos\Deposito:Deposito|App\Models\Movimientos\Dividendo:Dividendo|App\Models\Movimientos\Ejercicio:Ejercicio|App\Models\Movimientos\Envio:Envio|App\Models\Movimientos\Extraccion:Extracción|App\Models\Movimientos\Lanzamiento:Lanzamiento|App\Models\Movimientos\Movimiento:Movimiento|App\Models\Movimientos\Recepcion:Recepción|App\Models\Movimientos\Venta:Venta">
+                <x-ui-input-select item="model.type" options="App\Models\Movimientos\Comision:Comisión|App\Models\Movimientos\Compra:Compra|App\Models\Movimientos\Deposito:Deposito|App\Models\Movimientos\Dividendo:Dividendo|App\Models\Movimientos\Ejercicio:Ejercicio|App\Models\Movimientos\Envio:Envio|App\Models\Movimientos\Extraccion:Extracción|App\Models\Movimientos\Impuesto:Impuesto|App\Models\Movimientos\Lanzamiento:Lanzamiento|App\Models\Movimientos\Movimiento:Movimiento|App\Models\Movimientos\Recepcion:Recepción|App\Models\Movimientos\Venta:Venta">
                     Tipo de operación: 
                 </x-ui-input-select>
             </x-ui-column>

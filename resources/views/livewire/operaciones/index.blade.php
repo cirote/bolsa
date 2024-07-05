@@ -16,24 +16,24 @@
 
     <x-slot name="form">
         <x-ui-input-select item="model.activo_id" options="{{ \App\Models\Activos\Activo::toOptions() }}">Activo: </x-ui-input-select>
-        <x-ui-input-select item="model.type" options="App\Models\Operaciones\Comision:Comisión|App\Models\Operaciones\Compra:Compra|App\Models\Operaciones\Deposito:Deposito|App\Models\Operaciones\Dividendo:Dividendo|App\Models\Operaciones\Ejercicio:Ejercicio|App\Models\Operaciones\Envio:Envio|App\Models\Operaciones\Extraccion:Extracción|App\Models\Operaciones\Lanzamiento:Lanzamiento|App\Models\Operaciones\Movimiento:Movimiento|App\Models\Operaciones\Recepcion:Recepción|App\Models\Operaciones\Venta:Venta">
+        <x-ui-input-select item="model.type" options="App\Models\Operaciones\Comision:Comisión|App\Models\Operaciones\Compra:Compra|App\Models\Operaciones\Deposito:Deposito|App\Models\Operaciones\Dividendo:Dividendo|App\Models\Operaciones\Ejercicio:Ejercicio|App\Models\Operaciones\Envio:Envio|App\Models\Operaciones\Extraccion:Extracción|App\Models\Operaciones\Impuesto:Impuesto|App\Models\Operaciones\Lanzamiento:Lanzamiento|App\Models\Operaciones\Movimiento:Movimiento|App\Models\Operaciones\Recepcion:Recepción|App\Models\Operaciones\Venta:Venta">
             Tipo de operación: 
         </x-ui-input-select>
         <x-ui-input-text item="model.observaciones">Observaciones: </x-ui-input-text>
     </x-slot>
 
     @foreach($operaciones as $operacion)
-    <x-ui-tr>
-        <x-ui-td>{{ $operacion->id }}</x-ui-td>
-        <x-ui-td>{{ $operacion->fecha->format('d/m/Y') }}</x-ui-td>
-        <x-ui-td>{{ $operacion->activo ? $operacion->activo->denominacion : ''  }}</x-ui-td>
-        <x-ui-td>{{ $operacion->clase ?? '' }}</x-ui-td>
-        <x-ui-td>{{ $operacion->observaciones }}</x-ui-td>
-        <x-ui-td number="{{ $operacion->monto }}" />
-        <x-ui-td number="{{ $operacion->cantidad }}" decimals="0" />
-        <x-ui-td number="{{ $operacion->elementos }}" decimals="0" />
-        <x-ui-td-actions :id="$operacion->id" />
-    </x-ui-tr>
+        <x-ui-tr>
+            <x-ui-td>{{ $operacion->id }}</x-ui-td>
+            <x-ui-td>{{ $operacion->fecha ? $operacion->fecha->format('d/m/Y') : '' }}</x-ui-td>
+            <x-ui-td>{{ $operacion->activo ? $operacion->activo->denominacion : ''  }}</x-ui-td>
+            <x-ui-td>{{ $operacion->clase ?? '' }}</x-ui-td>
+            <x-ui-td>{{ $operacion->observaciones }}</x-ui-td>
+            <x-ui-td number="{{ $operacion->monto }}" />
+            <x-ui-td number="{{ $operacion->cantidad }}" decimals="0" />
+            <x-ui-td number="{{ $operacion->elementos }}" decimals="0" />
+            <x-ui-td-actions :id="$operacion->id" />
+        </x-ui-tr>
     @endforeach
 
 </x-ui-crud-table>
