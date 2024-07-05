@@ -2,10 +2,12 @@
 
 namespace App\Models\Operaciones;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Parental\HasChildren;
 use App\Config\Constantes as Config;
 use App\Models\Activos\Activo;
+use App\Models\Movimientos\Movimiento;
 
 class Operacion extends Model
 {
@@ -15,9 +17,16 @@ class Operacion extends Model
 
     protected $guarded = [];
 
+    protected $dates = ['fecha'];
+
     public function Activo()
     {
         return $this->belongsTo(Activo::class);
+    }
+
+    public function movimientos()
+    {
+        return $this->hasMany(Movimiento::class);
     }
 
     public function getClaseAttribute()
@@ -30,5 +39,19 @@ class Operacion extends Model
         }
 
         return $pos;
+    }
+
+    public function scopeConMonto(Builder $query)
+    {
+        return $query->addSelect([
+            'monto' => Movimiento::selectRaw('SUM(monto_en_dolares)')
+                ->whereColumn('operacion_id', $file = Config::PREFIJO . Config::OPERACIONES . '.id'),
+            'cantidad' => Movimiento::selectRaw('SUM(cantidad)')
+                ->whereColumn('operacion_id', $file),
+            'fecha' => Movimiento::selectRaw('MIN(fecha_operacion)')
+                ->whereColumn('operacion_id', $file),
+            'elementos' => Movimiento::selectRaw('count(*)')
+                ->whereColumn('operacion_id', $file),
+        ]);
     }
 }

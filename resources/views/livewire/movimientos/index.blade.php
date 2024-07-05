@@ -1,7 +1,8 @@
 <x-ui-crud-table title="Movimientos" :model="$movimientos" :mode="$mode">
 
     <x-slot name="header">
-        <tr>
+        <x-ui-tr>
+            <x-ui-th></x-ui-th>
             <x-ui-th sorteable="fecha_operacion" sortby="{{ $sort_by }}" sortorder="{{ $sort_order }}">Fecha</x-ui-th>
             <x-ui-th>Clase</x-ui-th>
             <x-ui-th sorteable="numero_operacion" sortby="{{ $sort_by }}" sortorder="{{ $sort_order }}">Número</x-ui-th>
@@ -10,7 +11,7 @@
             <x-ui-th>Monto</x-ui-th>
             <x-ui-th>Saldo</x-ui-th>
             <x-ui-th width="250px">Acciones</x-ui-th>
-        <tr>
+        </x-ui-tr>
     </x-slot>
 
     <x-slot name="form">
@@ -58,23 +59,30 @@
     </x-slot>
 
     @foreach($movimientos as $movimiento)
-    <tr>
+    <x-ui-tr>
+        <x-ui-td>
+            @if(! $movimiento->operacion_id)
+                <center>
+                    <input type="checkbox" wire:click="toggleRow({{ $movimiento->id }})" {{ in_array($movimiento->id, $this->selectedRows) ? 'checked' : '' }}>
+                </center>
+            @endif
+        </x-ui-td>
         <x-ui-td>{{ $movimiento->fecha_operacion->format('d-m-Y') }}</x-ui-td>
         <x-ui-td>{{ $movimiento->clase }}</x-ui-td>
         <x-ui-td>{{ $movimiento->numero_operacion }}</x-ui-td>
         <x-ui-td>{{ $movimiento->observaciones }}</x-ui-td>
-        <x-ui-td align='right'>{{ number_format($movimiento->cantidad, 0, ',', '.') }}</x-ui-td>
-        <x-ui-td align='right'>{{ number_format($movimiento->monto_en_dolares, 2, ',', '.') }}</x-ui-td>
-        <x-ui-td align='right'>{{ number_format($movimiento->saldo, 2, ',', '.') }}</x-ui-td>
+        <x-ui-td number="{{ $movimiento->cantidad }}" decimals="2"/>
+        <x-ui-td number="{{ $movimiento->monto_en_dolares }}" />
+        <x-ui-td number="{{ $movimiento->saldo }}" />
         <x-ui-td-actions :id="$movimiento->id"> 
             @if(! $movimiento->operacion_id)
-                <x-ui-button wire:click="crear_movimiento({{ $movimiento->id }})">
+                <x-ui-button wire:click="crear_operacion({{ $movimiento->id }})">
                     <i class="fa fa-plus"></i>
                     Operación
                 </x-ui-button>
             @endif
         </x-ui-td-actions> 
-    <tr>
+    </x-ui-tr>
     @endforeach
 
 </x-ui-crud-table>

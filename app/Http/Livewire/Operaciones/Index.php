@@ -12,6 +12,10 @@ class Index extends Component
 
     public $model_class = Operacion::class;
 
+    public $sort_by = 'id';
+
+    public $sort_order = 'ASC';
+
     protected $rules = [
         'model.simbolo' => 'required|string',
         'model.denominacion' => 'required|string|min:3|max:500'
@@ -19,8 +23,12 @@ class Index extends Component
 
     public function render()
     {
+        $operaciones = Operacion::conMonto()
+            ->orderBy($this->sort_by, $this->sort_order);
+
         return view('livewire.operaciones.index', [
-            'operaciones' => Operacion::paginate($this->paginate)
+            'operaciones' => $operaciones
+                ->paginate($this->paginate)
         ]);
     }
 }

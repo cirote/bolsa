@@ -12,6 +12,8 @@ class Index extends Component
 {
     use Crud;
 
+    public $paginationView = 'ui::pagination';
+
     public $cuenta;
 
     public $anio;
@@ -67,7 +69,7 @@ class Index extends Component
         };
     }
 
-    public function crear_movimiento(Movimiento $movimiento)
+    public function crear_operacion(Movimiento $movimiento)
     {
         $operacion = Operacion::create([
             'activo_id' => $movimiento->activo_id,
@@ -80,6 +82,12 @@ class Index extends Component
         ]);
 
         $movimiento->save();
+
+        if ($this->selectedRows)
+        {
+            Movimiento::whereIn('id', $this->selectedRows)
+                ->update(['operacion_id' => $operacion->id]);
+        }
     }
 
     public function render()
