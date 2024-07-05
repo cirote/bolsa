@@ -20,7 +20,7 @@ use App\Models\Movimientos\Movimiento;
 use App\Models\Movimientos\Recepcion;
 use App\Models\Movimientos\Venta;
 
-class ImportarDatosDeStoneXAction
+class ImportarDatosDeStoneXFormatoViejoAction
 {
     protected $broker;
 
@@ -85,26 +85,26 @@ class ImportarDatosDeStoneXAction
                 $clase = Compra::class;
             }
 
-            elseif (Str::startsWith($record["Transaction Type"], 'Dividends and Interest'))
+            elseif (Str::startsWith($record["ActivityType"], 'DividendsNInterest'))
             {
                 $clase = Dividendo::class;
             }
 
-            elseif (Str::startsWith($record["Transaction Type"], 'ReceiveNDeliver'))
+            elseif (Str::startsWith($record["ActivityType"], 'ReceiveNDeliver'))
             {
                 //  dump($record);
 
                 $clase = Recepcion::class;
             }
 
-            elseif (Str::startsWith($record["Transaction Type"], 'ExerciseNExpiration') OR Str::startsWith($record["Transaction Description"], 'OPTION EXERCISE'))
+            elseif (Str::startsWith($record["ActivityType"], 'ExerciseNExpiration') OR Str::startsWith($record["Description"], 'OPTION EXERCISE'))
             {
                 //  dump($record);
 
                 $clase = Ejercicio::class;
             }
 
-            elseif ((double) $record["Amount"])
+            elseif ((double) $record["NetAmount"])
             {
                 //  dump($record);
 
@@ -118,24 +118,24 @@ class ImportarDatosDeStoneXAction
                 $clase = Movimiento::class;
             }
 
-            $activo = $this->crear_activo($record["CUSIP"] ?? null, $record["Transaction Description"], $record["Symbol / ID"]);
+            $activo = $this->crear_activo($record["Cusip"] ?? null, $record["Description"], $record["Symbol"]);
 
             $clase::create([
                 'cuenta_id'         => $this->cuenta->id,
-                'fecha_operacion'   => Carbon::create($record["Trade Date"]),
-                'fecha_liquidacion' => Carbon::create($record["Settle Date"]),
-                'numero_operacion'  => $record["Control No"],
+                'fecha_operacion'   => Carbon::create($record["ProcessDate"]),
+                'fecha_liquidacion' => Carbon::create($record["ProcessDate"]),
+                'numero_operacion'  => $record["SecurityNumber"],
                 'broker_id'         => $this->broker->id,
                 'activo_id'         => $activo ? $activo->id : null,
-                'observaciones'     => $record["Transaction Description"] ?: 'Vacio',
+                'observaciones'     => $record["Description"] ?: 'Vacio',
                 'cantidad'          => abs((double) $record["Quantity"]),
                 
                 'moneda_original_id' => Ticker::byName('USD')->activo->id,
 
                 'precio_en_moneda_original' => (double) $record["Price"],
                 'precio_en_dolares' => (double) $record["Price"],
-                'monto_en_moneda_original' => (double) $record["Amount"],
-                'monto_en_dolares'  => (double) $record["Amount"],
+                'monto_en_moneda_original' => (double) $record["NetAmount"],
+                'monto_en_dolares'  => (double) $record["NetAmount"],
                 'archivo'           => $this->file
             ]);
 
