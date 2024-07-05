@@ -32,8 +32,7 @@
         <x-ui-td number="{{ $operacion->monto }}" />
         <x-ui-td number="{{ $operacion->cantidad }}" decimals="0" />
         <x-ui-td number="{{ $operacion->elementos }}" decimals="0" />
-        <x-ui-td-actions :id="$operacion->id">
-        </x-ui-td-actions>
+        <x-ui-td-actions :id="$operacion->id" />
     </x-ui-tr>
     @endforeach
 
