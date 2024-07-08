@@ -69,10 +69,12 @@ class Index extends Component
 
     public function crear_operacion(Movimiento $movimiento)
     {
+        $tipo = str_replace('\Models\Movimientos', '\Models\Operaciones', $movimiento->type);
+
         $operacion = Operacion::create([
             'activo_id' => $movimiento->activo_id,
             'observaciones' => $movimiento->observaciones,
-            'type' => str_replace('\Models\Movimientos', '\Models\Operaciones', $movimiento->type),
+            'type' => $tipo ? $tipo : null,
         ]);
 
         $movimiento->fill([
@@ -97,13 +99,22 @@ class Index extends Component
 
         $fin = Carbon::create($this->anio, 12, 1)->addMonth(1);
 
-        $this->cuenta->calcular_saldos();
+        if ($this->cuenta)
+        {
+            $this->cuenta->calcular_saldos();
 
-        $movimientos = $this->cuenta
-            ->movimientos()
-            // ->where('fecha_operacion', '>=', $inicio)
-            // ->where('fecha_operacion', '<', $fin)
-            ->orderBy($this->sort_by, $this->sort_order);
+            $movimientos = $this->cuenta
+                ->movimientos()
+                // ->where('fecha_operacion', '>=', $inicio)
+                // ->where('fecha_operacion', '<', $fin)
+                ->orderBy($this->sort_by, $this->sort_order);
+        }
+
+        else
+        {
+            $movimientos = Movimiento::with('cuenta')
+                ->orderBy($this->sort_by, $this->sort_order);
+        }
 
         if ($this->filtro)
         {

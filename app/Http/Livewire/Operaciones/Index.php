@@ -13,9 +13,9 @@ class Index extends Component
 
     public $model_class = Operacion::class;
 
-    public $sort_by = 'id';
+    public $sort_by = 'fecha';
 
-    public $sort_order = 'ASC';
+    public $sort_order = 'DESC';
 
     protected $rules = [
         'model.activo_id' => 'nullable',

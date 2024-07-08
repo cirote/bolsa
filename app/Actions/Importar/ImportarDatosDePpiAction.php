@@ -24,7 +24,9 @@ class ImportarDatosDePpiAction extends Base
 {
     protected $broker = 'PPI';
 
-    protected $archivos = ['Movimientos 01.xlsx', 'Movimientos 2019.xlsx', 'Movimientos 2020.xlsx', 'Movimientos 2021.xlsx', 'Movimientos 2022.xlsx', 'Movimientos 2022-04-07-09-12-37.xlsx'];
+    // protected $archivos = ['Movimientos 01.xlsx', 'Movimientos 2019.xlsx', 'Movimientos 2020.xlsx', 'Movimientos 2021.xlsx', 'Movimientos 2022.xlsx', 'Movimientos 2022-04-07-09-12-37.xlsx'];
+
+    protected $archivos = ['Movimientos 2024-07-08-12-11-58.xlsx'];
 
     protected function setCuenta($planilla)
     {

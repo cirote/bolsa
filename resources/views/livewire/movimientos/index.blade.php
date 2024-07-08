@@ -9,7 +9,9 @@
             <x-ui-th sorteable="observaciones" sortby="{{ $sort_by }}" sortorder="{{ $sort_order }}">Observaciones</x-ui-th>
             <x-ui-th>Cantidad</x-ui-th>
             <x-ui-th>Monto</x-ui-th>
-            <x-ui-th>Saldo</x-ui-th>
+            @if($cuenta)
+                <x-ui-th>Saldo</x-ui-th>
+            @endif
             <x-ui-th width="250px">Acciones</x-ui-th>
         </x-ui-tr>
     </x-slot>
@@ -73,7 +75,9 @@
         <x-ui-td>{{ $movimiento->observaciones }}</x-ui-td>
         <x-ui-td number="{{ $movimiento->cantidad }}" decimals="2"/>
         <x-ui-td number="{{ $movimiento->monto_en_dolares }}" />
-        <x-ui-td number="{{ $movimiento->saldo }}" />
+        @if($cuenta)
+            <x-ui-td number="{{ $movimiento->saldo }}" />
+        @endif
         <x-ui-td-actions :id="$movimiento->id"> 
             @if(! $movimiento->operacion_id)
                 <x-ui-button wire:click="crear_operacion({{ $movimiento->id }})">

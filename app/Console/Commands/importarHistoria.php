@@ -74,9 +74,13 @@ class importarHistoria extends Command
 
         // \App\Actions\Importar\ImportarDatosDeStoneXFormatoViejoAction::do('transactions-17670277-20221222-124407.csv');
 
-        \App\Actions\Importar\ImportarDatosDeStoneXAction::do('17670277 Transactions 2024-07-05 14_49_03.csv'); // Hasta el 5 de julio de 2024
+        // \App\Actions\Importar\ImportarDatosDeStoneXAction::do('17670277 Transactions 2024-07-05 14_49_03.csv'); // Hasta el 5 de julio de 2024
 
-        \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
+        //  PPI
+
+        \App\Actions\Importar\ImportarDatosDePpiAction::do();
+
+        // \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
 
         \App\Actions\Cuentas\CalcularSaldosAction::do();
         
