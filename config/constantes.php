@@ -26,7 +26,7 @@ class Constantes
 
 	const MOVIMIENTOS            = 'movimientos_originales';
 	const OPERACIONES            = 'operaciones';
-	const COMPRAVENTAS			 = 'compraventas';
+	const COMPRAVENTAS			 = 'compra_ventas';
 
 	const SEGUIMIENTOS           = 'seguimientos';
 	const POSICIONES             = 'posiciones';

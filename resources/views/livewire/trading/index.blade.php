@@ -74,20 +74,29 @@
                             </x-slot>
             
                             @foreach($activo->compras as $compra)
-                                <x-ui-tr>
-                                    <x-ui-td>{{ $compra->fecha->format('d/m/Y') }}</x-ui-td>
-                                    <x-ui-td number="{{ $compra->cantidad }}" decimals="0"/>
-                                    <x-ui-td number="{{ abs($compra->monto / $compra->cantidad) }}"/>
-                                    <x-ui-td number="{{ $compra->monto }}"/>
-                                    <x-ui-td number="{{ $compra->saldo }}" decimals="0"/>
-                                    <x-ui-td number="{{ $compra->inversion }}"/>
-                                    <x-ui-td>
-                                        <x-ui-button wire:click="imputar_venta({{ $compra->id }})">
-                                            <i class="fa-solid fa-bullseye"></i>
-                                        </x-ui-button>
-                                    </x-ui-td>
-        
-                                </x-ui-tr>
+                                @if($compra->saldo)
+                                    <x-ui-tr>
+                                        <x-ui-td>{{ $compra->fecha->format('d/m/Y') }}</x-ui-td>
+                                        <x-ui-td number="{{ $compra->cantidad }}" decimals="0"/>
+                                        <x-ui-td number="{{ abs($compra->monto / $compra->cantidad) }}"/>
+                                        <x-ui-td number="{{ $compra->monto }}"/>
+                                        <x-ui-td number="{{ $compra->saldo }}" decimals="0"/>
+                                        <x-ui-td number="{{ $compra->inversion }}"/>
+                                        <x-ui-td>
+                                            @if($operacion_venta)
+                                                <x-ui-button type='warning' wire:click="imputar_compra({{ $compra->id }})">
+                                                    <i class="fa-solid fa-bullseye"></i>
+                                                </x-ui-button>
+                                            @else
+                                                @if(! $operacion_compra)
+                                                    <x-ui-button wire:click="imputar_compra({{ $compra->id }})">
+                                                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                                                    </x-ui-button>
+                                                @endif
+                                            @endif
+                                        </x-ui-td>
+                                    </x-ui-tr>
+                                @endif
                             @endforeach
             
                         </x-ui-table>
@@ -117,20 +126,29 @@
                             </x-slot>
             
                             @foreach($activo->ventas as $venta)
-                                <x-ui-tr>
-                                    <x-ui-td>{{ $venta->fecha->format('d/m/Y') }}</x-ui-td>
-                                    <x-ui-td number="{{ $venta->cantidad }}" decimals="0"/>
-                                    <x-ui-td number="{{ $venta->monto / $venta->cantidad }}"/>
-                                    <x-ui-td number="{{ $venta->monto }}"/>
-                                    <x-ui-td number="{{ $venta->saldo }}" decimals="0"/>
-                                    <x-ui-td number="{{ $venta->inversion }}"/>
-                                    <x-ui-td>
-                                        <x-ui-button wire:click="imputar_compra({{ $compra->id }})">
-                                            <i class="fa-solid fa-bullseye"></i>
-                                        </x-ui-button>
-                                    </x-ui-td>
-            
-                                </x-ui-tr>
+                                @if($venta->saldo)
+                                    <x-ui-tr>
+                                        <x-ui-td>{{ $venta->fecha->format('d/m/Y') }}</x-ui-td>
+                                        <x-ui-td number="{{ $venta->cantidad }}" decimals="0"/>
+                                        <x-ui-td number="{{ $venta->monto / $venta->cantidad }}"/>
+                                        <x-ui-td number="{{ $venta->monto }}"/>
+                                        <x-ui-td number="{{ $venta->saldo }}" decimals="0"/>
+                                        <x-ui-td number="{{ $venta->inversion }}"/>
+                                        <x-ui-td>
+                                            @if($operacion_compra)
+                                                <x-ui-button type='warning' wire:click="imputar_venta({{ $venta->id }})">
+                                                    <i class="fa-solid fa-bullseye"></i>
+                                                </x-ui-button>
+                                            @else
+                                                @if(! $operacion_venta)
+                                                    <x-ui-button wire:click="imputar_venta({{ $venta->id }})">
+                                                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                                                    </x-ui-button>
+                                                @endif
+                                            @endif
+                                        </x-ui-td>
+                                    </x-ui-tr>
+                                @endif
                             @endforeach
             
                         </x-ui-table>

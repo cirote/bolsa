@@ -83,13 +83,13 @@ class Operacion extends Model
                 
             'saldo' => DB::raw('
                 (SELECT SUM(cantidad) FROM ' . Config::PREFIJO . Config::MOVIMIENTOS . ' WHERE operacion_id = ' . $file . ') -
-                (SELECT SUM(cantidad) FROM ' . Config::PREFIJO . Config::COMPRAVENTAS . ' WHERE operacion_compra_id = ' . $file . ' OR operacion_venta_id = ' . $file . ') 
+                COALESCE((SELECT SUM(cantidad) FROM ' . Config::PREFIJO . Config::COMPRAVENTAS . ' WHERE operacion_compra_id = ' . $file . ' OR operacion_venta_id = ' . $file . '), 0) 
                 as saldo
             '),
 
             'inversion' => DB::raw('
                 (SELECT SUM(monto_en_dolares) FROM ' . Config::PREFIJO . Config::MOVIMIENTOS . ' WHERE operacion_id = ' . $file . ') /
-                (SELECT SUM(cantidad) FROM ' . Config::PREFIJO . Config::MOVIMIENTOS . ' WHERE operacion_id = ' . $file . ') *
+                COALESCE((SELECT SUM(cantidad) FROM ' . Config::PREFIJO . Config::MOVIMIENTOS . ' WHERE operacion_id = ' . $file . '), 0) *
                 ( 
                     (SELECT SUM(cantidad) FROM ' . Config::PREFIJO . Config::MOVIMIENTOS . ' WHERE operacion_id = ' . $file . ') -
                     (SELECT SUM(cantidad) FROM ' . Config::PREFIJO . Config::COMPRAVENTAS . ' WHERE operacion_compra_id = ' . $file . ' OR operacion_venta_id = ' . $file . ') 
