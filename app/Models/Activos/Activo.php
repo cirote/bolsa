@@ -131,14 +131,7 @@ class Activo extends Model
 
     public function compraventas()
     {
-        return $this->hasManyThrough(
-            Compraventa::class,
-            Operacion::class,
-            'activo_id',
-            'operacion_compra_id',
-            'id',
-            'id'
-        );
+        return $this->hasManyThrough(Compraventa::class, Operacion::class, 'activo_id', 'operacion_compra_id');
     }
 
     public function agregarTicker($ticker, $tipo = '', $ratio = 1, $principal = false, $pesos = false, $dolares = false)
