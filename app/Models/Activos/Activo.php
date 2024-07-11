@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Parental\HasChildren;
 use App\Config\Constantes as Config;
+use App\Models\Operaciones\Compraventa;
+use App\Models\Operaciones\Operacion;
 
 class Activo extends Model
 {
@@ -105,6 +107,38 @@ class Activo extends Model
     public function tickers()
     {
         return $this->hasMany(Ticker::class, 'activo_id');
+    }
+
+    public function operaciones()
+    {
+        return $this->hasMany(Operacion::class);
+    }
+
+    public function compras()
+    {
+        return $this->operaciones()->where('type', 'App\Models\Operaciones\Compra');
+    }
+
+    public function ventas()
+    {
+        return $this->operaciones()->where('type', 'App\Models\Operaciones\Venta');
+    }
+
+    public function dividendos()
+    {
+        return $this->operaciones()->where('type', 'App\Models\Operaciones\Dividendo');
+    }
+
+    public function compraventas()
+    {
+        return $this->hasManyThrough(
+            Compraventa::class,
+            Operacion::class,
+            'activo_id',
+            'operacion_compra_id',
+            'id',
+            'id'
+        );
     }
 
     public function agregarTicker($ticker, $tipo = '', $ratio = 1, $principal = false, $pesos = false, $dolares = false)

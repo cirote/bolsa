@@ -17,9 +17,9 @@ class Index extends Component
         'model.denominacion' => 'required|string|min:3|max:500'
     ];
 
-    public function ver_bandas(Activo $activo)
+    public function trading(Activo $activo)
     {
-        return redirect()->route('bandas.index', ['activo' => $activo]);
+        return redirect()->route('trading.index', ['activo' => $activo]);
     }
 
     public function render()
