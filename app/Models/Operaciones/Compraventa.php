@@ -43,6 +43,12 @@ class Compraventa extends Model
 
     public function getTasaAttribute()
     {
+        if (! $this->costo)
+            return 0;
+
+        if ($this->dias == 0)
+            return 0;
+
         return $this->resultado / $this->costo / $this->dias * 365;
     }
 }

@@ -4,6 +4,56 @@
         Operaciones de Trading de {{ $activo->denominacion }}
     </x-slot>
 
+    <x-ui-row> 
+        <x-ui-column number='2'>
+            <x-ui-tarjeta>
+                <x-slot name="header">
+                    Stock
+                </x-slot>
+                {{ $activo->stock }}
+            </x-ui-tarjeta>
+        </x-ui-column>
+
+        <x-ui-column number='2'>
+            <x-ui-tarjeta>
+                <x-slot name="header">
+                    Inversión
+                </x-slot>
+                $ {{ number_format($activo->inversion, 2, ',', '.') }}
+            </x-ui-tarjeta>
+        </x-ui-column>
+
+        <x-ui-column number='2'>
+        </x-ui-column>
+
+        <x-ui-column number='2'>
+            <x-ui-tarjeta>
+                <x-slot name="header">
+                    Resultado realizados
+                </x-slot>
+                $ {{ number_format($activo->resultadosRealizados, 2, ',', '.') }}
+            </x-ui-tarjeta>
+        </x-ui-column>
+
+        <x-ui-column number='2'>
+            <x-ui-tarjeta>
+                <x-slot name="header">
+                    Dividendos
+                </x-slot>
+                $ {{ number_format($activo->dividendosCobrados, 2, ',', '.') }}
+            </x-ui-tarjeta>
+        </x-ui-column>
+
+        <x-ui-column number='2'>
+            <x-ui-tarjeta>
+                <x-slot name="header">
+                    Resultado total
+                </x-slot>
+                $ {{ number_format($activo->resultadosTotales, 2, ',', '.') }}
+            </x-ui-tarjeta>
+        </x-ui-column>
+    </x-ui-row>
+
     <x-ui-row>
         <x-ui-column number='10'>
 

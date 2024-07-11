@@ -20,6 +20,8 @@ class CreateOperacionesTable extends Migration
 
             $table->string('observaciones')->default(null);
 
+            $table->double('base')->nullable()->default(null);
+
             $table->timestamps();
         });
     }

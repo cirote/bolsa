@@ -3,8 +3,8 @@
 namespace App\Http\Livewire\Grillas;
 
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
 use Livewire\Component;
+use App\Models\Activos\Activo;
 use App\Models\Seguimientos\Grilla;
 
 class Index extends Component
@@ -18,6 +18,11 @@ class Index extends Component
         'model.fecha_inicial' => 'required|date',
         'model.precio_activacion' => 'nullable|numeric|min:0',
     ];
+
+    public function trading(Activo $activo)
+    {
+        return redirect()->route('trading.index', ['activo' => $activo]);
+    }
 
     public function initial_values()
     {

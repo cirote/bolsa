@@ -92,7 +92,7 @@ class Operacion extends Model
                 COALESCE((SELECT SUM(cantidad) FROM ' . Config::PREFIJO . Config::MOVIMIENTOS . ' WHERE operacion_id = ' . $file . '), 0) *
                 ( 
                     (SELECT SUM(cantidad) FROM ' . Config::PREFIJO . Config::MOVIMIENTOS . ' WHERE operacion_id = ' . $file . ') -
-                    (SELECT SUM(cantidad) FROM ' . Config::PREFIJO . Config::COMPRAVENTAS . ' WHERE operacion_compra_id = ' . $file . ' OR operacion_venta_id = ' . $file . ') 
+                    COALESCE((SELECT SUM(cantidad) FROM ' . Config::PREFIJO . Config::COMPRAVENTAS . ' WHERE operacion_compra_id = ' . $file . ' OR operacion_venta_id = ' . $file . '), 0) 
                 ) as inversion
             ')
         ]);

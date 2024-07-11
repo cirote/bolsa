@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Seguimientos;
 
 use Livewire\Component;
 use App\Models\Seguimientos\Seguimiento;
+use App\Models\Activos\Activo;
 
 class Index extends Component
 {
@@ -24,6 +25,11 @@ class Index extends Component
         'model.comentarios' => 'string',
         'model.activo_id' => 'numeric'
     ];
+
+    public function trading(Activo $activo)
+    {
+        return redirect()->route('trading.index', ['activo' => $activo]);
+    }
 
     public function render()
     {
