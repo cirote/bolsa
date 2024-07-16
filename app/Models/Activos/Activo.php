@@ -39,19 +39,34 @@ class Activo extends Model
         return abs($this->compras->sum('inversion'));
     }
 
-    public function getResultadosRealizadosAttribute()
+    public function getResultadosCompraVentaAttribute()
     {
         return abs($this->ventas->sum('monto')) - abs($this->compras->sum('monto')) + $this->inversion;
     }
 
+    public function getResultadosRealizadosAttribute()
+    {
+        return $this->resultadosCompraVenta + $this->dividendosCobrados;
+    }
+
+    public function getResultadosNoRealizadosAttribute()
+    {
+        return abs(($this->getCotizacionAttribute() * $this->stock) - $this->inversion);
+    }
+
     public function getResultadosTotalesAttribute()
     {
-        return $this->resultadosRealizados + $this->dividendosCobrados;
+        return $this->resultadosRealizados + $this->resultadosNoRealizados;
     }
 
     public function getStockAttribute()
     {
         return $this->compras->sum('cantidad') - $this->ventas->sum('cantidad');
+    }
+
+    public function getPPCAttribute()
+    {
+        return $this->inversion / $this->stock;
     }
 
     private $cotizacion;

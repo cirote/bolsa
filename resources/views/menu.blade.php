@@ -26,7 +26,7 @@
     Operaciones
 </x-ui-menu-item>
 
-<x-ui-menu-item route='posiciones.index'>
+{{-- <x-ui-menu-item route='posiciones.index'>
     Posiciones
 </x-ui-menu-item>
 
@@ -36,6 +36,10 @@
 
 <x-ui-menu-item route='globales.index'>
     Posiciones Globales
+</x-ui-menu-item> --}}
+
+<x-ui-menu-item route='trading.index' icon="fa-solid fa-sack-dollar">
+    Inversión
 </x-ui-menu-item>
 
 <x-ui-menu-item route='seguimientos.index' icon="fas fa-search-dollar">
@@ -46,10 +50,10 @@
     Grillas
 </x-ui-menu-item>
 
-<x-ui-menu-item route='estados.index'>
+{{-- <x-ui-menu-item route='estados.index'>
     Estados
 </x-ui-menu-item>
 
 <x-ui-menu-item route='resultados.index'>
     Resultados
-</x-ui-menu-item>
+</x-ui-menu-item> --}}
