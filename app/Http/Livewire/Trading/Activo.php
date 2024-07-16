@@ -2,14 +2,14 @@
 
 namespace App\Http\Livewire\Trading;
 
-use App\Models\Activos\Activo;
+use App\Models\Activos\Activo as Acti;
 use App\Models\Operaciones\Compraventa;
 use App\Models\Operaciones\Operacion;
 use Livewire\Component;
 
-class Index extends Component
+class Activo extends Component
 {
-    public Activo $activo;
+    public Acti $activo;
 
     public $operacion_compra;
 
@@ -45,13 +45,13 @@ class Index extends Component
         }
     }
 
-    public function mount(Activo $activo)
+    public function mount(Acti $activo)
     {
         $this->activo = $activo;
     }
 
     public function render()
     {
-        return view('livewire.trading.index');
+        return view('livewire.trading.activo');
     }
 }

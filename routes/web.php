@@ -39,7 +39,7 @@ Route::middleware(['auth:sanctum', 'verified'])
             ->name('trading.')
             ->group(function () 
             {
-                Route::get('/{activo}', \App\Http\Livewire\Trading\Index::class)->name('index');
+                Route::get('/{activo}', \App\Http\Livewire\Trading\Activo::class)->name('activo');
             });
 
         Route::controller(\App\Http\Controllers\CuentasController::class)

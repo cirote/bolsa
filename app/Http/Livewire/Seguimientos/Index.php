@@ -28,7 +28,7 @@ class Index extends Component
 
     public function trading(Activo $activo)
     {
-        return redirect()->route('trading.index', ['activo' => $activo]);
+        return redirect()->route('trading.activo', ['activo' => $activo]);
     }
 
     public function render()
