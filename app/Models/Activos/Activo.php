@@ -51,7 +51,7 @@ class Activo extends Model
 
     public function getResultadosNoRealizadosAttribute()
     {
-        return abs(($this->getCotizacionAttribute() * $this->stock) - $this->inversion);
+        return abs(($this->getCotizacionAttribute() * $this->stock)) - $this->getInversionAttribute();
     }
 
     public function getResultadosTotalesAttribute()
@@ -134,7 +134,7 @@ class Activo extends Model
 
     static public function toOptions()
     {
-        return self::whereIn('type', ['App\Models\Activos\Accion'])
+        return self::whereIn('type', ['App\Models\Activos\Accion', 'App\Models\Activos\Etf'])
             ->orderBy('denominacion')
             ->pluck('denominacion', 'id')
             ->map(function ($descripcion, $id) 
