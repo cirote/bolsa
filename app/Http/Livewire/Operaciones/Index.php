@@ -5,7 +5,6 @@ namespace App\Http\Livewire\Operaciones;
 use Livewire\Component;
 use Cirote\Ui\Traits\Crud;
 use App\Models\Operaciones\Operacion;
-use App\Config\Constantes as Config;
 
 class Index extends Component
 {
