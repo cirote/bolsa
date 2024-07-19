@@ -13,7 +13,7 @@ class Index extends Component
 
     public $model_class = Operacion::class;
 
-    public $sort_by = 'fecha';
+    public $sort_by = 'id';
 
     public $sort_order = 'DESC';
 
