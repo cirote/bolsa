@@ -1,7 +1,14 @@
 <x-ui-crud-table title="Movimientos" :model="$movimientos" :mode="$mode">
 
+    <x-slot name="boxHeader">
+        <x-ui-button wire:click="calcular_saldos">
+            Calcular saldos
+        </x-ui-button>
+    </x-slot">
+
     <x-slot name="header">
         <x-ui-tr>
+            <x-ui-th>Id</x-ui-th>
             <x-ui-th></x-ui-th>
             <x-ui-th sorteable="fecha_operacion" sortby="{{ $sort_by }}" sortorder="{{ $sort_order }}">Fecha</x-ui-th>
             <x-ui-th>Clase</x-ui-th>
@@ -61,32 +68,35 @@
     </x-slot>
 
     @foreach($movimientos as $movimiento)
-    <x-ui-tr>
-        <x-ui-td>
-            @if(! $movimiento->operacion_id)
-                <center>
-                    <input type="checkbox" wire:click="toggleRow({{ $movimiento->id }})" {{ in_array($movimiento->id, $this->selectedRows) ? 'checked' : '' }}>
-                </center>
+        <x-ui-tr>
+            <x-ui-td>
+                {{ $movimiento->id }}
+            </x-ui-td>
+            <x-ui-td>
+                @if(! $movimiento->operacion_id)
+                    <center>
+                        <input type="checkbox" wire:click="toggleRow({{ $movimiento->id }})" {{ in_array($movimiento->id, $this->selectedRows) ? 'checked' : '' }}>
+                    </center>
+                @endif
+            </x-ui-td>
+            <x-ui-td>{{ $movimiento->fecha_operacion->format('d-m-Y') }}</x-ui-td>
+            <x-ui-td>{{ $movimiento->clase }}</x-ui-td>
+            <x-ui-td>{{ $movimiento->numero_operacion }}</x-ui-td>
+            <x-ui-td>{{ $movimiento->observaciones }}</x-ui-td>
+            <x-ui-td number="{{ $movimiento->cantidad }}" decimals="2"/>
+            <x-ui-td number="{{ $movimiento->monto_en_moneda_original }}" />
+            @if($cuenta)
+                <x-ui-td number="{{ $movimiento->saldo_calculado_en_moneda_original }}" />
             @endif
-        </x-ui-td>
-        <x-ui-td>{{ $movimiento->fecha_operacion->format('d-m-Y') }}</x-ui-td>
-        <x-ui-td>{{ $movimiento->clase }}</x-ui-td>
-        <x-ui-td>{{ $movimiento->numero_operacion }}</x-ui-td>
-        <x-ui-td>{{ $movimiento->observaciones }}</x-ui-td>
-        <x-ui-td number="{{ $movimiento->cantidad }}" decimals="2"/>
-        <x-ui-td number="{{ $movimiento->monto_en_dolares }}" />
-        @if($cuenta)
-            <x-ui-td number="{{ $movimiento->saldo }}" />
-        @endif
-        <x-ui-td-actions :id="$movimiento->id"> 
-            @if(! $movimiento->operacion_id)
-                <x-ui-button wire:click="crear_operacion({{ $movimiento->id }})">
-                    <i class="fa fa-plus"></i>
-                    Operación
-                </x-ui-button>
-            @endif
-        </x-ui-td-actions> 
-    </x-ui-tr>
+            <x-ui-td-actions :id="$movimiento->id"> 
+                @if(! $movimiento->operacion_id)
+                    <x-ui-button wire:click="crear_operacion({{ $movimiento->id }})">
+                        <i class="fa fa-plus"></i>
+                        Operación
+                    </x-ui-button>
+                @endif
+            </x-ui-td-actions> 
+        </x-ui-tr>
     @endforeach
 
 </x-ui-crud-table>

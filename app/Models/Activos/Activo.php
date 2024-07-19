@@ -61,28 +61,20 @@ class Activo extends Model
 
     public function getStockAttribute()
     {
-        return $this->compras->sum('cantidad') - $this->ventas->sum('cantidad');
+        return abs($this->compras->sum('cantidad')) - abs($this->ventas->sum('cantidad'));
     }
 
     public function getPPCAttribute()
     {
-        return $this->inversion / $this->stock;
+        return $this->stock
+            ? $this->inversion / $this->stock
+            : 0;
     }
 
     private $cotizacion;
 
     public function getCotizacionAttribute()
     {
-        if ($this->cusip == '040114HS2')
-        {
-            return 0.2608;
-        }
-
-        if ($this->denominacion == 'Cupones PBI U$S Ley Argentina')
-        {
-            return 0.01;
-        }
-
         if (! $this->cotizacion)
         {
             if ($ticker = $this->tickers->where('precio_referencia_dolares', true)->first())
@@ -125,7 +117,7 @@ class Activo extends Model
             {
                 $this->cotizacion = 'n/d';
 
-                $this->cotizacion = 26;
+                $this->cotizacion = $this->ppc;
             }
         }
 

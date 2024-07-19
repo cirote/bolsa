@@ -95,8 +95,8 @@
                             <x-ui-td number="{{ $activo->cotizacion }}"/>
                             <x-ui-td number="{{ $activo->inversion }}"/>
                             <x-ui-td number="{{ $activo->resultadosNoRealizados }}"/>
-                            <x-ui-td number="{{ $activo->resultadosNoRealizados / $activo->inversion * 100 }}"/>
-                            <x-ui-td number="{{ $activo->resultadosRealizados }}"/>
+                            <x-ui-td number="{{ $activo->inversion ? $activo->resultadosNoRealizados / $activo->inversion * 100 : 0 }}"/>
+                            <x-ui-td number="{{ $activo->resultadosCompraVenta }}"/>
                             <x-ui-td number="{{ $activo->dividendosCobrados }}"/>
                             <x-ui-td number="{{ $activo->resultadosTotales }}"/>
                             <x-ui-td>

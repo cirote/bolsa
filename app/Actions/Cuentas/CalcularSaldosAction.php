@@ -2,22 +2,29 @@
 
 namespace App\Actions\Cuentas;
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Carbon;
 use App\Models\Cuenta;
+use App\Models\Movimientos\Movimiento;
 
 class CalcularSaldosAction
 {
-    static public function do()
+    static public function do(Cuenta $cuenta = null)
     {
-        return (new static())->execute();
+        return (new static())->execute($cuenta);
     }
 
-    protected function execute()
+    protected function execute(Cuenta $cuenta = null)
     {
-        foreach(Cuenta::all() as $cuenta)
+        if ($cuenta)
         {
             $this->cuenta($cuenta);
+        }
+
+        else
+        {
+            foreach(Cuenta::all() as $cuenta)
+            {
+                $this->cuenta($cuenta);
+            }
         }
     }
 
@@ -29,8 +36,13 @@ class CalcularSaldosAction
 
         $saldo_dolares = 0;
 
-        foreach($cuenta->movimientos()->orderBy('fecha_operacion')->get() as $movimiento)
+        $movimientos = Movimiento::where('cuenta_id', $cuenta->id)
+            ->orderBy('fecha_operacion')
+            ->orderBy('id');
+
+        foreach($movimientos->cursor() as $movimiento)
         {
+
             $saldo_original += $movimiento->monto_en_moneda_original;
 
             $saldo_dolares += $movimiento->monto_en_dolares;
@@ -43,7 +55,14 @@ class CalcularSaldosAction
                 'saldo_en_pesos' => $saldo_pesos
             ]);
 
+            // echo "ID: " . $movimiento->id . ", Fecha: " . $movimiento->fecha_operacion->format('Y/m/d') . ", Monto: " . $movimiento->monto_en_dolares . ", Saldo: " . $saldo_dolares . "<br>";
+
+            // if ($movimiento->id = 3099)
+            //     dd($movimiento);
+
             $movimiento->save();
         }
+
+        // dd('');
     }
 }

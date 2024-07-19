@@ -29,19 +29,19 @@ class Cuenta extends Model
         return $this->hasMany(Movimiento::class);
     }
 
-    public function calcular_saldos()
-    {
-        $saldo = 0;
+    // public function calcular_saldos()
+    // {
+    //     $saldo = 0;
 
-        foreach($this->movimientos as $movimiento)
-        {
-            $saldo += $movimiento->monto_en_moneda_original;
+    //     foreach($this->movimientos as $movimiento)
+    //     {
+    //         $saldo += $movimiento->monto_en_moneda_original;
 
-            $movimiento->saldo_calculado_en_moneda_original = $saldo;
+    //         $movimiento->saldo_calculado_en_moneda_original = $saldo;
 
-            $movimiento->save();
-        }
-    }
+    //         $movimiento->save();
+    //     }
+    // }
 
     public function scopeConSaldos($query, Carbon $fecha = null)
     {

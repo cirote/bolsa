@@ -78,11 +78,13 @@ class importarHistoria extends Command
 
         //  PPI
 
-        \App\Actions\Importar\ImportarDatosDePpiAction::do();
+        // \App\Actions\Importar\ImportarDatosDePpiAction::do();
+
+        \App\Actions\Importar\ImportarDatosDeStoneXAction::do('17670277 Transactions 2024-07-19 15_13_10.csv'); // Hasta el 5 de julio de 2024
 
         // \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
 
-        \App\Actions\Cuentas\CalcularSaldosAction::do();
+        // \App\Actions\Cuentas\CalcularSaldosAction::do();
         
         return 0;
     }

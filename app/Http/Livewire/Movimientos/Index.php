@@ -93,6 +93,11 @@ class Index extends Component
         $this->selectedRows = [];
     }
 
+    public function calcular_saldos()
+    {
+        \App\Actions\Cuentas\CalcularSaldosAction::do($this->cuenta);
+    }
+
     public function render()
     {
         $inicio = Carbon::create($this->anio, 1, 1);
@@ -101,13 +106,14 @@ class Index extends Component
 
         if ($this->cuenta)
         {
-            $this->cuenta->calcular_saldos();
+            // $this->cuenta->calcular_saldos();
 
             $movimientos = $this->cuenta
                 ->movimientos()
                 // ->where('fecha_operacion', '>=', $inicio)
                 // ->where('fecha_operacion', '<', $fin)
-                ->orderBy($this->sort_by, $this->sort_order);
+                ->orderBy($this->sort_by, $this->sort_order)
+                ->orderBy('id', 'ASC');
         }
 
         else

@@ -29,9 +29,9 @@
         <x-ui-column number='2'>
             <x-ui-tarjeta>
                 <x-slot name="header">
-                    Resultado realizados
+                    Resultado compraventa
                 </x-slot>
-                $ {{ number_format($activo->resultadosRealizados, 2, ',', '.') }}
+                $ {{ number_format($activo->resultadosCompraVenta, 2, ',', '.') }}
             </x-ui-tarjeta>
         </x-ui-column>
 
@@ -49,7 +49,7 @@
                 <x-slot name="header">
                     Resultado total
                 </x-slot>
-                $ {{ number_format($activo->resultadosTotales, 2, ',', '.') }}
+                $ {{ number_format($activo->resultadosRealizados, 2, ',', '.') }}
             </x-ui-tarjeta>
         </x-ui-column>
     </x-ui-row>
