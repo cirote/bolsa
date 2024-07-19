@@ -24,11 +24,8 @@ class Index extends Component
 
     public function render()
     {
-        $operaciones = Operacion::conMonto()
-            ->orderBy($this->sort_by, $this->sort_order);
-
         return view('livewire.operaciones.index', [
-            'operaciones' => $operaciones
+            'operaciones' => Operacion::orderBy($this->sort_by, $this->sort_order)
                 ->paginate($this->paginate)
         ]);
     }
