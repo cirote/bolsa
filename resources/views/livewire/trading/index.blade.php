@@ -100,10 +100,7 @@
                             <x-ui-td number="{{ $activo->dividendosCobrados }}"/>
                             <x-ui-td number="{{ $activo->resultadosTotales }}"/>
                             <x-ui-td>
-                                <x-ui-button type="info" wire:click="trading({{ $activo->id }})">
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                    Trading
-                                </x-ui-button>
+                                <x-botonTrading wid="{{ $activo->id }}" />
                             </x-ui-td>
                         </x-ui-tr>
                     @endforeach

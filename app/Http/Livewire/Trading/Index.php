@@ -8,11 +8,8 @@ use Livewire\Component;
 
 class Index extends Component
 {
-    public function trading(Activo $activo)
-    {
-        return redirect()->route('trading.activo', ['activo' => $activo]);
-    }
-
+    use \App\Traits\Trading;
+    
     public function render()
     {
         $activos_validos = Operacion::query()
