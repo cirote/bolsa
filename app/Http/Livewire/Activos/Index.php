@@ -10,17 +10,14 @@ class Index extends Component
 {
     use Crud;
 
+    use \App\Traits\Trading;
+
     public $model_class = Activo::class;
 
     protected $rules = [
         'model.simbolo' => 'required|string',
         'model.denominacion' => 'required|string|min:3|max:500'
     ];
-
-    public function trading(Activo $activo)
-    {
-        return redirect()->route('trading.activo', ['activo' => $activo]);
-    }
 
     public function render()
     {

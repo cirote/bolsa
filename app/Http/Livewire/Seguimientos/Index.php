@@ -4,11 +4,12 @@ namespace App\Http\Livewire\Seguimientos;
 
 use Livewire\Component;
 use App\Models\Seguimientos\Seguimiento;
-use App\Models\Activos\Activo;
 
 class Index extends Component
 {
     use \Cirote\Ui\Traits\Crud;
+
+    use \App\Traits\Trading;
 
     public $model_class = Seguimiento::class;
 
@@ -25,11 +26,6 @@ class Index extends Component
         'model.comentarios' => 'string',
         'model.activo_id' => 'numeric'
     ];
-
-    public function trading(Activo $activo)
-    {
-        return redirect()->route('trading.activo', ['activo' => $activo]);
-    }
 
     public function render()
     {

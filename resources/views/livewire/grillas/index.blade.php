@@ -46,10 +46,7 @@
             @endif
         </x-ui-td>
         <x-ui-td-actions :id="$grilla->id">
-            <x-ui-button type="info" wire:click="trading({{ $grilla->activo->id }})">
-                <i class="fa-solid fa-cart-shopping"></i>
-                Trading
-            </x-ui-button>
+            <x-botonTrading wid="{{ $grilla->activo->id }}" />
             @if($grilla->precio_activacion !== null)
                 <x-ui-button wire:click="activar({{ $grilla->id }})">
                     <i class="fa fa-play"></i>

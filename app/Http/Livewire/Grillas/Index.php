@@ -4,12 +4,13 @@ namespace App\Http\Livewire\Grillas;
 
 use Illuminate\Support\Carbon;
 use Livewire\Component;
-use App\Models\Activos\Activo;
 use App\Models\Seguimientos\Grilla;
 
 class Index extends Component
 {
     use \Cirote\Ui\Traits\Crud;
+
+    use \App\Traits\Trading;
 
     public $model_class = Grilla::class;
 
@@ -19,10 +20,6 @@ class Index extends Component
         'model.precio_activacion' => 'nullable|numeric|min:0',
     ];
 
-    public function trading(Activo $activo)
-    {
-        return redirect()->route('trading.activo', ['activo' => $activo]);
-    }
 
     public function initial_values()
     {

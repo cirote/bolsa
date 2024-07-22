@@ -29,10 +29,7 @@
         <x-ui-td></x-ui-td>
         {{-- <x-ui-td>{{ \App\Models\Ccl::byDate('2013-12-12')->ccl }}</x-ui-td> --}}
         <x-ui-td-actions :id="$activo->id">
-            <x-ui-button wire:click="trading({{ $activo->id }})">
-                <i class="fa-solid fa-cart-shopping"></i>
-                Trading
-            </x-ui-button>
+            <x-botonTrading wid="{{ $activo->id }}" />
         </x-ui-td-actions>
     </x-ui-tr>
     @endforeach

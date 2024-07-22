@@ -15,18 +15,9 @@
     </x-slot>
 
     <x-slot name="form">
-        <x-ui-input-number item="model.precio">Precio: </x-ui-input-number>
-        <x-ui-input-number item="model.monto">Monto: </x-ui-input-number>
+        <x-ui-input-precio item="model.precio">Precio: </x-ui-input-precio>
+        <x-ui-input-precio item="model.monto">Monto: </x-ui-input-precio>
         <x-ui-input-number item="model.cantidad">Cantidad: </x-ui-input-number>
-    </x-slot>
-
-    <x-slot name="buttons">
-        <x-ui-button-cancel />
-        @if ($mode == 'EDIT')
-            <x-ui-button-store />
-        @elseif ($mode == 'CREATE')
-            <x-ui-button-store />
-        @endif
     </x-slot>
 
     @foreach($bandas as $banda)
