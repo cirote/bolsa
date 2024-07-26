@@ -1,7 +1,7 @@
 <x-ui-layout>
 
     <x-slot name="header">
-        Panel de control
+        Panel recomendaciones
     </x-slot>
 
     @if($comprar)

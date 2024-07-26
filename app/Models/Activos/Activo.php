@@ -30,13 +30,27 @@ class Activo extends Model
         $activos = Activo::whereIn('id', $activos_validos);
 
         $activos->orderBy('denominacion');
-        
+
         $activos = $activos->get();
 
         return $activos->filter(function ($activo) 
         {
             return $activo->stock != 0;
         });
+    }
+
+    public function getEstadoAttribute()
+    {
+        $bajo = -100 * ($this->maximo - $this->cotizacion) / ($this->maximo ? $this->maximo : 1);
+
+        $resultado = $this->inversion ? $this->resultadosNoRealizados / $this->inversion * 100 : 0;
+
+        if($bajo < -0.05 AND $resultado > 20)
+        {
+            return 'Vender';
+        }
+
+        return '';
     }
 
     public function getSimboloAttribute()
