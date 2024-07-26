@@ -19,6 +19,26 @@ class Activo extends Model
 
     protected $guarded = [];
 
+    public static function conStock()
+    {
+        $activos_validos = Operacion::query()
+            ->select('activo_id')
+            ->distinct()
+            ->get()
+            ->pluck('activo_id');
+
+        $activos = Activo::whereIn('id', $activos_validos);
+
+        $activos->orderBy('denominacion');
+        
+        $activos = $activos->get();
+
+        return $activos->filter(function ($activo) 
+        {
+            return $activo->stock != 0;
+        });
+    }
+
     public function getSimboloAttribute()
     {
         if ($ticker = $this->tickers()->where('principal', true)->first())

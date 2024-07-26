@@ -3,7 +3,6 @@
 namespace App\Actions\Calcular;
 
 use Illuminate\Support\Carbon;
-use App\Models\Operaciones\Operacion; 
 use App\Models\Activos\Activo;
 
 class CalcularMontoInvertidoEnDolaresAction
@@ -19,21 +18,6 @@ class CalcularMontoInvertidoEnDolaresAction
             $fecha = Carbon::now();
         }
 
-        $activos_validos = Operacion::query()
-            ->select('activo_id')
-            ->distinct()
-            ->get()
-            ->pluck('activo_id');
-
-        $activos = Activo::whereIn('id', $activos_validos);
-
-        $activos = $activos->get();
-
-        $activos = $activos->filter(function ($activo) 
-        {
-            return $activo->stock != 0;
-        });
-
-        return $activos->sum('inversion');
+        return Activo::conStock()->sum('inversion');
    }
 }
