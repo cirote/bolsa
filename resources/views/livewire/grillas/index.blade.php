@@ -28,38 +28,32 @@
     </x-slot>
 
     @foreach($grillas as $grilla)
-    <x-ui-tr>
-        <x-ui-td>{{ $grilla->activo->simbolo }}</x-ui-td>
-        <x-ui-td>{{ $grilla->activo->denominacion }}</x-ui-td>
-        <x-ui-td>{{ $grilla->fecha_inicial->format('d/m/Y') }}</x-ui-td>
-        <x-ui-td number="{{ $grilla->cotizacionDelActivo }}" />
-        @if($grilla->precio_activacion !== null)
-            <x-ui-td number="{{ $grilla->precio_activacion }}" />
-        @else
-            <x-ui-td />
-        @endif
-        <x-ui-td>
+        <x-ui-tr>
+            <x-ui-td>{{ $grilla->activo->simbolo }}</x-ui-td>
+            <x-ui-td>{{ $grilla->activo->denominacion }}</x-ui-td>
+            <x-ui-td>{{ $grilla->fecha_inicial->format('d/m/Y') }}</x-ui-td>
+            <x-ui-td number="{{ $grilla->cotizacionDelActivo }}" />
             @if($grilla->precio_activacion !== null)
-                {{ $grilla->precio_activacion >= $grilla->cotizacionDelActivo ? 'Corresponde activar' : '' }}
+                <x-ui-td number="{{ $grilla->precio_activacion }}" />
             @else
-                {{ $grilla->hayCambioDeBanda ? 'Cambio de banda' : '' }}
+                <x-ui-td />
             @endif
-        </x-ui-td>
-        <x-ui-td-actions :id="$grilla->id">
-            <x-botonTrading wid="{{ $grilla->activo->id }}" />
-            @if($grilla->precio_activacion !== null)
-                <x-ui-button wire:click="activar({{ $grilla->id }})">
-                    <i class="fa fa-play"></i>
-                    Activar
-                </x-ui-button>
-            @else
-                <x-ui-button wire:click="ver_bandas({{ $grilla->id }})">
-                    <i class="fa fa-bars"></i>
-                    Bandas
-                </x-ui-button>
-            @endif
-        </x-ui-td-actions>
-    </x-ui-tr>
+            <x-ui-td>{{ $grilla->estado }}</x-ui-td>
+            <x-ui-td-actions :id="$grilla->id">
+                <x-botonTrading wid="{{ $grilla->activo->id }}" />
+                @if($grilla->precio_activacion !== null)
+                    <x-ui-button wire:click="activar({{ $grilla->id }})">
+                        <i class="fa fa-play"></i>
+                        Activar
+                    </x-ui-button>
+                @else
+                    <x-ui-button wire:click="ver_bandas({{ $grilla->id }})">
+                        <i class="fa fa-bars"></i>
+                        Bandas
+                    </x-ui-button>
+                @endif
+            </x-ui-td-actions>
+        </x-ui-tr>
     @endforeach
 
 </x-ui-crud-table>

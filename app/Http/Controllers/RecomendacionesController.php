@@ -2,33 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Activos\Activo;
 use App\Models\Seguimientos\Seguimiento;
+use App\Models\Seguimientos\Grilla;
 
 class RecomendacionesController extends Controller
 {
     public function index()
     {
-        $comprar = [];
-
-        $vender = [];
-
-        foreach(Seguimiento::all() as $seguimiento)
+        $activos = Activo::conStock()->filter(function ($activo) 
         {
-            if (in_array($seguimiento->accion, ['Vender', 'Lanzar CALL']))
-            {
-                $vender[] = $seguimiento;
-            }
+            return $activo->estado != '';
+        });
 
-            elseif (in_array($seguimiento->accion, ['Comprar', 'Lanzar PUT']))
-            {
-                $comprar[] = $seguimiento;
-            }
-        }
+        $seguimientos = Seguimiento::with('activo')->get()->filter(function ($activo) 
+        {
+            return $activo->estado != '';
+        });
+
+        $grillas = Grilla::all()->filter(function ($activo) 
+        {
+            return $activo->estado != '';
+        });
 
         return view('recomendaciones', [
-            'comprar' => $comprar,
-            'vender'  => $vender
+            'activos'       => $activos,
+            'seguimientos'  => $seguimientos,
+            'grillas'       => $grillas,
         ]);
     }
 }

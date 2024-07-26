@@ -41,6 +41,21 @@ class Grilla extends Model
         return $this->_cotizacionDelActivo;
     }
 
+    public function getEstadoAttribute()
+    {
+        if($this->precio_activacion !== null)
+        {
+            return $this->precio_activacion >= $this->cotizacionDelActivo ? 'Corresponde activar' : '' ;
+        }
+
+        else
+        {
+            return $this->hayCambioDeBanda ? 'Cambio de banda' : '';
+        }
+
+        return '';
+    }
+
     protected $_idBandaActual = 0;
 
     protected $_hayCambioDeBanda = null;
@@ -71,7 +86,7 @@ class Grilla extends Model
                 {
                     $bandas = $this->bandas()->conLimites()->orderBy('precio')->get();
 
-                    $filtradas = $bandas->filter(function ($banda, int $key) 
+                    $filtradas = $bandas->filter(function ($banda) 
                     {
                         return $banda->precioEnEntorno;
                     });
