@@ -11,6 +11,10 @@ class Index extends Component
 
     public $model_class = Broker::class;
 
+    public $sort_by = 'sigla';
+
+    public $sort_order = 'asc';
+
     protected $rules = [
         'model.sigla' => 'required|string|min:2|max:10',
         'model.nombre' => 'required|string|min:3|max:100'
@@ -19,7 +23,8 @@ class Index extends Component
     public function render()
     {
         return view('livewire.broker.index', [
-            'brokers' => Broker::paginate($this->paginate)
+            'brokers' => Broker::orderBy($this->sort_by, strtoupper($this->sort_order))
+                ->paginate($this->paginate)
         ]);
     }
 }

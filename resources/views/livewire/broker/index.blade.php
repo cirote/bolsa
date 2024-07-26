@@ -2,8 +2,8 @@
 
     <x-slot name="header">
         <tr>
-            <x-ui-th sort="asc">Sigla</x-ui-th>
-            <x-ui-th sort="desc">Nombre</x-ui-th>
+            <x-ui-th sorteable='sigla' sortby='{{ $sort_by }}' sortorder='{{ $sort_order }}'>Sigla</x-ui-th>
+            <x-ui-th sorteable='nombre' sortby='{{ $sort_by }}' sortorder='{{ $sort_order }}'>Nombre</x-ui-th>
             <x-ui-th >Acciones</x-ui-th>
         <tr>
     </x-slot>
