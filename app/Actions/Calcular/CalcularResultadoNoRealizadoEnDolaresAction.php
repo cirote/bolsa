@@ -2,21 +2,28 @@
 
 namespace App\Actions\Calcular;
 
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
-use App\Models\Posiciones\General;
+use App\Models\Operaciones\Operacion; 
+use App\Models\Activos\Activo;
 
 class CalcularResultadoNoRealizadoEnDolaresAction
 {
     static function do()
     {
-        $resultado = 0;
+        $activos_validos = Operacion::query()
+            ->select('activo_id')
+            ->distinct()
+            ->get()
+            ->pluck('activo_id');
 
-        foreach(General::with('activo', 'posiciones')->conCantidad()->get() as $posicion_global)
+        $activos = Activo::whereIn('id', $activos_validos);
+
+        $activos = $activos->get();
+
+        $activos = $activos->filter(function ($activo) 
         {
-            $resultado += $posicion_global->resultado;
-        }
+            return $activo->stock != 0;
+        });
 
-        return $resultado;
+        return $activos->sum('resultadosNoRealizados');
     }
 }
