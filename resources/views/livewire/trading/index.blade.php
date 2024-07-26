@@ -76,12 +76,15 @@
                             <x-ui-th>Stock</x-ui-th>
                             <x-ui-th>PPC</x-ui-th>
                             <x-ui-th>Cotización</x-ui-th>
+                            <x-ui-th>Máximo</x-ui-th>
+                            <x-ui-th>Var%</x-ui-th>
                             <x-ui-th>Inversión</x-ui-th>
                             <x-ui-th>R. no Realizados</x-ui-th>
                             <x-ui-th>Por %.</x-ui-th>
                             <x-ui-th>Compra/Venta</x-ui-th>
                             <x-ui-th>Dividendos</x-ui-th>
                             <x-ui-th>R. Totales</x-ui-th>
+                            <x-ui-th>Recomendación</x-ui-th>
                             <x-ui-th></x-ui-th>
                         </x-ui-tr>
                     </x-slot>
@@ -93,12 +96,19 @@
                             <x-ui-td number="{{ $activo->stock }}" decimals="0"/>
                             <x-ui-td number="{{ $activo->pPC }}"/>
                             <x-ui-td number="{{ $activo->cotizacion }}"/>
+                            <x-ui-td number="{{ $activo->maximo }}"/>
+                            <x-ui-td number="{{ $bajo = (-100 * ($activo->maximo - $activo->cotizacion) / ($activo->maximo ? $activo->maximo : 1)) }}"/>
                             <x-ui-td number="{{ $activo->inversion }}"/>
                             <x-ui-td number="{{ $activo->resultadosNoRealizados }}"/>
-                            <x-ui-td number="{{ $activo->inversion ? $activo->resultadosNoRealizados / $activo->inversion * 100 : 0 }}"/>
+                            <x-ui-td number="{{ $resultado = ($activo->inversion ? $activo->resultadosNoRealizados / $activo->inversion * 100 : 0) }}"/>
                             <x-ui-td number="{{ $activo->resultadosCompraVenta }}"/>
                             <x-ui-td number="{{ $activo->dividendosCobrados }}"/>
                             <x-ui-td number="{{ $activo->resultadosTotales }}"/>
+                            <x-ui-td>
+                                @if($bajo < -0.05 AND $resultado > 20)
+                                    Vender
+                                @endif
+                            </x-ui-td>
                             <x-ui-td>
                                 <x-botonTrading wid="{{ $activo->id }}" />
                             </x-ui-td>

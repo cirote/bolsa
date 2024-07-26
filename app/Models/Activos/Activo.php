@@ -29,6 +29,18 @@ class Activo extends Model
         return 'n/d';
     }
 
+    public function getMaximoAttribute()
+    {
+        if ($this->getCotizacionAttribute() > $this->precio_maximo)
+        {
+            $this->precio_maximo = $this->getCotizacionAttribute();
+
+            $this->save();
+        }
+
+        return $this->precio_maximo;
+    }
+
     public function getDividendosCobradosAttribute()
     {
         return abs($this->dividendos->sum('monto'));
