@@ -3,12 +3,13 @@
 namespace App\Http\Livewire\Operaciones;
 
 use Livewire\Component;
-use Cirote\Ui\Traits\Crud;
 use App\Models\Operaciones\Operacion;
 
 class Index extends Component
 {
-    use Crud;
+    use \Cirote\Ui\Traits\Crud;
+
+    use \App\Traits\Trading;
 
     public $model_class = Operacion::class;
 
