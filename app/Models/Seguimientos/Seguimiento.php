@@ -101,7 +101,7 @@ class Seguimiento extends Model
             : 0;
     }
 
-    public function getAccionAttribute()
+    public function getEstadoAttribute()
     {
         if (! $this->tipo)
         {

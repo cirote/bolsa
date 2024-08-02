@@ -79,7 +79,7 @@
         <x-ui-td number="{{ $seguimiento->base }}" />
         <x-ui-td number="{{ $seguimiento->techoCalculado }}" />
         <x-ui-td number="{{ $seguimiento->puntaje * 100 }}" />
-        <x-ui-td>{{ $seguimiento->accion }}</x-ui-td>
+        <x-ui-td>{{ $seguimiento->estado }}</x-ui-td>
         <x-ui-td-actions :id="$seguimiento->id">
             <x-botonTrading wid="{{ $seguimiento->activo->id }}" />
         </x-ui-td-actions>
