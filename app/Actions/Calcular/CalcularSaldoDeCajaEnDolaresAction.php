@@ -17,7 +17,7 @@ class CalcularSaldoDeCajaEnDolaresAction
 
         $cuentas = Cuenta::conSaldos($fecha)
             ->where('moneda_id', $moneda->id)
-            ->whereIn('id', [9, 17])
+            // ->whereIn('id', [9, 17])
             ->get();
 
         foreach($cuentas as $cuenta)
