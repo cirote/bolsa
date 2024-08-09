@@ -30,7 +30,7 @@
 
         <x-ui-row>
             <x-ui-column number='12'>
-                <x-ui-input-text item="model.tipo">Tipo: </x-ui-input-text>
+                <x-ui-input-select item="model.tipo" options="Cierre:Precio de Cierre|LogChannel:Canal Logarítmico">Tipo: </x-ui-input-select>
             </x-ui-column>
         </x-ui-row>
 

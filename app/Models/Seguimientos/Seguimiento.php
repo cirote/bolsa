@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Parental\HasChildren;
 use App\Config\Constantes as Config;
-use App\Models\Broker;
 use App\Models\Activos\Activo;
 
 class Seguimiento extends Model
@@ -22,118 +21,47 @@ class Seguimiento extends Model
         'fecha_2'
     ];
 
-    public function getTechoCalculadoAttribute($value)
+    public $estrategia;
+
+    protected static function boot()
     {
-        return $this->base + $this->amplitud;
+        parent::boot();
+
+        static::retrieved(function ($seguimiento) 
+        {
+            $seguimiento->doSomethingAfterHydration();
+        });
     }
 
-    public function getBaseAttribute()
+    protected function doSomethingAfterHydration()
     {
-        if (! $this->fecha_1)
-        {
-            return $this->base_1;
-        }
+        $modelo = "\\App\\Models\\Seguimientos\\" . $this->tipo;
 
-        if ($this->tipo == 'LogChannel')
-        {
-            return $this->base_logaritmica();    
-        }
-
-        elseif ($this->tipo == 'Channel')
-        {
-            return $this->base_lineal();    
-        }
-
-        return 0;
-    }
-
-    protected function base_logaritmica()
-    {
-        if (!($this->fecha_1 instanceof Carbon && $this->fecha_2 instanceof Carbon)) 
-        {
-            throw new \Exception('Las fechas deben ser instancias de Carbon');
-        }
-
-        $diasTotales = $this->fecha_1->diffInDays($this->fecha_2);
-
-        $diasHastaHoy = $this->fecha_1->diffInDays(Carbon::now());
-
-        $diferenciaLogaritmica = log($this->base_2) - log($this->base_1);
-
-        $pendiente = $diferenciaLogaritmica / $diasTotales;
-
-        $constante = log($this->base_1);
-
-        $valorFinalLogaritmico = $pendiente * $diasHastaHoy + $constante;
-
-        return exp($valorFinalLogaritmico);
-    }
-
-    protected function base_lineal()
-    {
-        if (!($this->fecha_1 instanceof Carbon && $this->fecha_2 instanceof Carbon)) 
-        {
-            throw new \Exception('Las fechas deben ser instancias de Carbon');
-        }
-
-        $diasTotales = $this->fecha_1->diffInDays($this->fecha_2);
-
-        $diasHastaHoy = $this->fecha_1->diffInDays(Carbon::now());
-
-        $diferencia = $this->base_2 - $this->base_1;
-
-        $pendiente = $diferencia / $diasTotales;
-
-        $constante = $this->base_1;
-
-        return $pendiente * $diasHastaHoy + $constante;
-    }
-
-    public function getPuntajeAttribute()
-    {
-        if (!is_numeric($this->activo->cotizacion))
-        {
-            return 0;
-        }
-
-        return $this->amplitud
-            ? ($this->activo->cotizacion - $this->base) / $this->amplitud
-            : 0;
-    }
-
-    public function getEstadoAttribute()
-    {
-        if (! $this->tipo)
-        {
-            return '';
-        }
-
-        if ($this->puntaje >= 1)
-        {
-            return 'Vender';
-        }
-
-        if ($this->puntaje >= 0.9)
-        {
-            return 'Lanzar CALL';
-        }
-
-        if ($this->puntaje <= 0)
-        {
-            return 'Comprar';
-        }
-
-        if ($this->puntaje <= 0.1)
-        {
-            return 'Lanzar PUT';
-        }
-        
-        return '';
-        return 'Mantener';
+        $this->estrategia = new $modelo($this);
     }
 
     public function Activo()
     {
         return $this->belongsTo(Activo::class);
+    }
+
+    public function getBaseAttribute()
+    {
+        return $this->estrategia->base();
+    }
+
+    public function getTechoCalculadoAttribute()
+    {
+        return $this->estrategia->techoCalculado();
+    }
+
+    public function getPuntajeAttribute()
+    {
+        return $this->estrategia->puntaje();
+    }
+
+    public function getEstadoAttribute()
+    {
+        return $this->estrategia->estado();
     }
 }
