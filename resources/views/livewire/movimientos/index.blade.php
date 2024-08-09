@@ -57,11 +57,14 @@
         </x-ui-row>
 
         <x-ui-row>
-            <x-ui-column number='6'>
+            <x-ui-column number='4'>
                 <x-ui-input-number item="model.cantidad">Cantidad operada: </x-ui-input-number>
             </x-ui-column>
-            <x-ui-column number='6'>
-                <x-ui-input-precio item="model.monto_en_dolares">Monto en dólares de operación: </x-ui-input-precio>
+            <x-ui-column number='4'>
+                <x-ui-input-precio item="model.monto_en_dolares">Monto en dólares: </x-ui-input-precio>
+            </x-ui-column>
+            <x-ui-column number='4'>
+                <x-ui-input-precio item="model.monto_en_moneda_original">Moneda original: </x-ui-input-precio>
             </x-ui-column>
         </x-ui-row>
 

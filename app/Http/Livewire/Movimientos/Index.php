@@ -32,6 +32,7 @@ class Index extends Component
         'model.cantidad'          => 'nullable|numeric',
         'model.numero_boleto'     => 'nullable:numeric',
         'model.monto_en_dolares'  => 'required|numeric',
+        'model.monto_en_moneda_original'  => 'required|numeric',
         'model.type'              => 'required|string',
     ];
 

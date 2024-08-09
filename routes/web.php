@@ -43,14 +43,12 @@ Route::middleware(['auth:sanctum', 'verified'])
                 Route::get('/{activo}', \App\Http\Livewire\Trading\Activo::class)->name('activo');
             });
 
-        Route::controller(\App\Http\Controllers\CuentasController::class)
-            ->prefix('cuentas')
+        Route::prefix('cuentas')
             ->name('cuentas.')
             ->group(function () 
             {
                 Route::get('/', \App\Http\Livewire\Cuentas\Index::class)->name('index');
-                Route::get('/{id}', 'show')->name('show');
-                Route::post('/', 'store')->name('store');
+                Route::get('/saldos', \App\Http\Livewire\Cuentas\Saldos::class)->name('saldos');
             });
 
         Route::controller(\App\Http\Controllers\GrillasController::class)

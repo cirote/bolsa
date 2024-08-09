@@ -14,6 +14,10 @@
     Cuentas
 </x-ui-menu-item>
 
+<x-ui-menu-item route='cuentas.saldos' icon="fas fa-file-invoice">
+    Cuentas con saldo
+</x-ui-menu-item>
+
 <x-ui-menu-item route='activos.index' icon="fas fa-industry">
     Activos
 </x-ui-menu-item>
