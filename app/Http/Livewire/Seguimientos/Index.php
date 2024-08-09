@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Seguimientos;
 
 use Livewire\Component;
-use Illuminate\Support\Carbon;
 use App\Models\Seguimientos\Seguimiento;
 
 class Index extends Component
@@ -15,7 +14,7 @@ class Index extends Component
     public $model_class = Seguimiento::class;
 
     protected $rules = [
-        'model.activo_id'   => 'required|integer',
+        'model.activo_id'   => 'required|exists:activos,id',
         'model.fecha_1'     => 'date',
         'model.fecha_2'     => 'date',
         'model.base_1'      => 'nullable|numeric|min:0',
@@ -28,11 +27,10 @@ class Index extends Component
         'model.activo_id'   => 'numeric'
     ];
 
-    public function initial_values()
-    {
-        // $this->model->fecha_1 = Carbon::Now()->format('Y-m-d'); 
-        // $this->model->fecha_2 = Carbon::Now()->format('Y-m-d'); 
-    }
+    protected $messages = [
+        'model.activo_id.numeric' => 'Debe elegir una opción',
+        'model.tipo.string'       => 'Debe elegir una opción',
+    ];
 
     public function render()
     {

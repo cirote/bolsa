@@ -23,12 +23,12 @@ class Bandas extends Component
 
     protected $rules = [
         'model.grilla_id' => 'required|integer',
-        'model.fecha_operacion' => 'required|date',
+        'model.fecha_operacion'  => 'required|date',
         'model.precio_operacion' => 'required|numeric',
-        'model.precio' => 'required|numeric',
-        'model.monto' => 'required|numeric',
-        'model.cantidad' => 'required|integer',
-        'model.estado' => 'required|boolean'
+        'model.precio'    => 'required|numeric',
+        'model.monto'     => 'required|numeric',
+        'model.cantidad'  => 'required|integer',
+        'model.estado'    => 'required|boolean'
     ];
 
     public function initial_values()
