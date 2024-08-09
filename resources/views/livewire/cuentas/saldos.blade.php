@@ -6,17 +6,10 @@
     <x-ui-row>
         @foreach ($enDolares as $cuenta)
             <x-ui-column number='2'>
-                <x-ui-tarjeta>
-                    <x-slot name="header">
-                        {{ $cuenta->nombre }}
-                    </x-slot>
-
-                    <x-slot name="footer">
-                        <a href="{{ route('movimientos.show', $cuenta) }}" class="small-box-footer bg-default">
-                            <span class="text-muted">Movimientos <i class="fa fa-arrow-circle-right"></i></span>
-                        </a>
-                    </x-slot>
-
+                <x-ui-tarjeta title="{{ $cuenta->nombre }}" 
+                              footer="Movimientos" 
+                              href="{{ route('movimientos.show', $cuenta) }}"
+                              icon="fa fa-arrow-circle-right">
                     $ {{ number_format($cuenta->saldo, 2, ',', '.') }}
                 </x-ui-tarjeta> 
             </x-ui-column>    
@@ -32,17 +25,10 @@
     <x-ui-row>
             @foreach ($enEuros as $cuenta)
             <x-ui-column number='2'>
-                <x-ui-tarjeta>
-                    <x-slot name="header">
-                        {{ $cuenta->nombre }}
-                    </x-slot>
-
-                    <x-slot name="footer">
-                        <a href="{{ route('movimientos.show', $cuenta) }}" class="small-box-footer bg-default">
-                            <span class="text-muted">Movimientos <i class="fa fa-arrow-circle-right"></i></span>
-                        </a>
-                    </x-slot>
-
+                <x-ui-tarjeta title="{{ $cuenta->nombre }}" 
+                              footer="Movimientos" 
+                              href="{{ route('movimientos.show', $cuenta) }}"
+                              icon="fa fa-arrow-circle-right">
                     &euro; {{ number_format($cuenta->saldo, 2, ',', '.') }}
                 </x-ui-tarjeta> 
             </x-ui-column>    
@@ -52,24 +38,17 @@
 
 <x-ui-box>
     <x-slot name="header">
-        Cuentas en pesos argentinos | Saldo total: $ {{ number_format($enArgentinos->sum('saldo'), 2, ',', '.') }}
+        Cuentas en pesos argentinos | Saldo total: $a {{ number_format($enArgentinos->sum('saldo'), 2, ',', '.') }}
     </x-slot>
 
     <x-ui-row>
             @foreach ($enArgentinos as $cuenta)
             <x-ui-column number='2'>
-                <x-ui-tarjeta>
-                    <x-slot name="header">
-                        {{ $cuenta->nombre }}
-                    </x-slot>
-
-                    <x-slot name="footer">
-                        <a href="{{ route('movimientos.show', $cuenta) }}" class="small-box-footer bg-default">
-                            <span class="text-muted">Movimientos <i class="fa fa-arrow-circle-right"></i></span>
-                        </a>
-                    </x-slot>
-           
-                    {{ number_format($cuenta->saldo, 2, ',', '.') }}
+                <x-ui-tarjeta title="{{ $cuenta->nombre }}" 
+                              footer="Movimientos" 
+                              href="{{ route('movimientos.show', $cuenta) }}"
+                              icon="fa fa-arrow-circle-right">
+                    $a {{ number_format($cuenta->saldo, 2, ',', '.') }}
                 </x-ui-tarjeta> 
             </x-ui-column>    
         @endforeach
