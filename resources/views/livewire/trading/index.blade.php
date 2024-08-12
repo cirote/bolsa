@@ -6,55 +6,37 @@
 
     <x-ui-row> 
         <x-ui-column number='2'>
-            <x-ui-tarjeta>
-                <x-slot name="header">
-                    Cantidad de activos con stock
-                </x-slot>
+            <x-ui-tarjeta footer="Cantidad de activos con stock">
                 {{ number_format($activos->count(), 0, ',', '.') }}
             </x-ui-tarjeta>
         </x-ui-column>
 
         <x-ui-column number='2'>
-            <x-ui-tarjeta>
-                <x-slot name="header">
-                    Inversión
-                </x-slot>
+            <x-ui-tarjeta footer="Inversión">
                 $ {{ number_format($activos->sum('inversion'), 2, ',', '.') }}
             </x-ui-tarjeta>
         </x-ui-column>
 
         <x-ui-column number='2'>
-            <x-ui-tarjeta>
-                <x-slot name="header">
-                    Resultados no realizados
-                </x-slot>
+            <x-ui-tarjeta footer="Resultados no realizados">
                 $ {{ number_format($activos->sum('resultadosNoRealizados'), 2, ',', '.') }}
             </x-ui-tarjeta>
         </x-ui-column>
 
         <x-ui-column number='2'>
-            <x-ui-tarjeta>
-                <x-slot name="header">
-                    Resultados por compraventa
-                </x-slot>
+            <x-ui-tarjeta footer="Resultados por compraventa">
                 $ {{ number_format($activos->sum('resultadosCompraVenta'), 2, ',', '.') }}
             </x-ui-tarjeta>
         </x-ui-column>
 
         <x-ui-column number='2'>
-            <x-ui-tarjeta>
-                <x-slot name="header">
-                    Dividendos cobrados
-                </x-slot>
+            <x-ui-tarjeta footer="Dividendos cobrados">
                 $ {{ number_format($activos->sum('dividendosCobrados'), 2, ',', '.') }}
             </x-ui-tarjeta>
         </x-ui-column>
 
         <x-ui-column number='2'>
-            <x-ui-tarjeta>
-                <x-slot name="header">
-                    Resultados totales
-                </x-slot>
+            <x-ui-tarjeta footer="Resultados totales">
                 $ {{ number_format($activos->sum('resultadosTotales'), 2, ',', '.') }}
             </x-ui-tarjeta>
         </x-ui-column>

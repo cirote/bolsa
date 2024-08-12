@@ -84,7 +84,9 @@ class importarHistoria extends Command
 
         // \App\Actions\Importar\ImportarDatosDeStoneXAction::do('17670277 Transactions 2024-07-22 11_25_06.csv'); // Hasta el 20 de julio de 2024
 
-        \App\Actions\Importar\ImportarDatosDeStoneXAction::do('17670277 Transactions 2024-08-01 09_30_16.csv'); // Hasta el 31 de julio de 2024
+        // \App\Actions\Importar\ImportarDatosDeStoneXAction::do('17670277 Transactions 2024-08-01 09_30_16.csv'); // Hasta el 31 de julio de 2024
+
+        \App\Actions\Importar\ImportarDatosDeStoneXAction::do('17670277 Transactions 2024-08-12 13_06_08.csv'); // Hasta el 12 de agosto de 2024
 
         // \App\Actions\ImputarMovimientosOriginalesEnPosicionesAction::do();
 
