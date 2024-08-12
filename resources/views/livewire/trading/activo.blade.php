@@ -6,34 +6,37 @@
 
     <x-ui-row> 
         <x-ui-column number='2'>
-            <x-ui-tarjeta title="Stock">
+            <x-ui-tarjeta footer="Stock">
                 {{ $activo->stock }}
             </x-ui-tarjeta>
         </x-ui-column>
 
         <x-ui-column number='2'>
-            <x-ui-tarjeta title="Inversión">
+            <x-ui-tarjeta footer="Inversión">
                 $ {{ number_format($activo->inversion, 2, ',', '.') }}
             </x-ui-tarjeta>
         </x-ui-column>
 
         <x-ui-column number='2'>
+        <x-ui-tarjeta footer="Resultados no realizados" bgColor="warning">
+                $ {{ number_format($activo->resultadosNoRealizados, 2, ',', '.') }}
+            </x-ui-tarjeta>
         </x-ui-column>
 
         <x-ui-column number='2'>
-            <x-ui-tarjeta title="Resultado compraventa">
+            <x-ui-tarjeta footer="Resultado compraventa">
                 $ {{ number_format($activo->resultadosCompraVenta, 2, ',', '.') }}
             </x-ui-tarjeta>
         </x-ui-column>
 
         <x-ui-column number='2'>
-            <x-ui-tarjeta title="Dividendos">
+            <x-ui-tarjeta footer="Dividendos">
                 $ {{ number_format($activo->dividendosCobrados, 2, ',', '.') }}
             </x-ui-tarjeta>
         </x-ui-column>
 
         <x-ui-column number='2'>
-            <x-ui-tarjeta title="Resultado total">
+            <x-ui-tarjeta footer="Resultado total" bgColor="success">
                 $ {{ number_format($activo->resultadosRealizados, 2, ',', '.') }}
             </x-ui-tarjeta>
         </x-ui-column>
