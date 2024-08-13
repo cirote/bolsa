@@ -36,7 +36,7 @@
         </x-ui-column>
 
         <x-ui-column number='2'>
-            <x-ui-tarjeta footer="Resultado total" bgColor="success">
+            <x-ui-tarjeta footer="Resultados realizados" bgColor="success">
                 $ {{ number_format($activo->resultadosRealizados, 2, ',', '.') }}
             </x-ui-tarjeta>
         </x-ui-column>
