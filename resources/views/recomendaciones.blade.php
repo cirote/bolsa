@@ -1,5 +1,4 @@
-<x-ui-layout>
-
+<div>
     <x-slot name="header">
         Panel recomendaciones
     </x-slot>
@@ -129,6 +128,7 @@
                         <x-ui-td>{{ $grilla->estado }}</x-ui-td>
                         <x-ui-td>
                             <x-botonTrading wid="{{ $grilla->activo->id }}" />
+                            <x-botonBanda wid="{{ $grilla->id }}" />
                             @if($grilla->precio_activacion !== null)
                                 <x-ui-button wire:click="activar({{ $grilla->id }})">
                                     <i class="fa fa-play"></i>
@@ -141,5 +141,4 @@
             </x-ui-table>
         </x-ui-box>
     @endif
-
-</x-ui-layout>
+</div>

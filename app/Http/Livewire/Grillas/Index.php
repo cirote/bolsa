@@ -12,6 +12,8 @@ class Index extends Component
 
     use \App\Traits\Trading;
 
+    use \App\Traits\Bandas;
+
     public $model_class = Grilla::class;
 
     protected $rules = [
@@ -38,15 +40,5 @@ class Index extends Component
         $grilla->precio_activacion = null;
 
         $grilla->save();
-    }
-
-    public function ver_bandas(Grilla $grilla)
-    {
-        return redirect()->route('grillas.bandas', 
-            [
-                'header' => 'Bandas de precios',
-                'grilla' => $grilla
-            ]
-        );
     }
 }

@@ -24,7 +24,7 @@ Route::middleware(['auth:sanctum', 'verified'])
         Route::controller(\App\Http\Controllers\RecomendacionesController::class)
         ->group(function () 
         {
-            Route::get('/recomendaciones', 'index')->name('recomendaciones');
+            Route::get('/recomendaciones', \App\Http\Livewire\Recomendaciones\Index::class)->name('recomendaciones');
         });
 
         Route::controller(\App\Http\Controllers\ActivosController::class)

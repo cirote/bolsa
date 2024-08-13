@@ -47,10 +47,7 @@
                         Activar
                     </x-ui-button>
                 @else
-                    <x-ui-button wire:click="ver_bandas({{ $grilla->id }})">
-                        <i class="fa fa-bars"></i>
-                        Bandas
-                    </x-ui-button>
+                    <x-botonBanda wid="{{ $grilla->id }}" />
                 @endif
             </x-ui-td-actions>
         </x-ui-tr>
