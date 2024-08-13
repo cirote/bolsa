@@ -1,4 +1,4 @@
-<x-ui-crud-table title="Bandas de Precios de ({{ $activo->simbolo }}) {{ $activo->denominacion }}" :model="$bandas" :mode="$mode">
+<x-ui-crud-table title="Bandas de Precios de ({{ $activo->simbolo }}) {{ $activo->denominacion }} {{ $activo->stock ? ' - (' . $activo->stock . ') acciones' : '' }}" :model="$bandas" :mode="$mode">
 
     <x-slot name="header">
         <tr>
