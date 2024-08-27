@@ -27,10 +27,11 @@ class ImportarDatosDeIolAction extends Base
 	protected $broker = 'IOL';
 
     protected $archivos = [
-        'MovimientosHistoricos.xlsx', 
-        'Pesos hasta Mayo 2020.xlsx', 
-        'Dolares hasta Mayo 2020.xlsx',
-        'Pesos Mayo 2020 hasta Febrero 2022 completo.xlsx'
+        // 'MovimientosHistoricos.xlsx', 
+        // 'Pesos hasta Mayo 2020.xlsx', 
+        // 'Dolares hasta Mayo 2020.xlsx',
+        // 'Pesos Mayo 2020 hasta Febrero 2022 completo.xlsx',
+        'OperacionesFinalizadas.xls'
     ];
 
     protected function setCuenta($planilla)

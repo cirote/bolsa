@@ -19,6 +19,8 @@ class Ticker extends Model
 
     static public function byName($name)
     {
+        // dump ("Consultando el ticker de {$name}");
+
         return static::where('ticker', $name)->first();
     }
 
