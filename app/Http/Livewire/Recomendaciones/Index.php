@@ -15,6 +15,8 @@ class Index extends Component
     
     public function render()
     {
+        \App\Actions\Recomendaciones\FiltrarRecomendacionesAction::do();
+
         $activos = Activo::conStock()->filter(function ($activo) 
         {
             return $activo->estado != '';

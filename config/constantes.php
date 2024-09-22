@@ -28,6 +28,8 @@ class Constantes
 	const OPERACIONES            = 'operaciones';
 	const COMPRAVENTAS			 = 'compra_ventas';
 
+	const NOTIFICACIONES         = 'notificaciones';
+	
 	const SEGUIMIENTOS           = 'seguimientos';
 	const POSICIONES             = 'posiciones';
 	const MOVIMIENTOS_POSICIONES = 'posiciones_movimientos';

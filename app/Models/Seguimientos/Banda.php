@@ -14,7 +14,7 @@ class Banda extends Model
 
     protected $guarded = [];
 
-    protected $dates = ['fecha_operaciom'];
+    protected $dates = ['fecha_operacion'];
 
     protected function grilla()
     {
