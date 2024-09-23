@@ -28,9 +28,38 @@ class FiltrarRecomendacionesAction
 
         $texto = $this->notificar();
 
+        if ($texto) 
+        {
+            $this->enviar_mensaje($texto);
+        }
+
         dd($texto);
 
         return $this->estados;
+    }
+
+    protected function enviar_mensaje($texto)
+    {
+        $token = 'EAAxZBKSG6socBOw1IoylrGsVfQu1rc36qS0wu2VYobWid7J271WRt5AwSTLciLdhNubwQOiEAkZBZBzHNzZAz0zW5dnZAyvAAzsKDHOH4LsQcr4CIkvT4kI3EXMNNPZB3B9KKff4fsZATqZC6Ds16ZCGSwRsCKiZB4ZBwv19FznYZAb3yyR7Dc6uaWIdEhNKVdgJWEINTcxvnr56loUyT4JdpolR8PD8JgZDZD';
+        $phone_number_id = '443328075527104';
+        $recipient_phone_number = '59897103023';
+
+        $tsap = new \zepson\Whatsapp\WhatsappClass($phone_number_id, $token, "v20.0");
+
+        try 
+        {
+            $sendtsap = $tsap->sendMessage(
+                $texto,
+                $recipient_phone_number
+            );
+
+            dump($sendtsap);
+        } 
+        
+        catch (\Exception $e) 
+        {
+            dump('Error al enviar el mensaje: ' . $e->getMessage());
+        }
     }
 
     public function obtener_datos()
@@ -107,7 +136,7 @@ class FiltrarRecomendacionesAction
 
         if ($t = $this->notificar_sobrantes()) 
         {
-            $texto .= 'Hay recomendaciones que desaparecen: ' . PHP_EOL;
+            $texto .= 'Hay recomendaciones que se vencieron: ' . PHP_EOL;
 
             $texto .= $t;
         }
@@ -133,7 +162,7 @@ class FiltrarRecomendacionesAction
         foreach ($this->datosSobrantes as $dato) {
             $notificacion = Notificacion::find($dato['id']);
 
-            $texto .= " - Sobrante {$dato['origen']} {$dato['ticker']} con estado {$dato['accion']} desde {$notificacion->created_at->format('d/m/Y')}\n";
+            $texto .= " - Oportunidad en {$dato['origen']} para {$dato['ticker']} con recomendacion de {$dato['accion']} desde el {$notificacion->created_at->format('d/m/Y')}\n";
         }
 
         return $texto;

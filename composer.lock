@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1edb859230c507d9d1e3dae9fbb8d783",
+    "content-hash": "36462a8a6a00acc7bf0e15e74713857a",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -7004,6 +7004,68 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "zepson/whatsappcloud-php",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pro-cms/whatsappcloud-php.git",
+                "reference": "86d35b1c93848b4b9f2d80ba0e6ba4ef26a25e27"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pro-cms/whatsappcloud-php/zipball/86d35b1c93848b4b9f2d80ba0e6ba4ef26a25e27",
+                "reference": "86d35b1c93848b4b9f2d80ba0e6ba4ef26a25e27",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.4",
+                "php": "^8.0|^7.4"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "pestphp/pest": "^1.20",
+                "spatie/ray": "^1.28"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "zepson\\Whatsapp\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Novath Thomas",
+                    "email": "novath@zepson.co.tz",
+                    "role": "Developer"
+                }
+            ],
+            "description": "WhatsApp   Latest CLoud API Wrapper for PHP",
+            "homepage": "https://github.com/pro-cms/whatsappcloud-php",
+            "keywords": [
+                "Whatsapp cloud",
+                "Whatsapp cloud Api",
+                "Whatsapp cloud php",
+                "Whatsapp cloud php wrapper",
+                "whatsapp",
+                "zepson"
+            ],
+            "support": {
+                "issues": "https://github.com/pro-cms/whatsappcloud-php/issues",
+                "source": "https://github.com/pro-cms/whatsappcloud-php/tree/1.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/pro-cms",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-05-22T07:31:52+00:00"
         }
     ],
     "packages-dev": [
