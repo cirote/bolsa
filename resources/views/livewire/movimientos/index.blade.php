@@ -26,10 +26,10 @@
     <x-slot name="form">
         <x-ui-row>
             <x-ui-column number='6'>
-                <x-ui-input-fecha item="model.fecha_operacion">Fecha de operación: </x-ui-input-fecha>
+                <x-ui-input-date item="model.fecha_operacion">Fecha de operación: </x-ui-input-date>
             </x-ui-column>
             <x-ui-column number='6'>
-                <x-ui-input-fecha item="model.fecha_liquidacion">Fecha de liquidación: </x-ui-input-fecha>
+                <x-ui-input-date item="model.fecha_liquidacion">Fecha de liquidación: </x-ui-input-date>
             </x-ui-column>
         </x-ui-row>
 

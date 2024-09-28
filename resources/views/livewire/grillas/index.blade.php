@@ -14,17 +14,8 @@
 
     <x-slot name="form">
         <x-ui-input-select item="model.activo_id" options="{{ \App\Models\Activos\Activo::toOptions() }}">Denominacion: </x-ui-input-select>
-        <x-ui-input-fecha item="model.fecha_inicial">Fecha: </x-ui-input-fecha>
+        <x-ui-input-date   item="model.fecha_inicial">Fecha: </x-ui-input-date>
         <x-ui-input-precio item="model.precio_activacion">Precio de activación: </x-ui-input-precio>
-    </x-slot>
-
-    <x-slot name="buttons">
-        <x-ui-button-cancel />
-        @if ($mode == 'EDIT')
-            <x-ui-button-store />
-        @elseif ($mode == 'CREATE')
-            <x-ui-button-store />
-        @endif
     </x-slot>
 
     @foreach($grillas as $grilla)

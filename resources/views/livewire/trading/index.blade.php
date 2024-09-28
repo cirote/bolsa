@@ -6,38 +6,38 @@
 
     <x-ui-row> 
         <x-ui-column number='2'>
-            <x-ui-tarjeta footer="Cantidad de activos con stock">
+            <x-ui-tarjeta footer="Activos con stock">
                 {{ number_format($activos->count(), 0, ',', '.') }}
             </x-ui-tarjeta>
         </x-ui-column>
 
         <x-ui-column number='2'>
             <x-ui-tarjeta footer="Inversión">
-                $ {{ number_format($activos->sum('inversion'), 2, ',', '.') }}
+                $ {{ number_format($activos->sum('inversion'), 0, ',', '.') }}
             </x-ui-tarjeta>
         </x-ui-column>
 
         <x-ui-column number='2'>
             <x-ui-tarjeta footer="Resultados no realizados">
-                $ {{ number_format($activos->sum('resultadosNoRealizados'), 2, ',', '.') }}
+                $ {{ number_format($activos->sum('resultadosNoRealizados'), 0, ',', '.') }}
             </x-ui-tarjeta>
         </x-ui-column>
 
         <x-ui-column number='2'>
             <x-ui-tarjeta footer="Resultados por compraventa">
-                $ {{ number_format($activos->sum('resultadosCompraVenta'), 2, ',', '.') }}
+                $ {{ number_format($activos->sum('resultadosCompraVenta'), 0, ',', '.') }}
             </x-ui-tarjeta>
         </x-ui-column>
 
         <x-ui-column number='2'>
             <x-ui-tarjeta footer="Dividendos cobrados">
-                $ {{ number_format($activos->sum('dividendosCobrados'), 2, ',', '.') }}
+                $ {{ number_format($activos->sum('dividendosCobrados'), 0, ',', '.') }}
             </x-ui-tarjeta>
         </x-ui-column>
 
         <x-ui-column number='2'>
             <x-ui-tarjeta footer="Resultados totales">
-                $ {{ number_format($activos->sum('resultadosTotales'), 2, ',', '.') }}
+                $ {{ number_format($activos->sum('resultadosTotales'), 0, ',', '.') }}
             </x-ui-tarjeta>
         </x-ui-column>
     </x-ui-row>
@@ -53,20 +53,22 @@
 
                     <x-slot name="header">
                         <x-ui-tr>
-                            <x-ui-th>Ticker</x-ui-th>
-                            <x-ui-th>Activo</x-ui-th>
+                            <x-ui-th sorteable='simbolo'>Ticker</x-ui-th>
+                            <x-ui-th sorteable='denominacion'>Activo</x-ui-th>
                             <x-ui-th>Stock</x-ui-th>
                             <x-ui-th>PPC</x-ui-th>
-                            <x-ui-th>Cotización</x-ui-th>
+                            <x-ui-th>Precio</x-ui-th>
                             <x-ui-th>Máximo</x-ui-th>
                             <x-ui-th>Var%</x-ui-th>
-                            <x-ui-th>Inversión</x-ui-th>
-                            <x-ui-th>R. no Realizados</x-ui-th>
+                            <x-ui-th sorteable='inversion'>Inversión</x-ui-th>
+                            <x-ui-th sorteable='resultadosNoRealizados'>R. no Realizados</x-ui-th>
                             <x-ui-th>Por %.</x-ui-th>
-                            <x-ui-th>Compra/Venta</x-ui-th>
-                            <x-ui-th>Dividendos</x-ui-th>
-                            <x-ui-th>R. Totales</x-ui-th>
+                            <x-ui-th sorteable='resultadosCompraVenta'>Compra/Venta</x-ui-th>
+                            <x-ui-th sorteable='dividendosCobrados'>Dividendos</x-ui-th>
+                            <x-ui-th sorteable='resultadosTotales'>R. Totales</x-ui-th>
                             <x-ui-th>Estado</x-ui-th>
+                            <x-ui-th>c/Grilla</x-ui-th>
+                            <x-ui-th>c/Seg</x-ui-th>
                             <x-ui-th></x-ui-th>
                         </x-ui-tr>
                     </x-slot>
@@ -86,6 +88,7 @@
                             <x-ui-td number="{{ $activo->resultadosCompraVenta }}"/>
                             <x-ui-td number="{{ $activo->dividendosCobrados }}"/>
                             <x-ui-td number="{{ $activo->resultadosTotales }}"/>
+                            <x-ui-td>{{ $activo->estado }}</x-ui-td>
                             <x-ui-td>{{ $activo->estado }}</x-ui-td>
                             <x-ui-td>
                                 <x-botonTrading wid="{{ $activo->id }}" />

@@ -187,6 +187,16 @@ class Activo extends Model
         return $this->hasMany(Ticker::class, 'activo_id');
     }
 
+    public function seguimientos()
+    {
+        return $this->hasMany(Seguimiento::class);
+    }
+
+    public function grillas()
+    {
+        return $this->hasMany(Grilla::class);
+    }
+
     public function operaciones()
     {
         return $this->hasMany(Operacion::class);

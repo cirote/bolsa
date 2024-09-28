@@ -32,15 +32,12 @@ class FiltrarRecomendacionesAction
         {
             $this->enviar_mensaje($texto);
         }
-
-        dd($texto);
-
-        return $this->estados;
     }
 
     protected function enviar_mensaje($texto)
     {
-        $token = 'EAAxZBKSG6socBOw1IoylrGsVfQu1rc36qS0wu2VYobWid7J271WRt5AwSTLciLdhNubwQOiEAkZBZBzHNzZAz0zW5dnZAyvAAzsKDHOH4LsQcr4CIkvT4kI3EXMNNPZB3B9KKff4fsZATqZC6Ds16ZCGSwRsCKiZB4ZBwv19FznYZAb3yyR7Dc6uaWIdEhNKVdgJWEINTcxvnr56loUyT4JdpolR8PD8JgZDZD';
+        // $token = '';
+        $token = 'EAAxZBKSG6socBO0bOVM4ORbzmsDiyjXdvXtJI0XdCuhhSZAjJzyVXFL3RNuoUv3BjUBJUuAQOcPVtPwSW51D2l4S9lKXRXGlgBnSuK7mM7qWc0kZCi16NHQcHZAu2B6tCw1Im3hvI24a16A0W1Fm4j4hfYLF1Ad9ZCmPj7QLvZCZBgTBKZBNItKZC6QgBZB5f0p4TuYNzpIjT4IovBlCYCMurmGt9D';
         $phone_number_id = '443328075527104';
         $recipient_phone_number = '59897103023';
 
@@ -53,7 +50,7 @@ class FiltrarRecomendacionesAction
                 $recipient_phone_number
             );
 
-            dump($sendtsap);
+            // dump($sendtsap);
         } 
         
         catch (\Exception $e) 
@@ -149,7 +146,7 @@ class FiltrarRecomendacionesAction
         $texto = '';
 
         foreach ($this->datosNuevos as $dato) {
-            $texto .= " - Nuevo {$dato['origen']} {$dato['ticker']} con estado {$dato['accion']}\n";
+            $texto .= " - Nuevo {$dato['origen']} {$dato['ticker']} con estado {$dato['accion']}" . PHP_EOL;
         }
 
         return $texto;
@@ -162,7 +159,7 @@ class FiltrarRecomendacionesAction
         foreach ($this->datosSobrantes as $dato) {
             $notificacion = Notificacion::find($dato['id']);
 
-            $texto .= " - Oportunidad en {$dato['origen']} para {$dato['ticker']} con recomendacion de {$dato['accion']} desde el {$notificacion->created_at->format('d/m/Y')}\n";
+            $texto .= " - Oportunidad en {$dato['origen']} para {$dato['ticker']} con recomendacion de {$dato['accion']} desde el {$notificacion->created_at->format('d/m/Y')}" . PHP_EOL;
         }
 
         return $texto;

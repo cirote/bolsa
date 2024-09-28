@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+
+Artisan::command('bolsa', function () {
+    \App\Actions\Recomendaciones\FiltrarRecomendacionesAction::do();
+})->purpose('Recomendaciones de bolsa');

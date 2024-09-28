@@ -36,7 +36,7 @@
 
         <x-ui-row>
             <x-ui-column number='6'>
-                <x-ui-input-fecha item="model.fecha_1">Fecha inicial: </x-ui-input-fecha>
+                <x-ui-input-date item="model.fecha_1">Fecha inicial: </x-ui-input-date>
             </x-ui-column>
             <x-ui-column number='6'>
                 <x-ui-input-number item="model.base_1">Base inicial: </x-ui-input-number>
@@ -45,7 +45,7 @@
 
         <x-ui-row>
             <x-ui-column number='6'>
-                <x-ui-input-fecha item="model.fecha_2">Fecha final: </x-ui-input-fecha>
+                <x-ui-input-date item="model.fecha_2">Fecha final: </x-ui-input-date>
             </x-ui-column>
             <x-ui-column number='6'>
                 <x-ui-input-number item="model.base_2">Base final: </x-ui-input-number>
