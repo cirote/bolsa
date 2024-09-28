@@ -2,8 +2,9 @@
 
 namespace App\Http\Livewire\Trading;
 
-use App\Models\Activos\Activo;
 use Livewire\Component;
+use App\Models\Activos\Activo;
+use App\Models\Operaciones\Operacion;
 
 class Index extends Component
 {
@@ -22,9 +23,18 @@ class Index extends Component
     {
         if (! $this->activos) 
         {
-            $this->activos = Activo::conStock();
-//                ->mountwith('grillas')
-  //              ->with('seguimientos');
+            $activos_con_movimientos = Operacion::query()
+                ->pluck('activo_id')
+                ->unique();
+
+            $activos = Activo::with(['grillas', 'seguimientos', 'dividendos', 'compras', 'ventas', 'ticker', 'tickerRefDolar', 'tickerRefPesos'])
+                ->whereIn('id', $activos_con_movimientos)
+                ->get();
+
+            $this->activos = $activos->filter(function ($activo) 
+                {
+                    return $activo->stock != 0;
+                });
         }
 
         $this->activos = ($this->sort_order == 'asc')

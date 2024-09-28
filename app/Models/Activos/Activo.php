@@ -8,6 +8,8 @@ use Parental\HasChildren;
 use App\Config\Constantes as Config;
 use App\Models\Operaciones\Compraventa;
 use App\Models\Operaciones\Operacion;
+use App\Models\Seguimientos\Grilla;
+use App\Models\Seguimientos\Seguimiento;
 
 class Activo extends Model
 {
@@ -18,26 +20,6 @@ class Activo extends Model
     protected $table = Config::PREFIJO . Config::ACTIVOS;
 
     protected $guarded = [];
-
-    public static function conStock()
-    {
-        $activos_validos = Operacion::query()
-            ->select('activo_id')
-            ->distinct()
-            ->get()
-            ->pluck('activo_id');
-
-        $activos = Activo::whereIn('id', $activos_validos);
-
-        $activos->orderBy('denominacion');
-
-        $activos = $activos->get();
-
-        return $activos->filter(function ($activo) 
-        {
-            return $activo->stock != 0;
-        });
-    }
 
     public function getEstadoAttribute()
     {
@@ -51,16 +33,6 @@ class Activo extends Model
         }
 
         return '';
-    }
-
-    public function getSimboloAttribute()
-    {
-        if ($ticker = $this->tickers()->where('principal', true)->first())
-        {
-            return $ticker->ticker;
-        }
-
-        return 'n/d';
     }
 
     public function getMaximoAttribute()
@@ -123,7 +95,7 @@ class Activo extends Model
     {
         if (! $this->cotizacion)
         {
-            if ($ticker = $this->tickers->where('precio_referencia_dolares', true)->first())
+            if ($ticker = $this->tickerRefDolar)
             {
                 $this->cotizacion = Cache::remember($ticker->ticker, self::CACHE_EN_SEGUNDOS, function () use ($ticker)
                 {
@@ -141,7 +113,7 @@ class Activo extends Model
                 });
             }
     
-            elseif ($ticker = $this->tickers->where('precio_referencia_pesos', true)->first())
+            elseif ($ticker = $this->tickerRefPesos)
             {
                 $this->cotizacion = Cache::remember($ticker->ticker, self::CACHE_EN_SEGUNDOS, function () use ($ticker)
                 {
@@ -161,7 +133,7 @@ class Activo extends Model
     
             else
             {
-                $this->cotizacion = 'n/d';
+                $this->cotizacion = '100';
 
                 $this->cotizacion = $this->ppc;
             }
@@ -180,6 +152,24 @@ class Activo extends Model
                 return "{$id}:{$descripcion}"; 
             }
         )->implode('|');
+    }
+
+    public function ticker()
+    {
+        return $this->hasOne(Ticker::class)
+            ->where('principal', true);
+    }
+
+    public function tickerRefDolar()
+    {
+        return $this->hasOne(Ticker::class)
+            ->where('precio_referencia_dolares', true);
+    }
+
+    public function tickerRefPesos()
+    {
+        return $this->hasOne(Ticker::class)
+            ->where('precio_referencia_pesos', true);
     }
 
     public function tickers()

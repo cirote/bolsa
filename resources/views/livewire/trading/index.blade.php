@@ -75,21 +75,22 @@
 
                     @foreach($activos as $activo)
                         <x-ui-tr>
-                            <x-ui-td>{{ $activo->simbolo }}</x-ui-td>
+                            <x-ui-td>{{ $activo->simbolo ?? $activo->ticker->ticker }}</x-ui-td>
                             <x-ui-td>{{ $activo->denominacion }}</x-ui-td>
-                            <x-ui-td number="{{ $activo->stock }}" decimals="0"/>
-                            <x-ui-td number="{{ $activo->pPC }}"/>
-                            <x-ui-td number="{{ $activo->cotizacion }}"/>
-                            <x-ui-td number="{{ $activo->maximo }}"/>
+                            <x-ui-td number="{{ $activo->stock }}" />
+                            <x-ui-td number="{{ $activo->pPC }}" />
+                            <x-ui-td number="{{ $activo->cotizacion }}" />
+                            <x-ui-td number="{{ $activo->maximo }}" />
                             <x-ui-td number="{{ -100 * ($activo->maximo - $activo->cotizacion) / ($activo->maximo ? $activo->maximo : 1) }}"/>
-                            <x-ui-td number="{{ $activo->inversion }}"/>
-                            <x-ui-td number="{{ $activo->resultadosNoRealizados }}"/>
+                            <x-ui-td number="{{ $activo->inversion }}" />
+                            <x-ui-td number="{{ $activo->resultadosNoRealizados }}" />
                             <x-ui-td number="{{ $activo->inversion ? $activo->resultadosNoRealizados / $activo->inversion * 100 : 0 }}"/>
-                            <x-ui-td number="{{ $activo->resultadosCompraVenta }}"/>
-                            <x-ui-td number="{{ $activo->dividendosCobrados }}"/>
-                            <x-ui-td number="{{ $activo->resultadosTotales }}"/>
+                            <x-ui-td number="{{ $activo->resultadosCompraVenta }}" />
+                            <x-ui-td number="{{ $activo->dividendosCobrados }}" />
+                            <x-ui-td number="{{ $activo->resultadosTotales }}" />
                             <x-ui-td>{{ $activo->estado }}</x-ui-td>
-                            <x-ui-td>{{ $activo->estado }}</x-ui-td>
+                            <x-ui-td>{{ $activo->grillas->count() ? 'Si' : 'No' }}</x-ui-td>
+                            <x-ui-td>{{ $activo->seguimientos->count() ? 'Si' : 'No' }}</x-ui-td>
                             <x-ui-td>
                                 <x-botonTrading wid="{{ $activo->id }}" />
                             </x-ui-td>
