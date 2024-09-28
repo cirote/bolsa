@@ -23,8 +23,7 @@ class CalcularMontoInvertidoEnDolaresAction
             ->pluck('activo_id')
             ->unique();
 
-        $activos = Activo::with(['grillas', 'seguimientos', 'dividendos', 'compras', 'ventas', 'ticker', 'tickerRefDolar', 'tickerRefPesos'])
-            ->whereIn('id', $activos_con_movimientos)
+        $activos = Activo::whereIn('id', $activos_con_movimientos)
             ->get();
 
         return $activos->sum('inversion');

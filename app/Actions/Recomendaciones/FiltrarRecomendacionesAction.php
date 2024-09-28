@@ -3,6 +3,7 @@
 namespace App\Actions\Recomendaciones;
 
 use App\Models\Activos\Activo;
+use App\Models\Operaciones\Operacion;
 use App\Models\Seguimientos\Notificacion;
 use App\Models\Seguimientos\Grilla;
 use App\Models\Seguimientos\Seguimiento;
@@ -61,7 +62,11 @@ class FiltrarRecomendacionesAction
 
     public function obtener_datos()
     {
-        $this->normalice('Activos', Activo::conStock()->filter(function ($activo) 
+        $activos_con_movimientos = Operacion::query()
+            ->pluck('activo_id')
+            ->unique();
+
+        $this->normalice('Activos', Activo::whereIn('id', $activos_con_movimientos)->get()->filter(function ($activo) 
         {
             return $activo->estado != '';
         }));

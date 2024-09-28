@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Recomendaciones;
 
 use Livewire\Component;
 use App\Models\Activos\Activo;
+use App\Models\Operaciones\Operacion;
 use App\Models\Seguimientos\Seguimiento;
 use App\Models\Seguimientos\Grilla;
 
@@ -17,7 +18,11 @@ class Index extends Component
     {
         \App\Actions\Recomendaciones\FiltrarRecomendacionesAction::do();
 
-        $activos = Activo::conStock()->filter(function ($activo) 
+        $activos_con_movimientos = Operacion::query()
+            ->pluck('activo_id')
+            ->unique();
+
+        $activos = Activo::whereIn('id', $activos_con_movimientos)->get()->filter(function ($activo) 
         {
             return $activo->estado != '';
         });
