@@ -16,9 +16,11 @@
 
     <x-slot name="form">
         <x-ui-row>
-
-            <x-ui-column number='12'>
-                <x-ui-input-select item="model.activo_id" options="{{ \App\Models\Activos\Activo::toOptions() }}">Denominacion: </x-ui-input-select>
+            <x-ui-column number='6'>
+                <x-ui-input-select item="model.activo_id" options="{{ \App\Models\Activos\Activo::toOptions() }}">Activo: </x-ui-input-select>
+            </x-ui-column>
+            <x-ui-column number='6'>
+                <x-ui-input-select item="model.tipo" options="Cierre:Precio de Cierre|LogChannel:Canal Logarítmico">Tipo: </x-ui-input-select>
             </x-ui-column>
         </x-ui-row>
 
@@ -29,40 +31,31 @@
         </x-ui-row>
 
         <x-ui-row>
-            <x-ui-column number='12'>
-                <x-ui-input-select item="model.tipo" options="Cierre:Precio de Cierre|LogChannel:Canal Logarítmico">Tipo: </x-ui-input-select>
-            </x-ui-column>
-        </x-ui-row>
-
-        <x-ui-row>
-            <x-ui-column number='6'>
+            <x-ui-column number='4'>
                 <x-ui-input-date item="model.fecha_1">Fecha inicial: </x-ui-input-date>
             </x-ui-column>
-            <x-ui-column number='6'>
+            <x-ui-column number='4'>
                 <x-ui-input-number item="model.base_1">Base inicial: </x-ui-input-number>
             </x-ui-column>
         </x-ui-row>
 
         <x-ui-row>
-            <x-ui-column number='6'>
+            <x-ui-column number='4'>
                 <x-ui-input-date item="model.fecha_2">Fecha final: </x-ui-input-date>
             </x-ui-column>
-            <x-ui-column number='6'>
+            <x-ui-column number='4'>
                 <x-ui-input-number item="model.base_2">Base final: </x-ui-input-number>
             </x-ui-column>
-        </x-ui-row>
-
-        <x-ui-row>
-            <x-ui-column number='6'>
+            <x-ui-column number='4'>
                 <x-ui-input-number item="model.amplitud">Amplitud: </x-ui-input-number>
             </x-ui-column>
         </x-ui-row>
 
         <x-ui-row>
-            <x-ui-column number='6'>
+            <x-ui-column number='4'>
                 <x-ui-input-number item="model.piso">Piso: </x-ui-input-number>
             </x-ui-column>
-            <x-ui-column number='6'>
+            <x-ui-column number='4'>
                 <x-ui-input-number item="model.techo">Techo: </x-ui-input-number>
             </x-ui-column>
         </x-ui-row>
