@@ -16,9 +16,9 @@ class Seguimiento extends Model
 
     protected $guarded = [];
 
-    protected $dates = [
-        'fecha_1',
-        'fecha_2'
+    protected $casts = [
+        'fecha_1' => 'datetime:Y-m-d',
+        'fecha_2' => 'datetime:Y-m-d'
     ];
 
     public $estrategia;

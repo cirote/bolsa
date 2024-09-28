@@ -12,7 +12,9 @@ class Grilla extends Model
 
     protected $guarded = [];
 
-    protected $dates = ['fecha_inicial'];
+    protected $casts = [
+        'fecha_inicial' => 'datetime:Y-m-d'
+    ];    
 
     public function activo()
     {

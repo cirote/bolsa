@@ -17,10 +17,10 @@ class Movimiento extends Model
 
     protected $guarded = [];
 
-    protected $dates = [
-        'fecha_operacion',
-        'fecha_liquidacion'
-    ];
+    protected $casts = [
+        'fecha_operacion' => 'datetime:Y-m-d',
+        'fecha_liquidacion' => 'datetime:Y-m-d'
+    ];    
 
     public function Activo()
     {
