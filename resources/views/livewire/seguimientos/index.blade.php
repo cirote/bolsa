@@ -26,7 +26,7 @@
 
         <x-ui-row>
             <x-ui-column number='12'>
-                <x-ui-input-text item="model.comentarios">Comentarios: </x-ui-input-text>
+                <x-ui-input-word item="model.comentarios">Comentarios: </x-ui-input-word>
             </x-ui-column>
         </x-ui-row>
 

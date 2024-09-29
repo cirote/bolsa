@@ -86,10 +86,10 @@
             <x-ui-td>{{ $movimiento->clase }}</x-ui-td>
             <x-ui-td>{{ $movimiento->numero_operacion }}</x-ui-td>
             <x-ui-td>{{ $movimiento->observaciones }}</x-ui-td>
-            <x-ui-td number="{{ $movimiento->cantidad }}" decimals="2"/>
-            <x-ui-td number="{{ $movimiento->monto_en_moneda_original }}" />
+            <x-ui-td :number="$movimiento->cantidad" decimals="2" /> 
+            <x-ui-td :number="$movimiento->monto_en_moneda_original" decimals="2" />
             @if($cuenta)
-                <x-ui-td number="{{ $movimiento->saldo_calculado_en_moneda_original }}" />
+                <x-ui-td :number="$movimiento->saldo_calculado_en_moneda_original" decimals="2" />
             @endif
             <x-ui-td-actions :id="$movimiento->id"> 
                 @if(! $movimiento->operacion_id)
