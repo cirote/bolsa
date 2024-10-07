@@ -88,7 +88,7 @@ class FiltrarRecomendacionesAction
         {
             $this->estados[] = [
                 'origen' => $origen,
-                'ticker' => $dato->simbolo ?? $dato->activo->simbolo,
+                'ticker' => $dato->simbolo ?? ($dato->ticker->ticker ?? 'n/d'),
                 'accion' => $dato->estado ?? $dato->activo->estado
             ];
         }
