@@ -72,15 +72,15 @@
                         @foreach($activo->compraventas as $compraventa)
                             <x-ui-tr>
                                 <x-ui-td>{{ $compraventa->compra->fecha->format('d/m/Y') }}</x-ui-td>
-                                <x-ui-td number="{{ $compraventa->cantidad }}" decimals="0"/>
-                                <x-ui-td number="{{ $compraventa->compra->precio }}"/>
-                                <x-ui-td number="{{ $compraventa->costo }}"/>
+                                <x-ui-td :number="$compraventa->cantidad" />
+                                <x-ui-td :number="$compraventa->compra->precio" d="2" />
+                                <x-ui-td :number="$compraventa->costo" />
                                 <x-ui-td>{{ $compraventa->venta->fecha->format('d/m/Y') }}</x-ui-td>
-                                <x-ui-td number="{{ $compraventa->venta->precio }}"/>
-                                <x-ui-td number="{{ $compraventa->ingreso }}"/>
-                                <x-ui-td number="{{ $compraventa->resultado }}"/>
-                                <x-ui-td number="{{ $compraventa->dias }}" decimals="0"/>
-                                <x-ui-td number="{{ $compraventa->tasa * 100 }}"/>
+                                <x-ui-td :number="$compraventa->venta->precio" d="2" />
+                                <x-ui-td :number="$compraventa->ingreso" d="2" />
+                                <x-ui-td :number="$compraventa->resultado" d="2" />
+                                <x-ui-td :number="$compraventa->dias" />
+                                <x-ui-td :number="$compraventa->tasa * 100" d="1" />
                             </x-ui-tr>
                         @endforeach
         
@@ -115,11 +115,11 @@
                                 @if($compra->saldo)
                                     <x-ui-tr>
                                         <x-ui-td>{{ $compra->fecha->format('d/m/Y') }}</x-ui-td>
-                                        <x-ui-td number="{{ $compra->cantidad }}" decimals="0"/>
-                                        <x-ui-td number="{{ abs($compra->monto / $compra->cantidad) }}"/>
-                                        <x-ui-td number="{{ $compra->monto }}"/>
-                                        <x-ui-td number="{{ $compra->saldo }}" decimals="0"/>
-                                        <x-ui-td number="{{ $compra->inversion }}"/>
+                                        <x-ui-td :number="$compra->cantidad" />
+                                        <x-ui-td :number="abs($compra->monto / $compra->cantidad)" decimals="2" />
+                                        <x-ui-td :number="$compra->monto" decimals="2" />
+                                        <x-ui-td :number="$compra->saldo" />
+                                        <x-ui-td :number="$compra->inversion" decimals="2" />
                                         <x-ui-td>
                                             @if($operacion_venta)
                                                 <x-ui-button type='warning' wire:click="imputar_compra({{ $compra->id }})">
@@ -213,17 +213,17 @@
                         </x-ui-tr>
                     </x-slot>
     
-                    @foreach($activo->dividendos as $dividendo)
+                    @foreach($activo->dividendos()->orderBy('fecha', 'DESC')->get() as $dividendo)
                         <x-ui-tr>
                             <x-ui-td>{{ $dividendo->fecha->format('d/m/Y') }}</x-ui-td>
-                            <x-ui-td number="{{ $dividendo->monto }}"/>
+                            <x-ui-td :number="$dividendo->monto" d="2" />
                         </x-ui-tr>
                     @endforeach
 
                     <x-slot name="footer">
                         <x-ui-tr>
                             <x-ui-td>Total</x-ui-td>
-                            <x-ui-td number="{{ $activo->dividendos->sum('monto') }}"/>
+                            <x-ui-td :number="$activo->dividendos->sum('monto')" d="2" />
                         </x-ui-tr>
                     </x-slot>
 
