@@ -1,4 +1,4 @@
-<x-ui-crud-table title="Bandas de Precios de ({{ $activo->simbolo }}) {{ $activo->denominacion }} {{ $activo->stock ? ' - Stock actual de ' . $activo->stock . ' acciones' : '' }}" :model="$bandas" :mode="$mode">
+<x-ui-crud-table title="Bandas de Precios de ({{ $activo->simbolo }}) {{ $activo->denominacion }} {{ $activo->stock ? ' - Stock actual de ' . $activo->stock . ' acciones' : '' }}" :model="$bandas" :mode="$mode" create=true>
 
     <x-slot name="header">
         <tr>
@@ -34,8 +34,8 @@
                 )
                 @endif
             </x-ui-td>
-            <x-ui-td number="{{ $banda->monto }}" decimals='0'/>
-            <x-ui-td number="{{ $banda->cantidad }}" decimals='0'/>
+            <x-ui-td number="{{ $banda->monto }}" d='2'/>
+            <x-ui-td number="{{ $banda->cantidad }}" d='0'/>
             <x-ui-td align="right">
                 {{ number_format($stock, 0, ',', '.') }} 
                 @if(($banda->grilla->idBandaActual == $banda->id) && ($activo->stock != $stock))

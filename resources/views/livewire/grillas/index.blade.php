@@ -1,4 +1,4 @@
-<x-ui-crud-table title="Bandas de Precios" :model="$grillas" :mode="$mode">
+<x-ui-crud-table title="Bandas de Precios" :model="$grillas" :mode="$mode" create=true>
 
     <x-slot name="header">
         <x-ui-tr>
@@ -23,9 +23,9 @@
             <x-ui-td>{{ $grilla->activo->simbolo }}</x-ui-td>
             <x-ui-td>{{ $grilla->activo->denominacion }}</x-ui-td>
             <x-ui-td>{{ $grilla->fecha_inicial->format('d/m/Y') }}</x-ui-td>
-            <x-ui-td number="{{ $grilla->cotizacionDelActivo }}" />
+            <x-ui-td number="{{ $grilla->cotizacionDelActivo }}" d=2 />
             @if($grilla->precio_activacion !== null)
-                <x-ui-td number="{{ $grilla->precio_activacion }}" />
+                <x-ui-td number="{{ $grilla->precio_activacion }}" d=2 />
             @else
                 <x-ui-td />
             @endif

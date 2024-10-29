@@ -12,8 +12,6 @@ class Index extends Component
 {
     use Crud;
 
-    public $can_create = true;
-
     public $cuenta;
 
     public $anio;
