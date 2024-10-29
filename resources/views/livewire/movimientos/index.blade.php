@@ -1,4 +1,4 @@
-<x-ui-crud-table title="Movimientos" :model="$movimientos" :mode="$mode">
+<x-ui-crud-table title="Movimientos" :model="$movimientos" :mode="$mode" create=true>
 
     <x-slot name="boxHeader">
         <x-ui-button wire:click="calcular_saldos">
