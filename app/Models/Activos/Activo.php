@@ -4,6 +4,7 @@ namespace App\Models\Activos;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Carbon;
 use Parental\HasChildren;
 use App\Config\Constantes as Config;
 use App\Models\Operaciones\Compraventa;
@@ -87,6 +88,38 @@ class Activo extends Model
         return $this->stock
             ? $this->inversion / $this->stock
             : 0;
+    }
+
+    public function getPrecioHistorico(Carbon $fecha)
+    {
+        if ($ticker = $this->tickerRefDolar)
+        {
+            $cliente = \App\Apis\YahooFinanceApi::get();
+
+            $datos = $cliente->getHistoricalQuoteData(
+                "AAPL",
+                "1d",
+                new \DateTime("-1 days"),
+                new \DateTime("today")
+            );
+
+            dd($datos);
+
+            if ($cotizador = $cliente->getQuote($ticker->ticker))
+            {
+                dd($cotizador);
+                $datos = $cotizador->getHistoricalQuoteData(
+                    "AAPL",
+                    ApiClient::INTERVAL_1_DAY,
+                    new \DateTime("-14 days"),
+                    new \DateTime("today")
+                );
+
+                dd($datos);
+            }
+        }
+
+        return null;
     }
 
     private $cotizacion;

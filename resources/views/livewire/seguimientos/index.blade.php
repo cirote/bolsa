@@ -37,6 +37,12 @@
             <x-ui-column number='4'>
                 <x-ui-input-number item="model.base_1">Base inicial: </x-ui-input-number>
             </x-ui-column>
+            <x-ui-column number='4'>
+                <x-ui-button wire:click.prevent="actualizar_precio_inicial" style="margin-top: 35px;" class="btn btn-info btn-sm">
+                    <i class="fa-solid fa-magnifying-glass-dollar"></i>
+                    @lang('Actualizar precio')
+                </x-ui-button>
+            </x-ui-column>
         </x-ui-row>
 
         <x-ui-row>
@@ -47,7 +53,10 @@
                 <x-ui-input-number item="model.base_2">Base final: </x-ui-input-number>
             </x-ui-column>
             <x-ui-column number='4'>
-                <x-ui-input-number item="model.amplitud">Amplitud: </x-ui-input-number>
+                <x-ui-button wire:click.prevent="actualizar_precio_final" style="margin-top: 35px;" class="btn btn-info btn-sm">
+                    <i class="fa-solid fa-magnifying-glass-dollar"></i>
+                    @lang('Actualizar precio')
+                </x-ui-button>
             </x-ui-column>
         </x-ui-row>
 
@@ -57,6 +66,9 @@
             </x-ui-column>
             <x-ui-column number='4'>
                 <x-ui-input-number item="model.techo">Techo: </x-ui-input-number>
+            </x-ui-column>
+            <x-ui-column number='4'>
+                <x-ui-input-number item="model.amplitud">Amplitud: </x-ui-input-number>
             </x-ui-column>
         </x-ui-row>
 
