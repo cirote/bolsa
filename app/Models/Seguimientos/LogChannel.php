@@ -8,7 +8,7 @@ class LogChannel extends Base
 {
     public function techoCalculado()
     {
-        return $this->seguimiento->base + $this->seguimiento->amplitud;
+        return $this->seguimiento->base * (1 + ($this->seguimiento->amplitud / 100));
     }
 
     public function base()

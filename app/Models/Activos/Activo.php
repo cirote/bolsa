@@ -28,9 +28,12 @@ class Activo extends Model
 
         $resultado = $this->inversion ? $this->resultadosNoRealizados / $this->inversion * 100 : 0;
 
-        if($bajo < -5 AND $resultado > 20)
+        if ($bajo < -5 AND $resultado > 20)
         {
-            return 'Vender';
+            if (! $this->grillas()->count())
+            {
+                return 'Vender';
+            }
         }
 
         return '';
