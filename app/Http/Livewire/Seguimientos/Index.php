@@ -42,32 +42,26 @@ class Index extends Component
 
     public function actualizar_precio_inicial()
     {
-        if ($ticker = $this->model->activo->tickerRefDolar)
-        {
-            if ($ticker = $this->model->activo->tickerRefDolar)
-            {
-                $this->model->base_1 = $this->actualizar_precio($ticker->ticker, $this->model->fecha_1, $this->model->base_1);
-            }
-        }
+        $this->model->base_1 = $this->actualizar_precio($this->model->fecha_1, $this->model->base_1);
     }
 
     public function actualizar_precio_final()
     {
-        if ($ticker = $this->model->activo->tickerRefDolar)
-        {
-            $this->model->base_2 = $this->actualizar_precio($ticker->ticker, $this->model->fecha_2, $this->model->base_2);
-        }
+        $this->model->base_2 = $this->actualizar_precio($this->model->fecha_2, $this->model->base_2);
     }
 
-    protected function actualizar_precio(String $ticker, Carbon $fecha, $valor_actual)
+    protected function actualizar_precio(Carbon $fecha, $valor_actual)
     {
-        $datos = \App\Apis\PythonFinanceApi::obtenerDatosCotizacion($ticker, $fecha); 
-
-        if (isset($datos['cierre_ajustado']))
+        if ($ticker = $this->model->activo->tickerRefDolar)
         {
-            $ajuste = $datos['cierre_ajustado'] - $datos['cierre'];
+            $datos = \App\Apis\PythonFinanceApi::obtenerDatosCotizacion($ticker->ticker, $fecha); 
 
-            return round($datos['minimo'] + $ajuste, 2);
+            if (isset($datos['cierre_ajustado']))
+            {
+                $ajuste = $datos['cierre_ajustado'] - $datos['cierre'];
+
+                return round($datos['minimo'] + $ajuste, 2);
+            }
         }
 
         return $valor_actual;
