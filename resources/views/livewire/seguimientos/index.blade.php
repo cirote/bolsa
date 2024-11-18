@@ -1,4 +1,4 @@
-<x-ui-crud-table title="Seguimientos de precios" :model="$seguimientos" :mode="$mode">
+<x-ui-crud-table title="Seguimientos de precios" :model="$seguimientos" :mode="$mode" create=true>
 
     <x-slot name="header">
         <x-ui-tr>

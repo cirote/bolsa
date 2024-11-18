@@ -1,4 +1,4 @@
-<x-ui-crud-table title="Lista de cuentas corrientes" :model="$cuentas" :mode="$mode">
+<x-ui-crud-table title="Lista de cuentas corrientes" :model="$cuentas" :mode="$mode" create=true>
 
     <x-slot name="header">
         <x-ui-tr>

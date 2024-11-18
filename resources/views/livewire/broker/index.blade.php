@@ -1,4 +1,4 @@
-<x-ui-crud-table title="Lista de brokers" :model="$brokers" :mode="$mode">
+<x-ui-crud-table title="Lista de brokers" :model="$brokers" :mode="$mode" create=true>
 
     <x-slot name="header">
         <tr>

@@ -1,4 +1,4 @@
-<x-ui-crud-table title="Lista de activos" :model="$activos" :mode="$mode">
+<x-ui-crud-table title="Lista de activos" :model="$activos" :mode="$mode" create=true>
 
     <x-slot name="header">
         <x-ui-tr>
