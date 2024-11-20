@@ -29,9 +29,9 @@
             <x-ui-td>{{ $operacion->activo ? $operacion->activo->denominacion : ''  }}</x-ui-td>
             <x-ui-td>{{ $operacion->clase ?? '' }}</x-ui-td>
             <x-ui-td>{{ $operacion->observaciones }}</x-ui-td>
-            <x-ui-td number="{{ $operacion->monto }}" />
-            <x-ui-td number="{{ $operacion->cantidad }}" decimals="0" />
-            <x-ui-td number="{{ $operacion->elementos }}" decimals="0" />
+            <x-ui-td number="{{ $operacion->monto }}" d=2 />
+            <x-ui-td number="{{ $operacion->cantidad }}" />
+            <x-ui-td number="{{ $operacion->elementos }}" />
             <x-ui-td-actions :id="$operacion->id">
                 @if($operacion->activo)       
                     <x-botonTrading wid="{{ $operacion->activo->id }}" />

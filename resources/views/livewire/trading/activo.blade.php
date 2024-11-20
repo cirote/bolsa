@@ -216,14 +216,14 @@
                     @foreach($activo->dividendos()->orderBy('fecha', 'DESC')->get() as $dividendo)
                         <x-ui-tr>
                             <x-ui-td>{{ $dividendo->fecha->format('d/m/Y') }}</x-ui-td>
-                            <x-ui-td :number="$dividendo->monto" d="2" />
+                            <x-ui-td :number="$dividendo->monto" d=2 />
                         </x-ui-tr>
                     @endforeach
 
                     <x-slot name="footer">
                         <x-ui-tr>
                             <x-ui-td>Total</x-ui-td>
-                            <x-ui-td :number="$activo->dividendos->sum('monto')" d="2" />
+                            <x-ui-td :number="$activo->dividendos->sum('monto')" d=2 />
                         </x-ui-tr>
                     </x-slot>
 

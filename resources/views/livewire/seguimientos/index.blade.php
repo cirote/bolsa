@@ -74,22 +74,20 @@
 
     </x-slot>
 
-    @if ($mode == 'TABLE')
     @foreach($seguimientos as $seguimiento)
-    <x-ui-tr>
-        <x-ui-td>{{ $seguimiento->activo->simbolo }}</x-ui-td>
-        <x-ui-td>{{ $seguimiento->activo->denominacion }}</x-ui-td>
-        <x-ui-td>{{ $seguimiento->tipo }}</x-ui-td>
-        <x-ui-td number="{{ $seguimiento->activo->cotizacion }}" />
-        <x-ui-td number="{{ $seguimiento->base }}" />
-        <x-ui-td number="{{ $seguimiento->techoCalculado }}" />
-        <x-ui-td number="{{ $seguimiento->puntaje * 100 }}" />
-        <x-ui-td>{{ $seguimiento->estado }}</x-ui-td>
-        <x-ui-td-actions :id="$seguimiento->id">
-            <x-botonTrading wid="{{ $seguimiento->activo->id }}" />
-        </x-ui-td-actions>
-    </x-ui-tr>
+        <x-ui-tr>
+            <x-ui-td>{{ $seguimiento->activo->simbolo }}</x-ui-td>
+            <x-ui-td>{{ $seguimiento->activo->denominacion }}</x-ui-td>
+            <x-ui-td>{{ $seguimiento->tipo }}</x-ui-td>
+            <x-ui-td number="{{ $seguimiento->activo->cotizacion }}" d=2 />
+            <x-ui-td number="{{ $seguimiento->base }}" d=2 />
+            <x-ui-td number="{{ $seguimiento->techoCalculado }}" d=2 />
+            <x-ui-td number="{{ $seguimiento->puntaje * 100 }}" />
+            <x-ui-td>{{ $seguimiento->estado }}</x-ui-td>
+            <x-ui-td-actions :id="$seguimiento->id">
+                <x-botonTrading wid="{{ $seguimiento->activo->id }}" />
+            </x-ui-td-actions>
+        </x-ui-tr>
     @endforeach
-    @endif
 
 </x-ui-crud-table>
