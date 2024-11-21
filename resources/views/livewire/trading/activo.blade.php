@@ -208,12 +208,12 @@
 
                     <x-slot name="header">
                         <x-ui-tr>
-                            <x-ui-th>Fecha</x-ui-th>
-                            <x-ui-th>Monto</x-ui-th>
+                            <x-ui-th sorteable="fecha" group="dividendos" />
+                            <x-ui-th sorteable="monto" group="dividendos" />
                         </x-ui-tr>
                     </x-slot>
     
-                    @foreach($activo->dividendos()->orderBy('fecha', 'DESC')->get() as $dividendo)
+                    @foreach($activo->dividendos()->orderBy($this->sort_dividendos_by, $this->sort_dividendos_order)->cursor() as $dividendo)
                         <x-ui-tr>
                             <x-ui-td>{{ $dividendo->fecha->format('d/m/Y') }}</x-ui-td>
                             <x-ui-td :number="$dividendo->monto" d=2 />

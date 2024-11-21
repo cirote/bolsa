@@ -9,11 +9,17 @@ use Livewire\Component;
 
 class Activo extends Component
 {
+    use \Cirote\Ui\Traits\Ordenable;
+
     public Acti $activo;
 
     public $operacion_compra;
 
     public $operacion_venta;
+
+    public $sort_dividendos_by    = 'fecha';
+
+    public $sort_dividendos_order = 'desc';
 
     public function imputar_compra($operacion)
     {
