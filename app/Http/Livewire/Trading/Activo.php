@@ -17,6 +17,14 @@ class Activo extends Component
 
     public $operacion_venta;
 
+    public $sort_compras_by    = 'fecha';
+
+    public $sort_compras_order = 'asc';
+
+    public $sort_ventas_by     = 'fecha';
+
+    public $sort_ventas_order  = 'asc';
+
     public $sort_dividendos_by    = 'fecha';
 
     public $sort_dividendos_order = 'desc';

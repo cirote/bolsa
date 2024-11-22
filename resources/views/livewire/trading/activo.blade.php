@@ -57,7 +57,7 @@
                         <x-slot name="header">
                             <x-ui-tr>
                                 <x-ui-th>Compra</x-ui-th>
-                                <x-ui-th>Cantidad</x-ui-th>
+                                <x-ui-th sorteable="cantidad" />
                                 <x-ui-th>Precio</x-ui-th>
                                 <x-ui-th>Monto</x-ui-th>
                                 <x-ui-th>Venta</x-ui-th>
@@ -69,7 +69,7 @@
                             </x-ui-tr>
                         </x-slot>
         
-                        @foreach($activo->compraventas as $compraventa)
+                        @foreach($activo->compraventas()->orderBy($this->sort_by, $this->sort_order)->cursor() as $compraventa)
                             <x-ui-tr>
                                 <x-ui-td>{{ $compraventa->compra->fecha->format('d/m/Y') }}</x-ui-td>
                                 <x-ui-td :number="$compraventa->cantidad" />
@@ -101,17 +101,17 @@
         
                             <x-slot name="header">
                                 <x-ui-tr>
-                                    <x-ui-th>Fecha</x-ui-th>
-                                    <x-ui-th>Cantidad</x-ui-th>
+                                    <x-ui-th sorteable="fecha" group="compras" />
+                                    <x-ui-th sorteable="cantidad" group="compras" />
                                     <x-ui-th>Precio</x-ui-th>
-                                    <x-ui-th>Monto</x-ui-th>
-                                    <x-ui-th>Saldo</x-ui-th>
-                                    <x-ui-th>Inversion</x-ui-th>
+                                    <x-ui-th sorteable="monto" group="compras" />
+                                    <x-ui-th sorteable="saldo" group="compras" />
+                                    <x-ui-th sorteable="inversion" group="compras" >Inversión</x-ui-th>
                                     <x-ui-th></x-ui-th>
                                 </x-ui-tr>
                             </x-slot>
             
-                            @foreach($activo->compras as $compra)
+                            @foreach($activo->compras()->orderBy($this->sort_compras_by, $this->sort_compras_order)->cursor() as $compra)
                                 @if($compra->saldo)
                                     <x-ui-tr>
                                         <x-ui-td>{{ $compra->fecha->format('d/m/Y') }}</x-ui-td>
@@ -153,17 +153,17 @@
         
                             <x-slot name="header">
                                 <x-ui-tr>
-                                    <x-ui-th>Fecha</x-ui-th>
-                                    <x-ui-th>Cantidad</x-ui-th>
+                                    <x-ui-th sorteable="fecha" group="ventas" />
+                                    <x-ui-th sorteable="cantidad" group="ventas" />
                                     <x-ui-th>Precio</x-ui-th>
-                                    <x-ui-th>Monto</x-ui-th>
-                                    <x-ui-th>Pendiente</x-ui-th>
-                                    <x-ui-th>A imputar</x-ui-th>
+                                    <x-ui-th sorteable="monto" group="ventas" />
+                                    <x-ui-th sorteable="saldo" group="ventas" >Pendiente</x-ui-th>
+                                    <x-ui-th sorteable="inversion" group="ventas" >A imputar</x-ui-th>
                                     <x-ui-th></x-ui-th>
                                 </x-ui-tr>
                             </x-slot>
             
-                            @foreach($activo->ventas as $venta)
+                            @foreach($activo->ventas()->orderBy($this->sort_ventas_by, $this->sort_ventas_order)->cursor() as $venta)
                                 @if($venta->saldo)
                                     <x-ui-tr>
                                         <x-ui-td>{{ $venta->fecha->format('d/m/Y') }}</x-ui-td>
