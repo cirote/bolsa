@@ -34,17 +34,17 @@
                     <x-ui-tr>
                         <x-ui-td>{{ $activo->simbolo }}</x-ui-td>
                         <x-ui-td>{{ $activo->denominacion }}</x-ui-td>
-                        <x-ui-td number="{{ $activo->stock }}" decimals="0"/>
-                        <x-ui-td number="{{ $activo->pPC }}"/>
-                        <x-ui-td number="{{ $activo->cotizacion }}"/>
-                        <x-ui-td number="{{ $activo->maximo }}"/>
-                        <x-ui-td number="{{ -100 * ($activo->maximo - $activo->cotizacion) / ($activo->maximo ? $activo->maximo : 1) }}"/>
-                        <x-ui-td number="{{ $activo->inversion }}"/>
-                        <x-ui-td number="{{ $activo->resultadosNoRealizados }}"/>
-                        <x-ui-td number="{{ $activo->inversion ? $activo->resultadosNoRealizados / $activo->inversion * 100 : 0 }}"/>
-                        <x-ui-td number="{{ $activo->resultadosCompraVenta }}"/>
-                        <x-ui-td number="{{ $activo->dividendosCobrados }}"/>
-                        <x-ui-td number="{{ $activo->resultadosTotales }}"/>
+                        <x-ui-td number="{{ $activo->stock }}" />
+                        <x-ui-td number="{{ $activo->pPC }}" d=2 />
+                        <x-ui-td number="{{ $activo->cotizacion }}" d=2 />
+                        <x-ui-td number="{{ $activo->maximo }}" d=2 />
+                        <x-ui-td number="{{ -100 * ($activo->maximo - $activo->cotizacion) / ($activo->maximo ? $activo->maximo : 1) }}" d=2 />
+                        <x-ui-td number="{{ $activo->inversion }}" d=2 />
+                        <x-ui-td number="{{ $activo->resultadosNoRealizados }}" d=2 />
+                        <x-ui-td number="{{ $activo->inversion ? $activo->resultadosNoRealizados / $activo->inversion * 100 : 0 }}" d=2 />
+                        <x-ui-td number="{{ $activo->resultadosCompraVenta }}" d=2 />
+                        <x-ui-td number="{{ $activo->dividendosCobrados }}" d=2 />
+                        <x-ui-td number="{{ $activo->resultadosTotales }}" d=2 />
                         <x-ui-td>{{ $activo->estado }}</x-ui-td>
                         <x-ui-td>
                             <x-botonTrading wid="{{ $activo->id }}" />
@@ -81,9 +81,9 @@
                         <x-ui-td>{{ $seguimiento->activo->simbolo }}</x-ui-td>
                         <x-ui-td>{{ $seguimiento->activo->denominacion }}</x-ui-td>
                         <x-ui-td>{{ $seguimiento->tipo }}</x-ui-td>
-                        <x-ui-td number="{{ $seguimiento->activo->cotizacion }}" />
-                        <x-ui-td number="{{ $seguimiento->base }}" />
-                        <x-ui-td number="{{ $seguimiento->techoCalculado }}" />
+                        <x-ui-td number="{{ $seguimiento->activo->cotizacion }}" d=2 />
+                        <x-ui-td number="{{ $seguimiento->base }}" d=2 />
+                        <x-ui-td number="{{ $seguimiento->techoCalculado }}" d=2 />
                         <x-ui-td number="{{ $seguimiento->puntaje * 100 }}" />
                         <x-ui-td>{{ $seguimiento->estado }}</x-ui-td>
                         <x-ui-td>
@@ -119,9 +119,9 @@
                         <x-ui-td>{{ $grilla->activo->simbolo }}</x-ui-td>
                         <x-ui-td>{{ $grilla->activo->denominacion }}</x-ui-td>
                         <x-ui-td>{{ $grilla->fecha_inicial->format('d/m/Y') }}</x-ui-td>
-                        <x-ui-td number="{{ $grilla->cotizacionDelActivo }}" />
+                        <x-ui-td number="{{ $grilla->cotizacionDelActivo }}" d=2 />
                         @if($grilla->precio_activacion !== null)
-                            <x-ui-td number="{{ $grilla->precio_activacion }}" />
+                            <x-ui-td number="{{ $grilla->precio_activacion }}" d=2 />
                         @else
                             <x-ui-td />
                         @endif
