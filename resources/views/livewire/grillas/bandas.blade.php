@@ -48,8 +48,8 @@
                 )
                 @endif
             </x-ui-td>
-            <x-ui-td number="{{ $banda->limite_inferior }}" />
-            <x-ui-td number="{{ $banda->limite_superior }}" />
+            <x-ui-td number="{{ $banda->limite_inferior }}" d=2 />
+            <x-ui-td number="{{ $banda->limite_superior }}" d=2 />
             <x-ui-td>{{ $banda->estado ? 'Activa' : '' }}</x-ui-td>
             <x-ui-td>{{ $banda->precioEnEntorno ? 'Si' : 'No' }}</x-ui-td>
             <x-ui-td>{{ $banda->grilla->idBandaActual == $banda->id ? "Actual" : '' }}</x-ui-td>
