@@ -4518,16 +4518,16 @@
         },
         {
             "name": "scheb/yahoo-finance-api",
-            "version": "v4.10.1",
+            "version": "v4.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scheb/yahoo-finance-api.git",
-                "reference": "9a43debe17ce90a9aeea9c998aa1ecce2bd9f8ed"
+                "reference": "08f47997d123389567e2c7fa7cafc94d4c4e2515"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/scheb/yahoo-finance-api/zipball/9a43debe17ce90a9aeea9c998aa1ecce2bd9f8ed",
-                "reference": "9a43debe17ce90a9aeea9c998aa1ecce2bd9f8ed",
+                "url": "https://api.github.com/repos/scheb/yahoo-finance-api/zipball/08f47997d123389567e2c7fa7cafc94d4c4e2515",
+                "reference": "08f47997d123389567e2c7fa7cafc94d4c4e2515",
                 "shasum": ""
             },
             "require": {
@@ -4567,9 +4567,9 @@
             ],
             "support": {
                 "issues": "https://github.com/scheb/yahoo-finance-api/issues",
-                "source": "https://github.com/scheb/yahoo-finance-api/tree/v4.10.1"
+                "source": "https://github.com/scheb/yahoo-finance-api/tree/v4.12.0"
             },
-            "time": "2024-06-09T11:50:56+00:00"
+            "time": "2025-03-27T15:44:16+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
