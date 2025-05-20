@@ -113,7 +113,7 @@ class Activo extends Model
                 dd($cotizador);
                 $datos = $cotizador->getHistoricalQuoteData(
                     "AAPL",
-                    ApiClient::INTERVAL_1_DAY,
+                    // ApiClient::INTERVAL_1_DAY,
                     new \DateTime("-14 days"),
                     new \DateTime("today")
                 );
@@ -125,10 +125,14 @@ class Activo extends Model
         return null;
     }
 
-    private $cotizacion;
+    // private $cotizacion;
 
     public function getCotizacionAttribute()
     {
+        return $this->attributes['cotizacion'] ?? 0;
+
+        return 100;
+
         if (! $this->cotizacion)
         {
             if ($ticker = $this->tickerRefDolar)

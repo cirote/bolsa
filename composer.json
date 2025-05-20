@@ -15,6 +15,7 @@
         "almasaeed2010/adminlte": "^3.2",
         "calebporzio/parental": "^1.0",
         "cirote/ui": "dev-main",
+        "doctrine/dbal": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
