@@ -31,7 +31,8 @@ class ImportarDatosDeIolAction extends Base
         // 'Pesos hasta Mayo 2020.xlsx', 
         // 'Dolares hasta Mayo 2020.xlsx',
         // 'Pesos Mayo 2020 hasta Febrero 2022 completo.xlsx',
-        'OperacionesFinalizadas.xls'
+        // 'OperacionesFinalizadas.xls',
+        'Marzo 2022 hasta el 2 de setiembre de 2025.xlsx'
     ];
 
     protected function setCuenta($planilla)

@@ -25,7 +25,7 @@
     @foreach($operaciones as $operacion)
         <x-ui-tr>
             <x-ui-td>{{ $operacion->id }}</x-ui-td>
-            <x-ui-td>{{ $operacion->fecha ? $operacion->fecha->format('d/m/Y') : '' }}</x-ui-td>
+            <x-ui-td>{{ $operacion->fecha ? \Carbon\Carbon::parse($operacion->fecha)->format('d/m/Y') : '' }}</x-ui-td>
             <x-ui-td>{{ $operacion->activo ? $operacion->activo->denominacion : ''  }}</x-ui-td>
             <x-ui-td>{{ $operacion->clase ?? '' }}</x-ui-td>
             <x-ui-td>{{ $operacion->observaciones }}</x-ui-td>

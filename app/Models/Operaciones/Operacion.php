@@ -40,6 +40,11 @@ class Operacion extends Model
         return $this->hasMany(Movimiento::class);
     }
 
+    public function getFechaAttribute($value)
+    {
+        return $value ? \Carbon\Carbon::parse($value) : null;
+    }
+
     public function getPrecioAttribute()
     {
         return abs($this->monto / $this->cantidad);
